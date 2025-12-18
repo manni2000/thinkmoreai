@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /services
+Allow: /technologies
+Allow: /process
+Allow: /portfolio
+Allow: /contact
+Disallow: /admin
+Disallow: /private
+
+Sitemap: /sitemap.xml

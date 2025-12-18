@@ -1,0 +1,105 @@
+import { motion } from "framer-motion";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
+import { Users, Award, Zap, Target } from "lucide-react";
+
+const teamMembers = [
+	{
+		name: "Charan Kumar",
+		role: "CEO & Co-founder",
+		company: "ThinkMoreAI",
+		avatar: "/charan-avatar.jpg",
+	},
+	{
+		name: "Manish Kumar", 
+		role: "CTO & Co-founder",
+		company: "ThinkMoreAI",
+		avatar: "/manish-avatar.jpg",
+	},
+	{
+		name: "CA Sukanta Kar",
+		role: "Advisor Board Member",
+		company: "ThinkMoreAI",
+		avatar: "/sukanta-avatar.jpg",
+	},
+	{
+		name: "Prince Choudhary",
+		role: "Advisor Board Member", 
+		company: "ThinkMoreAI",
+		avatar: "/prince-avatar.jpg",
+	},
+];
+
+const Team = () => {
+	const ref = useRef(null);
+	const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+	return (
+		<section className="section-padding bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 text-primary-foreground">
+			<div className="container-custom">
+				<motion.div
+					ref={ref}
+					initial={{ opacity: 0, y: 30 }}
+					animate={isInView ? { opacity: 1, y: 0 } : {}}
+					transition={{ duration: 0.6 }}
+					className="text-center max-w-4xl mx-auto"
+				>
+					<span className="text-accent font-semibold text-sm uppercase tracking-wider">
+						Our Team
+					</span>
+					<h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 mb-6">
+						Battle-Tested{" "}
+						<span className="text-accent">Experts</span>
+					</h2>
+					<p className="text-xl text-primary-foreground/70 mb-16 leading-relaxed">
+						A dedicated team from global MNCs and high-growth startups — combining
+						strategy, engineering, design, and compliance expertise to deliver
+						results.
+					</p>
+				</motion.div>
+
+				<div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+					{teamMembers.map((member, index) => (
+						<motion.div
+							key={member.name}
+							initial={{ opacity: 0, y: 30 }}
+							animate={isInView ? { opacity: 1, y: 0 } : {}}
+							transition={{ duration: 0.5, delay: index * 0.1 }}
+							className="bg-primary-foreground/5 backdrop-blur-sm border border-primary-foreground/10 rounded-2xl p-6 text-center hover:bg-primary-foreground/10 transition-all duration-300"
+						>
+							{/* Avatar */}
+							<div className="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden border-2 border-accent/30">
+								<img
+									src={member.avatar}
+									alt={member.name}
+									className="w-full h-full object-cover"
+									onError={(e) => {
+										// Fallback to initials if image fails to load
+										const target = e.target as HTMLImageElement;
+										target.style.display = 'none';
+										const parent = target.parentElement;
+										if (parent) {
+											parent.innerHTML = `<div class="w-full h-full flex items-center justify-center bg-accent/20 text-accent font-bold text-xl">${member.name.split(' ').map(n => n[0]).join('')}</div>`;
+										}
+									}}
+								/>
+							</div>
+							
+							<h3 className="font-heading font-semibold text-lg mb-1">
+								{member.name}
+							</h3>
+							<p className="text-accent font-medium text-sm mb-1">
+								{member.role}
+							</p>
+							<p className="text-primary-foreground/60 text-sm">
+								{member.company}
+							</p>
+						</motion.div>
+					))}
+				</div>
+			</div>
+		</section>
+	);
+};
+
+export default Team;
