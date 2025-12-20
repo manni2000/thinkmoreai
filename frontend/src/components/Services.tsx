@@ -59,7 +59,7 @@ const techServices = [
   },
   {
     icon: Video,
-    title: "Content & Videography",
+    title: "Content Writer & VideoEditing",
     tagline: "Narratives That Perform.",
     description: "High-quality written content and visual storytelling aligned with brand strategy and measurable outcomes.",
   },
@@ -75,42 +75,50 @@ const caServices = [
   {
     icon: Receipt,
     title: "Income Tax Return (ITR)",
-    description: "Accurate. Compliant. On Time.",
+    tagline: "Accurate Filing. Full Compliance. On-Time Delivery.",
+    description: "Professional income tax return filing with complete accuracy and timely submission.",
   },
   {
     icon: Calculator,
     title: "GST Services",
-    description: "Registration, Filing & Compliance — Simplified",
+    tagline: "End-to-End Registration, Filing & Compliance — Made Simple.",
+    description: "Comprehensive GST services from registration to filing and compliance management.",
   },
   {
     icon: BookOpen,
     title: "Accounting & Bookkeeping",
-    description: "Clean Books. Clear Numbers.",
+    tagline: "Structured Records. Transparent Financials.",
+    description: "Maintain clean, organized financial records with complete transparency.",
   },
   {
     icon: Lightbulb,
     title: "Tax Planning & Consultancy",
-    description: "Legally Optimized Savings",
+    tagline: "Strategic, Legal Tax Optimization.",
+    description: "Expert tax planning strategies for legal optimization and maximum savings.",
   },
   {
     icon: Building2,
     title: "Company Incorporation & ROC",
-    description: "From Idea to Entity",
+    tagline: "From Concept to Compliant Entity.",
+    description: "Complete company incorporation services with ROC compliance management.",
   },
   {
     icon: FileCheck,
     title: "TDS / TCS Compliance",
-    description: "Zero Errors. Zero Stress.",
+    tagline: "Error-Free Filings. Complete Peace of Mind.",
+    description: "Hassle-free TDS/TCS compliance with accurate and timely filings.",
   },
   {
     icon: FileText,
-    title: "Project Reports & Loan Docs",
-    description: "Bank-Ready Documentation",
+    title: "Project Reports & Loan Documentation",
+    tagline: "Professionally Prepared, Bank-Ready Reports.",
+    description: "Expert preparation of project reports and loan documentation for banking needs.",
   },
   {
     icon: Scale,
     title: "Notice Handling & Assessments",
-    description: "Professional Representation You Can Trust",
+    tagline: "Trusted Representation. Confident Resolution.",
+    description: "Professional representation for tax notices and assessments with confident resolution.",
   },
 ];
 

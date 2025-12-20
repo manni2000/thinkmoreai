@@ -17,10 +17,10 @@ const teamMembers = [
 		avatar: "/manish-avatar.jpg",
 	},
 	{
-		name: "CA Sukanta Kar",
+		name: "Rohit Kr Mandal",
 		role: "Advisor Board Member",
 		company: "ThinkMoreAI",
-		avatar: "/sukanta-avatar.jpg",
+		avatar: "/rohit-avatar.jpg",
 	},
 	{
 		name: "Prince Choudhary",
@@ -74,7 +74,6 @@ const Team = () => {
 									alt={member.name}
 									className="w-full h-full object-cover"
 									onError={(e) => {
-										// Fallback to initials if image fails to load
 										const target = e.target as HTMLImageElement;
 										target.style.display = 'none';
 										const parent = target.parentElement;

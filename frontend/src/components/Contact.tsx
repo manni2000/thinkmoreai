@@ -37,16 +37,41 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    const formData = new FormData(e.target as HTMLFormElement);
+    const data = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      phone: formData.get('phone'),
+      message: formData.get('message'),
+    };
     
-    toast({
-      title: "Message sent successfully!",
-      description: "We'll get back to you within 24 hours.",
-    });
-    
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      
+      if (response.ok) {
+        toast({
+          title: "Message sent successfully!",
+          description: "We'll get back to you within 24 hours.",
+        });
+        (e.target as HTMLFormElement).reset();
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send message. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -166,25 +191,60 @@ const Contact = () => {
               />
             </motion.div>
 
-            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+            <motion.div 
+              whileHover={{ scale: 1.02, y: -2 }} 
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
+            >
               <Button 
                 type="submit" 
                 variant="hero" 
                 size="xl" 
-                className="w-full group"
+                className="w-full group relative overflow-hidden"
                 disabled={isSubmitting}
               >
+                <motion.div
+                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                  initial={{ x: "-100%" }}
+                  whileHover={{ x: "100%" }}
+                  transition={{ duration: 0.6 }}
+                />
                 {isSubmitting ? (
-                  <motion.div animate={{ rotate: 360 }} transition={{ duration: 1, repeat: Infinity }} >
-                    Sending...
-                  </motion.div>
-                ) : (
-                  <>
-                    Send Message
-                    <motion.div className="overflow-hidden" whileHover={{ x: 5 }}>
+                  <motion.div 
+                    className="flex items-center gap-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    >
                       <Send className="w-5 h-5" />
                     </motion.div>
-                  </>
+                    <motion.span
+                      animate={{ opacity: [0.5, 1, 0.5] }}
+                      transition={{ duration: 1.5, repeat: Infinity }}
+                    >
+                      Sending...
+                    </motion.span>
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    className="flex items-center justify-center gap-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <span>Send Message</span>
+                    <motion.div
+                      className="overflow-hidden"
+                      initial={{ x: 0 }}
+                      whileHover={{ x: 8, rotate: 45 }}
+                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
+                    >
+                      <Send className="w-5 h-5" />
+                    </motion.div>
+                  </motion.div>
                 )}
               </Button>
             </motion.div>
