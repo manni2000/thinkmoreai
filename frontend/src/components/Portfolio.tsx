@@ -13,7 +13,7 @@ const portfolioItems = [
     description: "Feature-rich shopping application with seamless UX",
     tags: ["React Native", "Firebase", "Stripe"],
     gradient: "from-purple-500 to-pink-500",
-    url: "https://e-commercethinkmore.vercel.app/",
+    url: "https://e-commerce-thinkmoreai.vercel.app/",
     image: "/images/portfolio/ecommerce.png",
   },
   {
@@ -24,6 +24,8 @@ const portfolioItems = [
     description: "Secure payment and banking application",
     tags: ["Flutter", "Node.js", "MongoDB"],
     gradient: "from-indigo-500 to-purple-500",
+    url: "https://fintech-mobile-app-thinkmoreai.vercel.app/",
+    image: "/images/portfolio/mobile.png",
   },
   {
     id: 3,
@@ -38,12 +40,14 @@ const portfolioItems = [
   },
   {
     id: 4,
-    title: "Corporate Brand Video",
-    category: "VideoEditing",
+    title: "Professional Video Editing",
+    category: "Video Editing",
     icon: Video,
-    description: "Engaging brand story for tech startup launch",
+    description: "High-quality video editing services delivering polished, engaging, and brand-aligned content.",
     tags: ["Motion Graphics", "4K Production"],
     gradient: "from-red-500 to-rose-500",
+    url: "https://drive.google.com/file/d/134pW1Ai3qzkDdVnT4DAKf_73s0gaW_E8/view?usp=drivesdk",
+    image: "/images/portfolio/video.png",
   },
   {
     id: 5,
@@ -64,6 +68,8 @@ const portfolioItems = [
     description: "Modern business platform with advanced analytics dashboard",
     tags: ["React", "Node.js", "PostgreSQL"],
     gradient: "from-blue-500 to-cyan-500",
+    url: "https://enterprise-saas-platform-thinkmorea.vercel.app/",
+    image: "/images/portfolio/saas.png",
   },
 ];
 
