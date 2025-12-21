@@ -347,7 +347,7 @@ const Contact = () => {
               </p>
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Button variant="accent" asChild className="group">
-                  <a href="/contact">
+                  <a href="https://calendly.com/support-thinkmoreai" target="_blank" rel="noopener noreferrer">
                     Book a Discovery Call
                     <motion.div whileHover={{ x: 3 }}>
                       <ArrowRight className="w-5 h-5" />
