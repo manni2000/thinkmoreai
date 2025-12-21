@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
+import { submitContactForm } from "@/lib/api";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -39,30 +40,19 @@ const Contact = () => {
     
     const formData = new FormData(e.target as HTMLFormElement);
     const data = {
-      name: formData.get('name'),
-      email: formData.get('email'),
-      phone: formData.get('phone'),
-      message: formData.get('message'),
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      phone: formData.get('phone') as string,
+      message: formData.get('message') as string,
     };
     
     try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+      await submitContactForm(data);
+      toast({
+        title: "Message sent successfully!",
+        description: "We'll get back to you within 24 hours.",
       });
-      
-      if (response.ok) {
-        toast({
-          title: "Message sent successfully!",
-          description: "We'll get back to you within 24 hours.",
-        });
-        (e.target as HTMLFormElement).reset();
-      } else {
-        throw new Error('Failed to send message');
-      }
+      (e.target as HTMLFormElement).reset();
     } catch (error) {
       toast({
         title: "Error",
