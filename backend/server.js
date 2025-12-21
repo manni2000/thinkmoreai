@@ -57,6 +57,7 @@ const corsOptions = {
       "http://localhost:8080",
       "http://localhost:3000",
       "https://thinkmoreai.com",
+      "https://thinkmoreai.vercel.app",
       "https://thinkmoreai-backend.vercel.app",
       process.env.FRONTEND_URL
     ].filter(Boolean);
