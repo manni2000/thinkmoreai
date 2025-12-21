@@ -12,8 +12,6 @@ const xss = require("xss");
 const app = express();
 const PORT = process.env.PORT;
 
-app.set('trust proxy', true);
-
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10, 

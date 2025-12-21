@@ -39,11 +39,57 @@ const Contact = () => {
     setIsSubmitting(true);
     
     const formData = new FormData(e.target as HTMLFormElement);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string;
+    const message = formData.get('message') as string;
+    
+    // Client-side validation
+    if (!name || name.trim().length < 2 || name.trim().length > 50) {
+      toast({
+        title: "Validation Error",
+        description: "Name must be between 2 and 50 characters",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+    
+    if (!email || !email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      toast({
+        title: "Validation Error", 
+        description: "Please provide a valid email address",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+    
+    if (phone && !phone.match(/^[+]?[\d\s\-\(\)]+$/)) {
+      toast({
+        title: "Validation Error",
+        description: "Please provide a valid phone number",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+    
+    if (!message || message.trim().length < 10 || message.trim().length > 1000) {
+      toast({
+        title: "Validation Error",
+        description: "Message must be between 10 and 1000 characters",
+        variant: "destructive",
+      });
+      setIsSubmitting(false);
+      return;
+    }
+    
     const data = {
-      name: formData.get('name') as string,
-      email: formData.get('email') as string,
-      phone: formData.get('phone') as string,
-      message: formData.get('message') as string,
+      name: name.trim(),
+      email: email.trim().toLowerCase(),
+      phone: phone ? phone.trim() : undefined,
+      message: message.trim(),
     };
     
     try {
@@ -171,14 +217,21 @@ const Contact = () => {
               <label htmlFor="message" className="block text-sm font-semibold text-foreground mb-3">
                 Message *
               </label>
-              <Textarea
-                id="message"
-                name="message"
-                placeholder="Tell us about your project..."
-                required
-                rows={5}
-                className="bg-card border-border resize-none focus:border-accent transition-all duration-300"
-              />
+              <div className="relative">
+                <Textarea
+                  id="message"
+                  name="message"
+                  placeholder="Tell us about your project..."
+                  required
+                  rows={5}
+                  className="bg-card border-border resize-none focus:border-accent transition-all duration-300"
+                  minLength={10}
+                  maxLength={1000}
+                />
+                <div className="absolute bottom-2 right-2 text-xs text-muted-foreground">
+                  Min: 10, Max: 1000 characters
+                </div>
+              </div>
             </motion.div>
 
             <motion.div 
