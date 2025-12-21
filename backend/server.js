@@ -12,6 +12,9 @@ const xss = require("xss");
 const app = express();
 const PORT = process.env.PORT;
 
+// Trust proxy for rate limiting when deployed behind reverse proxy
+app.set('trust proxy', true);
+
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 10, 
