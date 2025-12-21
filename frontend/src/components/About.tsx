@@ -61,7 +61,6 @@ const About = () => {
 							execution excellence.
 						</p>
 
-						{/* Features List */}
 						<div className="space-y-4">
 							{[
 								"End-to-end product development",
