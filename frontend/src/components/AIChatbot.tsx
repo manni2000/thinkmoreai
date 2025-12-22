@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const botResponses: Record<string, string> = {
   "about": "ThinkmoreAI is an AI-driven technology and professional services company focused on building scalable, high-impact digital solutions. We help startups, SMEs, and enterprises turn ideas into production-ready products through intelligent automation, advanced analytics, and modern engineering. Our team brings experience from global MNCs and fast-scaling startups, with a strong emphasis on execution quality, clarity, and long-term partnerships.",
 
-  "services": "We provide end-to-end digital and professional services, including:\n\n💻 Website & Mobile App Development\n🤖 Custom AI Chatbots & Automation\n📊 Data Analytics & Research Reports\n📣 Social Media Management & Videography\n\nAdditionally, we offer Chartered Accountant (CA) services:\n🧾 ITR Filing, GST & Tax Planning\n🏢 Company Incorporation & ROC Services\n📄 Compliance, Notices & Assessments",
+  "services": "We provide end-to-end digital and professional services, including:\n\n💻 Website & Mobile App Development\n🤖 Custom AI Chatbots & Automation\n📊 Data Analytics & Research Reports\n📣 Social Media Management & Videoediting\n\nAdditionally, we offer Chartered Accountant (CA) services:\n🧾 ITR Filing, GST & Tax Planning\n🏢 Company Incorporation & ROC Services\n📄 Compliance, Notices & Assessments",
 
   "contact": "You can get in touch with us through the following channels:\n\n📧 Email: info@thinkmoreai.com\n📍 Office: Kestopur, Kolkata, West Bengal, India\n\n💬 You can also reach out via the contact form on our website, and our team will respond promptly.",
 

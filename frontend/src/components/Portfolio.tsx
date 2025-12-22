@@ -2,7 +2,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { ExternalLink, Globe, Smartphone, Video, FileText } from "lucide-react";
+import { ExternalLink, Globe, Smartphone, Video, FileText, AlertTriangle, X } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const portfolioItems = [
   {
@@ -73,7 +80,7 @@ const portfolioItems = [
   },
 ];
 
-const categories = ["All", "Website", "Mobile App", "Videography", "Research"];
+const categories = ["All", "Website", "Mobile App", "Video Editing", "Research"];
 
 const CardContent = ({ item }: { item: any }) => (
   <>
@@ -156,8 +163,23 @@ const CardContent = ({ item }: { item: any }) => (
 
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
+  const [isMobileDialogOpen, setIsMobileDialogOpen] = useState(false);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const isMobileDevice = () => {
+    if (typeof window === 'undefined') return false;
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  };
+
+  const handleFinTechClick = (e: React.MouseEvent, url: string) => {
+    e.preventDefault();
+    if (isMobileDevice()) {
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      setIsMobileDialogOpen(true);
+    }
+  };
 
   const filteredItems =
     activeCategory === "All"
@@ -248,7 +270,14 @@ const Portfolio = () => {
                 }}
               />
 
-              {item.url ? (
+              {item.url && item.title === "FinTech Mobile App" ? (
+                <div
+                  onClick={(e) => handleFinTechClick(e, item.url)}
+                  className="relative h-full bg-card border border-border/50 rounded-2xl overflow-hidden group-hover:border-accent/50 transition-all duration-300 flex flex-col cursor-pointer"
+                >
+                  <CardContent item={item} />
+                </div>
+              ) : item.url ? (
                 <a
                   href={item.url}
                   target="_blank"
@@ -265,6 +294,39 @@ const Portfolio = () => {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Mobile-Only Dialog */}
+        <Dialog open={isMobileDialogOpen} onOpenChange={setIsMobileDialogOpen}>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center gap-2">
+                <Smartphone className="w-5 h-5 text-accent" />
+                Mobile Device Required
+              </DialogTitle>
+              <DialogDescription className="text-base">
+                The FinTech Mobile App is designed exclusively for mobile devices and cannot be accessed on desktop or laptop computers.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="flex flex-col space-y-4">
+              <div className="bg-orange-50 border border-orange-200 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <AlertTriangle className="w-5 h-5 text-orange-500 mt-0.5 flex-shrink-0" />
+                  <div>
+                    <p className="text-sm font-medium text-orange-800">Mobile-Only Experience</p>
+                    <p className="text-sm text-orange-700 mt-1">
+                      Please visit this link on your mobile device to access the FinTech application.
+                    </p>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 rounded-lg p-3">
+                <p className="text-xs text-gray-600 text-center">
+                  Supported: iOS, Android, and other mobile browsers
+                </p>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );
