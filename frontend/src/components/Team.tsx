@@ -17,7 +17,7 @@ const teamMembers = [
 		avatar: "/manish-avatar.jpg",
 	},
 	{
-		name: "Rohit Kr Mandal",
+		name: "Aniket Kr Mandal",
 		role: "Advisor Board Member",
 		company: "ThinkMoreAI",
 		avatar: "/rohit-avatar.jpg",
@@ -35,7 +35,7 @@ const Team = () => {
 	const isInView = useInView(ref, { once: true, margin: "-100px" });
 
 	return (
-		<section className="section-padding bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 text-primary-foreground">
+		<section className="pt-2 pb-20 md:pt-4 md:pb-28 lg:pt-6 lg:pb-32 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 text-primary-foreground">
 			<div className="container-custom">
 				<motion.div
 					ref={ref}
@@ -44,14 +44,14 @@ const Team = () => {
 					transition={{ duration: 0.6 }}
 					className="text-center max-w-4xl mx-auto"
 				>
-					<span className="text-accent font-semibold text-sm uppercase tracking-wider">
+					<span className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold uppercase tracking-wider mb-4">
 						Our Team
 					</span>
-					<h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 mb-6">
+					<h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
 						Battle-Tested{" "}
 						<span className="text-accent">Experts</span>
 					</h2>
-					<p className="text-xl text-primary-foreground/70 mb-16 leading-relaxed">
+					<p className="text-xl text-primary-foreground/70 mb-8 leading-relaxed">
 						A dedicated team from global MNCs and high-growth startups — combining
 						strategy, engineering, design, and compliance expertise to deliver
 						results.

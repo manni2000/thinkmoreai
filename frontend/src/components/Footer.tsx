@@ -16,7 +16,7 @@ const Footer = () => {
               <span className="font-heading font-bold text-2xl">ThinkMoreAI</span>
             </div>
             <p className="text-primary-foreground/60 max-w-md leading-relaxed mb-6">
-              AI-driven development, automation, analytics, and compliance — 
+              AI-driven development, automation, analytics, and compliance
               delivered with precision and execution excellence.
             </p>
             <div className="flex gap-4">

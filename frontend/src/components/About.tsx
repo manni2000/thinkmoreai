@@ -56,7 +56,7 @@ const About = () => {
 						</h2>
 						<p className="text-lg text-muted-foreground leading-relaxed mb-8">
 							ThinkmoreAI is an AI-first company delivering high-impact digital
-							products,automation, analytics, and professional services. From startups to
+							products, automation, analytics, and professional services. From startups to
 							enterprise, we transform ideas into scalable solutions with speed, clarity, and
 							execution excellence.
 						</p>

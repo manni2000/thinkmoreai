@@ -115,7 +115,7 @@ const Hero = () => {
               variants={itemVariants}
               className="text-lg text-primary-foreground/75 max-w-xl leading-relaxed"
             >
-              AI-driven development, automation, analytics, and compliance — delivered with precision and execution excellence. Transform your ideas into scalable, profitable products.
+              AI-driven development, automation, analytics, and compliance delivered with precision and execution excellence. Transform your ideas into scalable, profitable products.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -141,7 +141,7 @@ const Hero = () => {
               </motion.div>
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Button variant="heroOutline" size="xl" asChild>
-                  <a href="/#portfolio">View Our Work</a>
+                  <a href="/portfolio">View Our Work</a>
                 </Button>
               </motion.div>
             </motion.div>

@@ -136,7 +136,7 @@ const Contact = () => {
         >
           <motion.span
             variants={itemVariants}
-            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold uppercase tracking-wider mb-4"
+            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold uppercase tracking-wider mb-4 mt-4 sm:mt-0"
             whileHover={{ scale: 1.05 }}
           >
             Get In Touch

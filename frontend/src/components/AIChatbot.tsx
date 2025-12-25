@@ -64,7 +64,7 @@ const AIChatbot = () => {
     if (lowerQuery.includes("contact") || lowerQuery.includes("email") || lowerQuery.includes("reach")) {
       return botResponses.contact;
     }
-    if (lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("rate")) {
+    if (lowerQuery.includes("pricing") || lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("rate")) {
       return botResponses.pricing;
     }
     if (lowerQuery.includes("tech") || lowerQuery.includes("stack") || lowerQuery.includes("tool")) {
