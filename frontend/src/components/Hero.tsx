@@ -1,6 +1,7 @@
-import { motion } from "framer-motion";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { ArrowRight, Sparkles, Zap, Shield, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -23,6 +24,21 @@ const itemVariants = {
 };
 
 const Hero = () => {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 1000], [0, -150]);
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const scale = useSpring(useTransform(scrollY, [0, 300], [1, 0.8]), { stiffness: 300, damping: 30 });
+
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20 pb-20 bg-gradient-to-br from-primary via-primary/95 to-navy-deep">
       {/* Animated Gradient Background */}
@@ -61,16 +77,30 @@ const Hero = () => {
           <rect width="100%" height="100%" fill="url(#grid)" />
         </svg>
 
-        {/* Floating Orbs */}
+        {/* Floating Orbs with mouse interaction */}
         <motion.div
-          animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
+          animate={{
+            y: [0, -20, 0],
+            x: [0, 10, 0],
+            scale: [1, 1.1, 1]
+          }}
           transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-20 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl"
+          style={{
+            transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`
+          }}
         />
         <motion.div
-          animate={{ y: [0, 20, 0], x: [0, -10, 0] }}
+          animate={{
+            y: [0, 20, 0],
+            x: [0, -10, 0],
+            scale: [1, 0.9, 1]
+          }}
           transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="absolute bottom-32 right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
+          style={{
+            transform: `translate(${-mousePosition.x * 0.015}px, ${-mousePosition.y * 0.015}px)`
+          }}
         />
       </div>
 
@@ -84,7 +114,7 @@ const Hero = () => {
           {/* Left Content */}
           <div className="space-y-8">
             {/* Badge */}
-            <motion.div variants={itemVariants} className="inline-flex mt-6">
+            <motion.div variants={itemVariants} className="flex justify-center sm:justify-start mt-8 sm:mt-6 lg:mt-6">
               <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-accent/20 backdrop-blur-md border border-accent/40 hover:border-accent/60 transition-all duration-300 group">
                 <motion.div
                   animate={{ rotate: 360 }}
@@ -126,30 +156,76 @@ const Hero = () => {
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                className="relative w-full sm:w-auto"
               >
-                <Button variant="hero" size="xl" asChild className="group">
-                  <a href="/contact" className="inline-flex items-center gap-3">
+                <motion.div
+                  className="absolute inset-0 bg-accent rounded-lg opacity-0 blur-lg"
+                  whileHover={{ opacity: 0.3 }}
+                  transition={{ duration: 0.3 }}
+                />
+                <Button variant="hero" size="xl" asChild className="group relative w-full sm:w-auto">
+                  <a href="/contact" className="inline-flex items-center justify-center gap-3 w-full">
+                    <motion.div
+                      animate={{ rotate: [0, 5, -5, 0] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                    >
+                      <Zap className="w-4 h-4" />
+                    </motion.div>
                     Get a Free Consultation
                     <motion.div
                       className="overflow-hidden"
                       whileHover={{ x: 5 }}
+                      transition={{ type: "spring", stiffness: 400, damping: 17 }}
                     >
                       <ArrowRight className="w-5 h-5" />
                     </motion.div>
                   </a>
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button variant="heroOutline" size="xl" asChild>
-                  <a href="/portfolio">View Our Work</a>
+              <motion.div 
+                whileHover={{ scale: 1.02 }} 
+                whileTap={{ scale: 0.98 }}
+                className="relative w-full sm:w-auto"
+              >
+                <Button variant="heroOutline" size="xl" asChild className="group w-full sm:w-auto">
+                  <a href="/portfolio" className="inline-flex items-center justify-center gap-2 w-full">
+                    <motion.div
+                      animate={{ scale: [1, 1.1, 1] }}
+                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
+                    >
+                      <TrendingUp className="w-4 h-4" />
+                    </motion.div>
+                    View Our Work
+                  </a>
                 </Button>
               </motion.div>
             </motion.div>
+
+            {/* Trust Indicators */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="flex flex-col items-center justify-center sm:items-start sm:justify-start pt-8"
+            >
+              <div className="flex items-center gap-3 mb-3">
+                <span className="text-2xl font-bold text-white tracking-wide text-center sm:text-left">
+                  Security. Scale. Intelligence.
+                </span>
+              </div>
+              <div className="flex items-start gap-2">
+                <div className="w-1 h-1 rounded-full bg-accent mt-2 flex-shrink-0" />
+                <span className="text-sm text-white/80 text-center sm:text-left max-w-md">
+                  Enterprise-grade AI & digital solutions built for growth and compliance
+                </span>
+              </div>
+            </motion.div>
           </div>
 
-          {/* Right – AI Robot Operator (Perfect Blend) */}
+          {/* Right – AI Robot Operator with enhanced animations */}
           <motion.div
             variants={itemVariants}
+            style={{ y, opacity, scale }}
             className="hidden lg:flex relative h-[650px] w-full justify-end items-center overflow-visible"
           >
             {/* Deep background dissolver (kills rectangle edges) */}
@@ -168,7 +244,7 @@ const Hero = () => {
               blur-3xl pointer-events-none"
             />
 
-            {/* Robot Image */}
+            {/* Robot Image with enhanced animations */}
             <motion.img
               src="/robot-img.png"
               alt="AI operator working on intelligent systems"
@@ -186,31 +262,75 @@ const Hero = () => {
                   "radial-gradient(ellipse 65% 55% at center 45%, rgba(0,0,0,1) 15%, rgba(0,0,0,0.9) 30%, rgba(0,0,0,0.65) 45%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.1) 75%, rgba(0,0,0,0) 90%)",
                 transform: "translateX(-300px)",
               }}
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 10 }}
-              transition={{ duration: 1.3, ease: "easeOut" }}
+              initial={{ opacity: 0, y: 50, scale: 0.8 }}
+              animate={{
+                opacity: 1,
+                y: 10,
+                scale: 1,
+                rotate: [0, 1, -1, 0]
+              }}
+              transition={{
+                duration: 1.3,
+                ease: "easeOut",
+                rotate: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+              }}
+              whileHover={{
+                scale: 1.05,
+                rotate: 2,
+                transition: { duration: 0.3 }
+              }}
             />
 
-            {/* Floating gold particles */}
-            {[...Array(7)].map((_, i) => (
-              <motion.span
-                key={i}
-                className="absolute w-1.5 h-1.5 rounded-full bg-accent"
-                style={{
-                  right: `${80 + i * 40}px`,
-                  top: `${160 + (i % 4) * 60}px`,
-                }}
-                animate={{
-                  opacity: [0, 1, 0],
-                  y: [-14, 14, -14],
-                }}
-                transition={{
-                  duration: 3.5 + i * 0.4,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-            ))}
+            {/* Enhanced floating particles with varied animations */}
+            {[...Array(12)].map((_, i) => {
+              const size = Math.random() * 3 + 1;
+              const duration = Math.random() * 4 + 2;
+              const delay = Math.random() * 2;
+
+              return (
+                <motion.span
+                  key={i}
+                  className="absolute rounded-full bg-accent"
+                  style={{
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    right: `${50 + Math.random() * 200}px`,
+                    top: `${100 + Math.random() * 400}px`,
+                  }}
+                  animate={{
+                    opacity: [0, 1, 0.8, 0],
+                    y: [-20, 20, -20],
+                    x: [-10, 10, -10],
+                    scale: [1, 1.5, 1],
+                  }}
+                  transition={{
+                    duration,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay,
+                  }}
+                />
+              );
+            })}
+
+            {/* Interactive glow effect */}
+            <motion.div
+              className="absolute right-[-200px] top-1/2 -translate-y-1/2 w-96 h-96"
+              style={{
+                background: `radial-gradient(circle, rgba(245,166,35,0.3) 0%, transparent 70%)`,
+                filter: 'blur(40px)',
+                transform: `translate(${mousePosition.x * 0.05}px, ${mousePosition.y * 0.05}px)`
+              }}
+              animate={{
+                scale: [1, 1.2, 1],
+                opacity: [0.5, 0.8, 0.5]
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
           </motion.div>
         </motion.div>
       </div>
