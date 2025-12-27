@@ -13,8 +13,8 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.1,
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
     },
   },
 };
@@ -24,7 +24,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.6 },
+    transition: { duration: 0.3 },
   },
 };
 
@@ -156,7 +156,7 @@ const Contact = () => {
               "radial-gradient(circle 800px at 80% 50%, rgba(245, 166, 35, 0.1) 0%, transparent 50%)",
             ],
           }}
-          transition={{ duration: 8, repeat: Infinity }}
+          transition={{ duration: 4, repeat: Infinity }}
           className="absolute inset-0"
         />
       </div>
@@ -198,7 +198,7 @@ const Contact = () => {
           <motion.form
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
             onSubmit={handleSubmit}
             className="space-y-6"
           >
@@ -405,7 +405,7 @@ const Contact = () => {
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
             className="space-y-8"
           >
             {/* Contact Information Cards */}
@@ -448,7 +448,7 @@ const Contact = () => {
               className="glass-card rounded-2xl p-8 bg-gradient-to-br from-accent/20 to-orange-400/10 border-accent/30 hover:border-accent/50 transition-all duration-300"
             >
               <h3 className="font-heading font-bold text-xl text-foreground mb-3">
-                Prefer a Call?
+                Prefer a call?
               </h3>
               <p className="text-muted-foreground mb-6">
                 Schedule a free consultation to discuss your project.
@@ -456,7 +456,7 @@ const Contact = () => {
               <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                 <Button variant="accent" asChild className="group">
                   <a href="https://cal.id/enquire.thinkmoreai" target="_blank" rel="noopener noreferrer">
-                    Book a Discovery Call
+                    Book a Discovery Call?
                     <motion.div whileHover={{ x: 3 }}>
                       <ArrowRight className="w-5 h-5" />
                     </motion.div>

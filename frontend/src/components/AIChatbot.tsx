@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageCircle, X, Send, Bot } from "lucide-react";
+import { MessageCircle, X, Send, Bot, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const botResponses: Record<string, string> = {
@@ -98,6 +98,24 @@ const AIChatbot = () => {
 
   return (
     <>
+      {/* WhatsApp Button */}
+      <motion.a
+        href="https://wa.me/919608826629?text=Hi%20there!%20I'm%20interested%20in%20your%20services%20and%20would%20like%20to%20know%20more"
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`fixed bottom-24 right-5 z-50 w-20 h-20 rounded-full shadow-2xl flex items-center justify-center ${isOpen ? 'hidden' : ''}`}
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        animate={{
+          boxShadow: ["0 0 0 0 rgba(34, 197, 94, 0.4)", "0 0 0 20px rgba(34, 197, 94, 0)", "0 0 0 0 rgba(34, 197, 94, 0)"]
+        }}
+        transition={{
+          boxShadow: { duration: 1, repeat: Infinity }
+        }}
+      >
+        <img src="/images/portfolio/whatsapp.png" alt="WhatsApp" className="w-12 h-12" style={{ filter: 'brightness(1.2)' }} />
+      </motion.a>
+
       {/* Chat Button */}
       <motion.button
         onClick={() => setIsOpen(true)}
@@ -108,7 +126,7 @@ const AIChatbot = () => {
           boxShadow: ["0 0 0 0 rgba(245, 166, 35, 0.4)", "0 0 0 20px rgba(245, 166, 35, 0)", "0 0 0 0 rgba(245, 166, 35, 0)"]
         }}
         transition={{ 
-          boxShadow: { duration: 2, repeat: Infinity }
+          boxShadow: { duration: 1, repeat: Infinity }
         }}
       >
         <MessageCircle className="w-7 h-7" />

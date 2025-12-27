@@ -35,16 +35,16 @@ const Team = () => {
 	const isInView = useInView(ref, { once: true, margin: "-100px" });
 
 	return (
-		<section className="pt-2 pb-20 md:pt-4 md:pb-28 lg:pt-6 lg:pb-32 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 text-primary-foreground">
+		<section className="pt-12 pb-20 md:pt-16 md:pb-28 lg:pt-20 lg:pb-32 bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 text-primary-foreground">
 			<div className="container-custom">
 				<motion.div
 					ref={ref}
 					initial={{ opacity: 0, y: 30 }}
 					animate={isInView ? { opacity: 1, y: 0 } : {}}
-					transition={{ duration: 0.6 }}
+					transition={{ duration: 0.3 }}
 					className="text-center max-w-4xl mx-auto"
 				>
-					<span className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold uppercase tracking-wider mb-4">
+					<span className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold uppercase tracking-wider mb-6">
 						Our Team
 					</span>
 					<h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
@@ -64,7 +64,7 @@ const Team = () => {
 							key={member.name}
 							initial={{ opacity: 0, y: 30 }}
 							animate={isInView ? { opacity: 1, y: 0 } : {}}
-							transition={{ duration: 0.5, delay: index * 0.1 }}
+							transition={{ duration: 0.3, delay: index * 0.05 }}
 							className="bg-primary-foreground/5 backdrop-blur-sm border border-primary-foreground/10 rounded-2xl p-6 text-center hover:bg-primary-foreground/10 transition-all duration-300"
 						>
 							{/* Avatar */}

@@ -8,8 +8,8 @@ const containerVariants = {
   visible: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.2,
-      delayChildren: 0.1,
+      staggerChildren: 0.1,
+      delayChildren: 0.05,
     },
   },
 };
@@ -19,7 +19,7 @@ const itemVariants = {
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.8 },
+    transition: { duration: 0.4 },
   },
 };
 
@@ -51,7 +51,7 @@ const Hero = () => {
               "radial-gradient(circle 800px at 20% 50%, rgba(245, 166, 35, 0.08) 0%, transparent 50%)",
             ],
           }}
-          transition={{ duration: 8, repeat: Infinity }}
+          transition={{ duration: 4, repeat: Infinity }}
           className="absolute inset-0"
         />
 
@@ -63,7 +63,7 @@ const Hero = () => {
               "radial-gradient(circle 600px at 80% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%)",
             ],
           }}
-          transition={{ duration: 10, repeat: Infinity, delay: 1 }}
+          transition={{ duration: 5, repeat: Infinity, delay: 1 }}
           className="absolute inset-0"
         />
 
@@ -84,7 +84,7 @@ const Hero = () => {
             x: [0, 10, 0],
             scale: [1, 1.1, 1]
           }}
-          transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           className="absolute top-20 left-10 w-72 h-72 bg-accent/10 rounded-full blur-3xl"
           style={{
             transform: `translate(${mousePosition.x * 0.02}px, ${mousePosition.y * 0.02}px)`
@@ -96,7 +96,7 @@ const Hero = () => {
             x: [0, -10, 0],
             scale: [1, 0.9, 1]
           }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
           className="absolute bottom-32 right-20 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl"
           style={{
             transform: `translate(${-mousePosition.x * 0.015}px, ${-mousePosition.y * 0.015}px)`
@@ -114,7 +114,7 @@ const Hero = () => {
           {/* Left Content */}
           <div className="space-y-8">
             {/* Badge */}
-            <motion.div variants={itemVariants} className="flex justify-center sm:justify-start mt-8 sm:mt-6 lg:mt-6">
+            <motion.div variants={itemVariants} className="flex justify-start mt-8 sm:mt-6 lg:mt-6">
               <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-accent/20 backdrop-blur-md border border-accent/40 hover:border-accent/60 transition-all duration-300 group">
                 <motion.div
                   animate={{ rotate: 360 }}
@@ -167,7 +167,7 @@ const Hero = () => {
                   <a href="/contact" className="inline-flex items-center justify-center gap-3 w-full">
                     <motion.div
                       animate={{ rotate: [0, 5, -5, 0] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                      transition={{ duration: 1, repeat: Infinity, repeatDelay: 1.5 }}
                     >
                       <Zap className="w-4 h-4" />
                     </motion.div>
@@ -191,7 +191,7 @@ const Hero = () => {
                   <a href="/portfolio" className="inline-flex items-center justify-center gap-2 w-full">
                     <motion.div
                       animate={{ scale: [1, 1.1, 1] }}
-                      transition={{ duration: 2, repeat: Infinity, repeatDelay: 4 }}
+                      transition={{ duration: 1, repeat: Infinity, repeatDelay: 2 }}
                     >
                       <TrendingUp className="w-4 h-4" />
                     </motion.div>
@@ -214,7 +214,6 @@ const Hero = () => {
                 </span>
               </div>
               <div className="flex items-start gap-2">
-                <div className="w-1 h-1 rounded-full bg-accent mt-2 flex-shrink-0" />
                 <span className="text-sm text-white/80 text-center sm:text-left max-w-md">
                   Enterprise-grade AI & digital solutions built for growth and compliance
                 </span>
@@ -270,9 +269,9 @@ const Hero = () => {
                 rotate: [0, 1, -1, 0]
               }}
               transition={{
-                duration: 1.3,
+                duration: 0.9,
                 ease: "easeOut",
-                rotate: { duration: 8, repeat: Infinity, ease: "easeInOut" }
+                rotate: { duration: 4, repeat: Infinity, ease: "easeInOut" }
               }}
               whileHover={{
                 scale: 1.05,
@@ -326,7 +325,7 @@ const Hero = () => {
                 opacity: [0.5, 0.8, 0.5]
               }}
               transition={{
-                duration: 4,
+                duration: 2,
                 repeat: Infinity,
                 ease: "easeInOut"
               }}

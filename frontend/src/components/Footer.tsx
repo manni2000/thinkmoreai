@@ -1,22 +1,9 @@
-import { Linkedin, Twitter, Instagram, Phone, Mail, MapPin, ArrowUp, Heart } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect } from "react";
+import { Linkedin, Twitter, Instagram, Phone, Mail, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
 
 const Footer = () => {
-  const [showScrollTop, setShowScrollTop] = useState(false);
   const currentYear = new Date().getFullYear();
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 400);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
   return (
     <footer className="bg-primary text-primary-foreground py-16 relative overflow-hidden">
       {/* Background Animation */}
@@ -29,7 +16,7 @@ const Footer = () => {
               "radial-gradient(circle 800px at 20% 50%, rgba(245, 166, 35, 0.05) 0%, transparent 50%)",
             ],
           }}
-          transition={{ duration: 10, repeat: Infinity }}
+          transition={{ duration: 3, repeat: Infinity }}
           className="absolute inset-0"
         />
       </div>
@@ -37,7 +24,7 @@ const Footer = () => {
         <motion.div 
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
+          transition={{ duration: 0.3 }}
           viewport={{ once: true }}
           className="grid sm:grid-cols-2 lg:grid-cols-5 gap-12 mb-12"
         >
@@ -46,7 +33,7 @@ const Footer = () => {
             className="lg:col-span-2"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
             viewport={{ once: true }}
           >
             <motion.div 
@@ -59,7 +46,7 @@ const Footer = () => {
                 alt="ThinkMoreAI Logo"
                 className="h-20 w-auto"
                 whileHover={{ rotate: [0, 10, -10, 0] }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.4 }}
               />
               <span className="font-heading font-bold text-2xl">ThinkMoreAI</span>
             </motion.div>
@@ -67,7 +54,7 @@ const Footer = () => {
               className="text-primary-foreground/60 max-w-md leading-relaxed mb-6"
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              transition={{ duration: 0.3, delay: 0.7 }}
               viewport={{ once: true }}
             >
               AI-driven development, automation, analytics, and compliance
@@ -77,7 +64,7 @@ const Footer = () => {
               className="flex gap-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.3 }}
+              transition={{ duration: 0.3, delay: 0.3 }}
               viewport={{ once: true }}
             >
               {[
@@ -106,7 +93,7 @@ const Footer = () => {
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
             viewport={{ once: true }}
           >
             <motion.h4 
@@ -143,7 +130,7 @@ const Footer = () => {
                   key={link.name}
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
+                  transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
                   viewport={{ once: true }}
                 >
                   <motion.a
@@ -166,7 +153,7 @@ const Footer = () => {
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
             viewport={{ once: true }}
           >
             <motion.h4 
@@ -211,7 +198,7 @@ const Footer = () => {
           <motion.div
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
+            transition={{ duration: 0.6, delay: 0.4 }}
             viewport={{ once: true }}
           >
             <motion.h4 
@@ -241,7 +228,7 @@ const Footer = () => {
                   className="flex items-center gap-3"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.5, delay: 0.5 + index * 0.1 }}
+                  transition={{ duration: 0.2, delay: 0.5 + index * 0.1 }}
                   viewport={{ once: true }}
                   whileHover={{ x: 5 }}
                 >
@@ -263,6 +250,26 @@ const Footer = () => {
                 </motion.div>
               ))}
             </motion.div>
+            
+            {/* Booking Button */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.2, delay: 0.8 }}
+              viewport={{ once: true }}
+              className="mt-4"
+            >
+              <Button
+                variant="accent"
+                size="lg"
+                asChild
+                className="w-full text-sm py-3 h-12 min-h-[48px]"
+              >
+                <a href="https://cal.id/enquire.thinkmoreai" target="_blank" rel="noopener noreferrer">
+                  Book Discovery Call
+                </a>
+              </Button>
+            </motion.div>
           </motion.div>
         </motion.div>
 
@@ -271,7 +278,7 @@ const Footer = () => {
           className="pt-8 border-t border-primary-foreground/10 flex flex-col items-center justify-center gap-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.3, delay: 0.6 }}
           viewport={{ once: true }}
         >
           <div className="text-center">
@@ -282,7 +289,7 @@ const Footer = () => {
               <span>© {currentYear} ThinkmoreAI. All rights reserved.</span>
               <motion.div
                 animate={{ scale: [1, 1.2, 1] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                transition={{ duration: 1.5, repeat: Infinity }}
               >
               </motion.div>
             </motion.p>
@@ -297,7 +304,7 @@ const Footer = () => {
             className="flex items-center gap-4 text-primary-foreground/40 text-xs"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.7 }}
+            transition={{ duration: 0.4, delay: 0.7 }}
             viewport={{ once: true }}
           >
             <motion.a
@@ -320,29 +327,6 @@ const Footer = () => {
           </motion.div>
         </motion.div>
       </div>
-      
-      {/* Scroll to Top Button */}
-      <AnimatePresence>
-        {showScrollTop && (
-          <motion.button
-            initial={{ opacity: 0, scale: 0, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0, y: 20 }}
-            transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-40 w-12 h-12 bg-accent text-accent-foreground rounded-full shadow-lg shadow-accent/25 flex items-center justify-center group"
-            whileHover={{ scale: 1.1, y: -3 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            <motion.div
-              animate={{ y: [0, -3, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <ArrowUp className="w-5 h-5" />
-            </motion.div>
-          </motion.button>
-        )}
-      </AnimatePresence>
     </footer>
   );
 };
