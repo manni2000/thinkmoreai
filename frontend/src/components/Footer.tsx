@@ -1,6 +1,7 @@
-import { Linkedin, Twitter, Instagram, Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { FaLinkedin, FaInstagram, FaFacebook } from "react-icons/fa";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -68,9 +69,10 @@ const Footer = () => {
               viewport={{ once: true }}
             >
               {[
-                { icon: Linkedin, href: "#", label: "LinkedIn" },
-                { icon: Twitter, href: "#", label: "Twitter" },
-                { icon: Instagram, href: "#", label: "Instagram" },
+                { icon: FaLinkedin, href: "#", label: "LinkedIn" },
+                { icon: "image", src: "/images/portfolio/x.png", href: "#", label: "X" },
+                { icon: FaFacebook, href: "#", label: "Facebook" },
+                { icon: FaInstagram, href: "#", label: "Instagram" },
               ].map((social, index) => (
                 <motion.a
                   key={social.label}
@@ -83,7 +85,11 @@ const Footer = () => {
                   transition={{ duration: 0.5, delay: 0.4 + index * 0.1 }}
                   viewport={{ once: true }}
                 >
-                  <social.icon className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+                  {social.icon === "image" ? (
+                    <img src={social.src} alt={social.label} className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+                  ) : (
+                    <social.icon className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
+                  )}
                 </motion.a>
               ))}
             </motion.div>
