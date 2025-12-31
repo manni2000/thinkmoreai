@@ -64,6 +64,8 @@ const contactValidation = [
 
 // Main handler
 module.exports = async (req, res) => {
+  console.log('Server is running and handling request:', req.method, req.url);
+  
   // Apply middleware
   await new Promise((resolve, reject) => {
     helmet()(req, res, (err) => err ? reject(err) : resolve());
@@ -88,6 +90,9 @@ module.exports = async (req, res) => {
 
   // CORS headers
   const allowedOrigins = [
+    "http://localhost:3000",
+    "http://localhost:5000",
+    "http://localhost:8080",
     "https://www.thinkmoreai.com",
     "https://thinkmoreai.com",
     "https://thinkmoreai.vercel.app",
