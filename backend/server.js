@@ -1,72 +1,41 @@
 require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
-const nodemailer = require("nodemailer");
 const rateLimit = require("express-rate-limit");
 const helmet = require("helmet");
 const { body, validationResult } = require("express-validator");
 const mongoSanitize = require("express-mongo-sanitize");
 const hpp = require("hpp");
 const xss = require("xss");
+const nodemailer = require("nodemailer");
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
-// Trust proxy for rate limiting when deployed behind reverse proxy
-app.set('trust proxy', true);
+// Trust proxy
+app.set("trust proxy", 1);
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10, 
-  message: {
-    success: false,
-    message: "Too many requests from this IP, please try again after 15 minutes."
-  },
-  standardHeaders: true,
-  legacyHeaders: false,
+// Request logging
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
 });
 
-const contactLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 5, 
-  message: {
-    success: false,
-    message: "Too many contact requests, please try again after an hour."
-  },
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'"],
-      scriptSrc: ["'self'"],
-      imgSrc: ["'self'", "data:", "https:"],
-      connectSrc: ["'self'"],
-      fontSrc: ["'self'"],
-      objectSrc: ["'none'"],
-      mediaSrc: ["'self'"],
-      frameSrc: ["'none'"],
-    },
-  },
-  crossOriginEmbedderPolicy: false,
-}));
-
+// CORS configuration
 const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
-      "http://localhost:8080",
-      "http://localhost:5000",
       "http://localhost:3000",
+      "http://localhost:5000",
+      "http://localhost:8080",
       "https://www.thinkmoreai.com",
       "https://thinkmoreai.com",
       "https://thinkmoreai.vercel.app",
       "https://thinkmoreai-backend.vercel.app",
-      process.env.FRONTEND_URL
+      process.env.FRONTEND_URL,
     ].filter(Boolean);
-    
+
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -74,64 +43,48 @@ const corsOptions = {
     }
   },
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
-app.use(limiter);
-app.use(express.json({ limit: "10kb" })); 
-app.use(express.urlencoded({ extended: true, limit: "10kb" }));
-app.use(mongoSanitize()); 
-app.use(hpp()); 
+app.use(helmet());
 
-const xssProtection = (req, res, next) => {
+// Body parsing
+app.use(express.json({ limit: "10kb" }));
+app.use(express.urlencoded({ extended: true, limit: "10kb" }));
+
+// Security middleware
+app.use(mongoSanitize());
+app.use(hpp());
+
+// XSS protection
+app.use((req, res, next) => {
   if (req.body) {
-    Object.keys(req.body).forEach(key => {
+    Object.keys(req.body).forEach((key) => {
       if (typeof req.body[key] === "string") {
         req.body[key] = xss(req.body[key]);
       }
     });
   }
   next();
-};
+});
 
-app.use(xssProtection);
+// Rate limiting
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: "Too many requests, please try again later.",
+});
 
-const suspiciousIPs = new Set();
-const requestCounts = new Map();
+const contactLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 5,
+  message: "Too many contact requests, try again later.",
+});
 
-const ipMonitor = (req, res, next) => {
-  const ip = req.ip || req.connection.remoteAddress;
-  const now = Date.now();
-  
-  if (!requestCounts.has(ip)) {
-    requestCounts.set(ip, { count: 1, firstSeen: now, lastSeen: now });
-  } else {
-    const data = requestCounts.get(ip);
-    data.count++;
-    data.lastSeen = now;
-    
-    if (data.count > 100 && (now - data.firstSeen) < 60000) {
-      suspiciousIPs.add(ip);
-      return res.status(429).json({
-        success: false,
-        message: "Too many requests. IP temporarily blocked."
-      });
-    }
-  }
-  
-  requestCounts.forEach((data, ip) => {
-    if (now - data.lastSeen > 3600000) { 
-      requestCounts.delete(ip);
-      suspiciousIPs.delete(ip);
-    }
-  });
-  
-  next();
-};
+app.use(limiter);
 
-app.use(ipMonitor);
-
+// Mail transporter
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
@@ -142,14 +95,7 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-const verifyTransporter = async () => {
-  try {
-    await transporter.verify();
-  } catch (error) {}
-};
-
-verifyTransporter();
-
+// Contact validation
 const contactValidation = [
   body("name")
     .trim()
@@ -157,21 +103,21 @@ const contactValidation = [
     .withMessage("Name must be between 2 and 50 characters")
     .matches(/^[a-zA-Z\s]+$/)
     .withMessage("Name can only contain letters and spaces"),
-  
+
   body("email")
     .trim()
     .isEmail()
     .withMessage("Please provide a valid email address")
     .normalizeEmail(),
-  
+
   body("phone")
     .optional()
     .trim()
-    .matches(/^[+]?[\d\s\-\(\)]+$/)
-    .withMessage("Please provide a valid phone number")
+    .matches(/^[+]?[\d\s\-()]+$/)
+    .withMessage("Invalid phone number")
     .isLength({ max: 20 })
     .withMessage("Phone number too long"),
-  
+
   body("message")
     .trim()
     .isLength({ min: 10, max: 1000 })
@@ -179,23 +125,23 @@ const contactValidation = [
     .escape(),
 ];
 
+// Routes
 app.post("/api/contact", contactLimiter, contactValidation, async (req, res) => {
   try {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
-        message: "Validation failed",
-        errors: errors.array().map(err => err.msg)
+        errors: errors.array().map((e) => e.msg),
       });
     }
 
     const { name, email, phone, message } = req.body;
 
-    const mailOptions = {
+    await transporter.sendMail({
       from: `"${name}" <${process.env.SMTP_FROM}>`,
       to: process.env.SMTP_TO,
-      subject: `New Client Inquiry Received – ${name}`,
+      subject: `New Client Inquiry – ${name}`,
       text: `
 Name: ${name}
 Email: ${email}
@@ -212,24 +158,27 @@ ${message}
         <p><strong>Message:</strong></p>
         <p>${message}</p>
       `,
-    };
-
-    await transporter.sendMail(mailOptions);
+    });
 
     res.status(200).json({
       success: true,
       message: "Your message has been sent successfully!",
     });
-  } catch (error) {
+  } catch (err) {
+    console.error(err);
     res.status(500).json({
       success: false,
-      message: "Failed to send message. Please try again later.",
+      message: "Failed to send message",
     });
   }
 });
 
+// Health check
 app.get("/", (req, res) => {
-  res.send("ThinkMoreAI Backend is running");
+  res.send("Backend is running");
 });
 
-app.listen(PORT);
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
