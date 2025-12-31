@@ -8,7 +8,31 @@ Allow: /portfolio
 Allow: /contact
 Allow: /privacy-policy
 Allow: /terms-of-service
+Allow: /faq
+Allow: /team
 Disallow: /admin
 Disallow: /private
+Disallow: /api/
 
+# Block common bot paths
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/
+Disallow: /trackback/
+Disallow: /comments/feed/
+Disallow: /*.php$
+
+# Allow specific file types
+Allow: /*.css
+Allow: /*.js
+Allow: /*.jpg
+Allow: /*.png
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.webp
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
+# Sitemap
 Sitemap: https://www.thinkmoreai.com/sitemap.xml

@@ -1,0 +1,77 @@
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ThinkmoreAI",
+  "alternateName": "ThinkmoreAI - AI Powered Digital Solutions & Business Services",
+  "url": "https://www.thinkmoreai.com",
+  "logo": "https://www.thinkmoreai.com/thinkmoreai-logo.png",
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "",
+    "contactType": "customer service",
+    "availableLanguage": "English"
+  },
+  "sameAs": [
+    "https://www.thinkmoreai.com"
+  ],
+  "description": "AI-driven web development, webite, mobile apps, automation, analytics, social media & video editing services,and professional CA services. Transform your ideas into scalable solutions.",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "IN"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": "",
+    "longitude": ""
+  },
+  "founder": "",
+  "foundingDate": "",
+  "areaServed": "Worldwide",
+  "knowsLanguage": "English",
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Digital Services",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Web Development",
+          "description": "AI-powered web development solutions"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Mobile App Development",
+          "description": "iOS and Android app development"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "AI Solutions",
+          "description": "Custom AI chatbots and automation"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Data Analytics",
+          "description": "Business intelligence and analytics"
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "CA Services",
+          "description": "Tax, GST, and compliance services"
+        }
+      }
+    ]
+  }
+}

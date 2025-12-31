@@ -29,17 +29,7 @@ const createRateLimiter = (windowMs, max, message) => {
     message: { success: false, message },
     standardHeaders: true,
     legacyHeaders: false,
-    keyGenerator: (req, _) => {
-      // Get client IP from X-Forwarded-For header if behind a proxy
-      const forwardedFor = req.headers['x-forwarded-for'];
-      if (forwardedFor) {
-        // Get the first IP in the X-Forwarded-For header
-        const firstIp = forwardedFor.split(',')[0].trim();
-        return firstIp;
-      }
-      // Fall back to the request's remote address
-      return req.ip;
-    }
+    // Use default keyGenerator which properly handles IPv6
   });
 };
 
@@ -75,16 +65,25 @@ app.use(helmet({
 
 const corsOptions = {
   origin: function (origin, callback) {
-    const allowedOrigins = [
-      "http://localhost:5000",
-      "http://localhost:8080",
-      "http://localhost:3000",
-      "https://www.thinkmoreai.com",
-      "https://thinkmoreai.com",
-      "https://thinkmoreai.vercel.app",
-      "https://thinkmoreai-backend.vercel.app",
-      process.env.FRONTEND_URL
-    ].filter(Boolean);
+    // Environment-specific CORS origins
+    const allowedOrigins = process.env.NODE_ENV === 'production' 
+      ? [
+          "https://www.thinkmoreai.com",
+          "https://thinkmoreai.com",
+          "https://thinkmoreai.vercel.app",
+          "https://thinkmoreai-backend.vercel.app",
+          process.env.FRONTEND_URL
+        ].filter(Boolean)
+      : [
+          "http://localhost:5000",
+          "http://localhost:8080",
+          "http://localhost:3000",
+          "https://www.thinkmoreai.com",
+          "https://thinkmoreai.com",
+          "https://thinkmoreai.vercel.app",
+          "https://thinkmoreai-backend.vercel.app",
+          process.env.FRONTEND_URL
+        ].filter(Boolean);
     
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
@@ -166,15 +165,7 @@ const verifyTransporter = async () => {
     await transporter.verify();
     console.log('SMTP transporter verified successfully');
   } catch (error) {
-    console.error('SMTP transporter verification failed:', error.message);
-    console.error('SMTP Config:', {
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      user: process.env.SMTP_USER ? 'configured' : 'missing',
-      pass: process.env.SMTP_PASS ? 'configured' : 'missing',
-      from: process.env.SMTP_FROM,
-      to: process.env.SMTP_TO
-    });
+    console.error('SMTP transporter verification failed:', error);
   }
 };
 
@@ -251,18 +242,9 @@ ${message}
       message: "Your message has been sent successfully!",
     });
   } catch (error) {
-    console.error('Contact form error details:', {
-      message: error.message,
-      code: error.code,
-      command: error.command,
-      response: error.response,
-      stack: error.stack
-    });
-    
     res.status(500).json({
       success: false,
       message: "Failed to send message. Please try again later.",
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 });
@@ -285,6 +267,26 @@ app.use((err, req, res, next) => {
 const server = app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+  
+  // Log environment-specific information
+  if (process.env.NODE_ENV === 'production') {
+    console.log('Production mode - All security features enabled');
+    console.log('CORS origins:', [
+      "https://www.thinkmoreai.com",
+      "https://thinkmoreai.com", 
+      "https://thinkmoreai.vercel.app",
+      "https://thinkmoreai-backend.vercel.app",
+      process.env.FRONTEND_URL
+    ].filter(Boolean));
+  } else {
+    console.log('Development mode - Local origins allowed');
+    console.log('CORS origins:', [
+      "http://localhost:5000",
+      "http://localhost:8080", 
+      "http://localhost:3000",
+      process.env.FRONTEND_URL
+    ].filter(Boolean));
+  }
 }).on('error', (err) => {
   console.error('Failed to start server:', err);
   process.exit(1);
