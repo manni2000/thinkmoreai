@@ -14,7 +14,7 @@ const botResponses: Record<string, string> = {
 
   "technologies": "We work with modern, production-grade technologies across the stack:\n\n⚛️ React, Next.js, Vue, Angular\n🔧 Node.js, Python, Django\n📱 React Native, Flutter\n🤖 TensorFlow, PyTorch, OpenAI\n☁️ AWS, GCP, Vercel",
 
-  "team": "Meet Our Leadership Team\n\n👨‍💼 Manish Kumar  \nCo-Founder & CTO  \n\n👨‍💼 Charan Kumar  \nCo-Founder & CEO  \n\nOur team combines technical expertise with business acumen to deliver exceptional results for our clients.",
+  "team": "Meet Our Leadership Team\n\n👨‍💼 Manish Kumar  \nfounder & CTO  \n\n👨‍💼 Charan Kumar  \nfounder & CEO  \n\nOur team combines technical expertise with business acumen to deliver exceptional results for our clients.",
 
   "default": "Hello! I’m ThinkmoreAI’s virtual assistant. I can help you with information about:\n\n• Our company and expertise\n• Services we provide\n• Technologies we work with\n• Contact details\n• Pricing and consultation\n\nJust type your question to get started!",
 };

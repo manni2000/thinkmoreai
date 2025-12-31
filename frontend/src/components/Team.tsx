@@ -6,13 +6,13 @@ import { Users, Award, Zap, Target } from "lucide-react";
 const teamMembers = [
 	{
 		name: "Charan Kumar",
-		role: "CEO & Co-founder",
+		role: "CEO & founder",
 		company: "ThinkMoreAI",
 		avatar: "/charan-avatar.jpg",
 	},
 	{
 		name: "Manish Kumar", 
-		role: "CTO & Co-founder",
+		role: "CTO & founder",
 		company: "ThinkMoreAI",
 		avatar: "/manish-avatar.jpg",
 	},
