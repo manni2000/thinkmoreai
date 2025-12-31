@@ -2,10 +2,10 @@
   "name": "thinkmoreai-backend",
   "version": "1.0.0",
   "description": "Backend for ThinkMoreAI contact form",
-  "main": "server.js",
+  "main": "api/index.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js"
+    "start": "node dev-server.js",
+    "dev": "nodemon dev-server.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
