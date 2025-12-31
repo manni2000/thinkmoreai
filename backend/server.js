@@ -79,6 +79,7 @@ const corsOptions = {
       "http://localhost:5000",
       "http://localhost:8080",
       "http://localhost:3000",
+      "https://www.thinkmoreai.com",
       "https://thinkmoreai.com",
       "https://thinkmoreai.vercel.app",
       "https://thinkmoreai-backend.vercel.app",
