@@ -1,0 +1,28 @@
+{
+  "name": "ThinkmoreAI - AI Powered Digital Solutions & Business Services",
+  "short_name": "ThinkmoreAI",
+  "description": "AI-driven development, automation, analytics, and compliance delivered with precision and execution excellence.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f5a623",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/thinkmoreai-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/thinkmoreai-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "technology"],
+  "lang": "en",
+  "dir": "ltr"
+}

@@ -10,29 +10,51 @@ const hpp = require("hpp");
 const xss = require("xss");
 
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 10, 
-  message: {
-    success: false,
-    message: "Too many requests from this IP, please try again after 15 minutes."
-  },
-  standardHeaders: true,
-  legacyHeaders: false,
+// Trust first proxy (important when behind load balancers/proxies like Vercel)
+app.set('trust proxy', 1);
+
+// Request logging middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
 });
 
-const contactLimiter = rateLimit({
-  windowMs: 60 * 60 * 1000,
-  max: 5, 
-  message: {
-    success: false,
-    message: "Too many contact requests, please try again after an hour."
-  },
-  standardHeaders: true,
-  legacyHeaders: false,
-});
+// Helper function to create rate limiters
+const createRateLimiter = (windowMs, max, message) => {
+  return rateLimit({
+    windowMs,
+    max,
+    message: { success: false, message },
+    standardHeaders: true,
+    legacyHeaders: false,
+    keyGenerator: (req, _) => {
+      // Get client IP from X-Forwarded-For header if behind a proxy
+      const forwardedFor = req.headers['x-forwarded-for'];
+      if (forwardedFor) {
+        // Get the first IP in the X-Forwarded-For header
+        const firstIp = forwardedFor.split(',')[0].trim();
+        return firstIp;
+      }
+      // Fall back to the request's remote address
+      return req.ip;
+    }
+  });
+};
+
+// Apply rate limiting
+const limiter = createRateLimiter(
+  15 * 60 * 1000, // 15 minutes
+  100, // 100 requests per window
+  "Too many requests from this IP, please try again after 15 minutes."
+);
+
+const contactLimiter = createRateLimiter(
+  60 * 60 * 1000, // 1 hour
+  5, // 5 requests per hour
+  "Too many contact requests, please try again after an hour."
+);
 
 app.use(helmet({
   contentSecurityPolicy: {
@@ -54,6 +76,7 @@ app.use(helmet({
 const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
+      "http://localhost:5000",
       "http://localhost:8080",
       "http://localhost:3000",
       "https://thinkmoreai.com",
@@ -140,7 +163,18 @@ const transporter = nodemailer.createTransport({
 const verifyTransporter = async () => {
   try {
     await transporter.verify();
-  } catch (error) {}
+    console.log('SMTP transporter verified successfully');
+  } catch (error) {
+    console.error('SMTP transporter verification failed:', error.message);
+    console.error('SMTP Config:', {
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      user: process.env.SMTP_USER ? 'configured' : 'missing',
+      pass: process.env.SMTP_PASS ? 'configured' : 'missing',
+      from: process.env.SMTP_FROM,
+      to: process.env.SMTP_TO
+    });
+  }
 };
 
 verifyTransporter();
@@ -216,9 +250,18 @@ ${message}
       message: "Your message has been sent successfully!",
     });
   } catch (error) {
+    console.error('Contact form error details:', {
+      message: error.message,
+      code: error.code,
+      command: error.command,
+      response: error.response,
+      stack: error.stack
+    });
+    
     res.status(500).json({
       success: false,
       message: "Failed to send message. Please try again later.",
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined
     });
   }
 });
@@ -227,4 +270,35 @@ app.get("/", (req, res) => {
   res.send("ThinkMoreAI Backend is running");
 });
 
-app.listen(PORT);
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Error:', err);
+  res.status(500).json({
+    success: false,
+    message: 'Internal server error',
+    error: process.env.NODE_ENV === 'development' ? err.message : undefined
+  });
+});
+
+// Start server
+const server = app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+}).on('error', (err) => {
+  console.error('Failed to start server:', err);
+  process.exit(1);
+});
+
+// Handle unhandled promise rejections
+process.on('unhandledRejection', (err) => {
+  console.error('Unhandled Rejection:', err);
+  server.close(() => process.exit(1));
+});
+
+// Handle uncaught exceptions
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+  server.close(() => process.exit(1));
+});
+
+module.exports = server;
