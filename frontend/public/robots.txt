@@ -11,4 +11,4 @@ Allow: /terms-of-service
 Disallow: /admin
 Disallow: /private
 
-Sitemap: https://thinkmoreai.com/sitemap.xml
+Sitemap: https://www.thinkmoreai.com/sitemap.xml
