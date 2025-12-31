@@ -6,7 +6,9 @@ Allow: /technologies
 Allow: /process
 Allow: /portfolio
 Allow: /contact
+Allow: /privacy-policy
+Allow: /terms-of-service
 Disallow: /admin
 Disallow: /private
 
-Sitemap: /sitemap.xml
+Sitemap: https://thinkmoreai.com/sitemap.xml
