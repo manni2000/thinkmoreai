@@ -54,16 +54,22 @@ export default async function handler(req, res) {
   if (origin && ALLOWED_ORIGINS.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
-  res.setHeader("Access-Control-Allow-Methods", "POST, OPTIONS");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   res.setHeader("Access-Control-Allow-Credentials", "true");
 
+  // Handle preflight requests
   if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
 
-  if (req.method !== "POST") {
-    return res.status(405).json({ success: false, message: "Method not allowed" });
+  // Root route - allow GET requests
+  if (req.method === "GET" && req.url === "/") {
+    return res.status(200).json({ 
+      success: true, 
+      message: "ThinkMoreAI Backend is running",
+      timestamp: new Date().toISOString()
+    });
   }
 
   let body;
@@ -131,4 +137,12 @@ ${clean.message}
       message: "Failed to send message",
     });
   }
+}
+
+// 404 for other routes
+if (req.method === "GET" && req.url !== "/") {
+  return res.status(404).json({ 
+    success: false, 
+    message: "Route not found" 
+  });
 }
