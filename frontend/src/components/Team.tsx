@@ -15,12 +15,6 @@ const teamMembers = [
     avatar: "/manish-avatar.jpg",
   },
   {
-    name: "Priyangshu",
-    role: "Technical Team Lead",
-    company: "ThinkMoreAI",
-    avatar: "/priyangshu-avatar.jpg",
-  },
-  {
     name: "Satyam Lohiya",
     role: "Advisor Board Member",
     company: "ThinkMoreAI",
