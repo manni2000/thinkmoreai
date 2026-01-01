@@ -24,21 +24,18 @@ const Footer = () => {
             </p>
             <div className="flex gap-4">
               {[
-                { icon: FaLinkedin, href: "#", label: "LinkedIn" },
-                { icon: "image", src: "/images/portfolio/x.png", href: "#", label: "X" },
-                { icon: FaFacebook, href: "#", label: "Facebook" },
-                { icon: FaInstagram, href: "#", label: "Instagram" },
+                { icon: FaLinkedin, href: "https://www.linkedin.com/company/thinkmoreai", label: "LinkedIn" },
+                { icon: FaFacebook, href: "https://www.facebook.com/share/1AzqgtTzzJ/", label: "Facebook" },
+                { icon: FaInstagram, href: "https://www.instagram.com/thinkmoreai", label: "Instagram" },
               ].map((social) => (
                 <a
                   key={social.label}
                   href={social.href}
                   className="w-12 h-12 rounded-lg bg-primary-foreground/10 flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-all duration-300 group"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  {social.icon === "image" ? (
-                    <img src={social.src} alt={social.label} className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
-                  ) : (
-                    <social.icon className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
-                  )}
+                  <social.icon className="w-6 h-6 group-hover:scale-110 transition-transform duration-300" />
                 </a>
               ))}
             </div>
