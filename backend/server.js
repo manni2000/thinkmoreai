@@ -118,6 +118,18 @@ const contactValidation = [
     .isLength({ max: 20 })
     .withMessage("Phone number too long"),
 
+  body("services")
+    .optional()
+    .isArray()
+    .withMessage("Services must be an array")
+    .custom((services) => {
+      if (services && services.length > 0) {
+        return services.every(service => typeof service === 'string' && service.trim().length > 0);
+      }
+      return true;
+    })
+    .withMessage("All services must be non-empty strings"),
+
   body("message")
     .trim()
     .isLength({ min: 10, max: 1000 })
@@ -136,7 +148,7 @@ app.post("/api/contact", contactLimiter, contactValidation, async (req, res) => 
       });
     }
 
-    const { name, email, phone, message } = req.body;
+    const { name, email, phone, services, message } = req.body;
 
     await transporter.sendMail({
       from: `"${name}" <${process.env.SMTP_FROM}>`,
@@ -146,6 +158,7 @@ app.post("/api/contact", contactLimiter, contactValidation, async (req, res) => 
 Name: ${name}
 Email: ${email}
 Phone: ${phone || "Not provided"}
+Services: ${services && services.length > 0 ? services.join(', ') : "Not specified"}
 
 Message:
 ${message}
@@ -155,6 +168,7 @@ ${message}
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ""}
+        ${services && services.length > 0 ? `<p><strong>Services Interested In:</strong> ${services.join(', ')}</p>` : ""}
         <p><strong>Message:</strong></p>
         <p>${message}</p>
       `,

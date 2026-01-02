@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { MapPin, Mail, Phone, Send, ArrowRight, CheckCircle, AlertCircle, User, MessageSquare } from "lucide-react";
+import { MapPin, Mail, Phone, Send, ArrowRight, CheckCircle, AlertCircle, User, MessageSquare, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -37,11 +37,23 @@ const Contact = () => {
     name: '',
     email: '',
     phone: '',
+    services: [] as string[],
     message: ''
   });
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isSuccess, setIsSuccess] = useState(false);
   const [charCount, setCharCount] = useState(0);
+
+  const services = [
+    'Web Development',
+    'Mobile App Development',
+    'Social Media Management',
+    'AI/ML Solutions',
+    'Cloud Services',
+    'Digital Marketing',
+    'AI Consulting',
+    'Custom Digital Solution'
+  ];
 
   const validateField = (name: string, value: string) => {
     const errors: Record<string, string> = {};
@@ -93,6 +105,15 @@ const Contact = () => {
     }
   };
 
+  const handleServiceChange = (service: string, checked: boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      services: checked 
+        ? [...prev.services, service]
+        : prev.services.filter(s => s !== service)
+    }));
+  };
+
   const handleInputBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     validateField(name, value);
@@ -102,8 +123,9 @@ const Contact = () => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    // Validate all fields
-    const isValid = Object.keys(formData).every(key => validateField(key, formData[key as keyof typeof formData]));
+    // Validate all fields except services (which is optional)
+    const fieldsToValidate = ['name', 'email', 'phone', 'message'];
+    const isValid = fieldsToValidate.every(key => validateField(key, formData[key as keyof typeof formData] as string));
     
     if (!isValid) {
       toast({
@@ -120,6 +142,7 @@ const Contact = () => {
       name: formData.name.trim(),
       email: formData.email.trim().toLowerCase(),
       phone: formData.phone.trim() || undefined,
+      services: formData.services,
       message: formData.message.trim(),
     };
     
@@ -130,7 +153,7 @@ const Contact = () => {
         title: "Message sent successfully!",
         description: "We'll get back to you within 24 hours.",
       });
-      setFormData({ name: '', email: '', phone: '', message: '' });
+      setFormData({ name: '', email: '', phone: '', services: [], message: '' });
       setCharCount(0);
       
       setTimeout(() => setIsSuccess(false), 5000);
@@ -301,6 +324,39 @@ const Contact = () => {
             </motion.div>
 
             <motion.div whileHover={{ y: -2 }} className="relative">
+              <label className="block text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
+                <Briefcase className="w-4 h-4" />
+                Services Interested In (Multiple tick allowed - select as many as you need)
+              </label>
+              <div className="grid grid-cols-2 gap-3">
+                {services.map((service) => (
+                  <motion.div
+                    key={service}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="relative"
+                  >
+                    <label
+                      htmlFor={`service-${service}`}
+                      className="flex items-center gap-3 p-3 rounded-lg bg-card border border-border cursor-pointer hover:border-accent/50 transition-all duration-300"
+                    >
+                      <input
+                        type="checkbox"
+                        id={`service-${service}`}
+                        name="services"
+                        value={service}
+                        checked={formData.services.includes(service)}
+                        onChange={(e) => handleServiceChange(service, e.target.checked)}
+                        className="w-4 h-4 text-accent border-border rounded focus:ring-accent focus:ring-2"
+                      />
+                      <span className="text-sm text-foreground">{service}</span>
+                    </label>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div whileHover={{ y: -2 }} className="relative">
               <label htmlFor="message" className="block text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
                 <MessageSquare className="w-4 h-4" />
                 Message *
@@ -406,7 +462,7 @@ const Contact = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.3, delay: 0.3 }}
-            className="space-y-8"
+            className="space-y-8 mt-12"
           >
             {/* Contact Information Cards */}
             {[
@@ -445,7 +501,7 @@ const Contact = () => {
             {/* CTA Card */}
             <motion.div
               whileHover={{ y: -5 }}
-              className="glass-card rounded-2xl p-8 bg-gradient-to-br from-accent/20 to-orange-400/10 border-accent/30 hover:border-accent/50 transition-all duration-300"
+              className="glass-card rounded-2xl p-8 bg-gradient-to-br from-accent/20 to-orange-400/10 border-accent/30 hover:border-accent/50 transition-all duration-300 mt-8"
             >
               <h3 className="font-heading font-bold text-xl text-foreground mb-3">
                 Prefer a call?

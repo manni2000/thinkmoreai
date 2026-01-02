@@ -27,6 +27,7 @@ export const submitContactForm = async (formData: {
   name: string;
   email: string;
   phone?: string;
+  services: string[];
   message: string;
 }) => {
   return apiRequest('/api/contact', {

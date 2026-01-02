@@ -46,6 +46,7 @@ const About = () => {
 						initial={{ opacity: 0, x: -50 }}
 						animate={isInView ? { opacity: 1, x: 0 } : {}}
 						transition={{ duration: 0.6 }}
+						className="text-center lg:text-left"
 					>
 						<span className="text-accent font-semibold text-sm uppercase tracking-wider">
 							About Us
