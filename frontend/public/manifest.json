@@ -1,0 +1,27 @@
+{
+  "name": "ThinkmoreAI - AI Powered Digital Solutions & Business Services",
+  "short_name": "ThinkmoreAI",
+  "description": "We Provides AI-driven digital solutions to help businesses automate workflows, generate intelligent insights, and enhance decision-making using advanced artificial intelligence. The platform focuses on AI automation, smart data analysis, and tailored AI tools designed to improve efficiency and support growth.",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f5a623",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "/thinkmoreai.webp",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/thinkmoreai.webp",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["business", "productivity", "technology", "design", "development", "ai consulting", "digital marketing"],
+  "lang": "en",
+  "dir": "ltr"
+}

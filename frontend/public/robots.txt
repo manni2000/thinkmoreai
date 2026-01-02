@@ -1,0 +1,39 @@
+User-agent: *
+Allow: /
+Allow: /about
+Allow: /services
+Allow: /technologies
+Allow: /process
+Allow: /portfolio
+Allow: /contact
+Allow: /privacy-policy
+Allow: /terms-of-service
+Allow: /faq
+Allow: /team
+Disallow: /admin
+Disallow: /private
+Disallow: /api/
+
+# Block common bot paths
+Disallow: /wp-admin/
+Disallow: /wp-includes/
+Disallow: /wp-content/
+Disallow: /trackback/
+Disallow: /comments/feed/
+
+# Sitemap
+Sitemap: https://www.thinkmoreai.com/sitemap.xml
+Disallow: /*.php$
+
+# Allow specific file types
+Allow: /*.css
+Allow: /*.js
+Allow: /*.jpg
+Allow: /*.png
+Allow: /*.gif
+Allow: /*.svg
+Allow: /*.webp
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
