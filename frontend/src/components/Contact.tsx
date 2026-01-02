@@ -45,7 +45,7 @@ const Contact = () => {
   const [charCount, setCharCount] = useState(0);
 
   const services = [
-    'Web Development',
+    'Website Development',
     'Mobile App Development',
     'Social Media Management',
     'Research Report',
