@@ -245,7 +245,7 @@ const Hero = () => {
 
             {/* Robot Image with enhanced animations */}
             <motion.img
-              src="/robot-img.png"
+              src="/robot-img.webp"
               alt="AI operator working on intelligent systems"
               className="
                 relative z-10

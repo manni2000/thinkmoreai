@@ -113,7 +113,7 @@ const AIChatbot = () => {
           boxShadow: { duration: 1, repeat: Infinity }
         }}
       >
-        <img src="/images/portfolio/whatsapp.png" alt="WhatsApp" className="w-12 h-12" style={{ filter: 'brightness(1.2)' }} />
+        <img src="/images/portfolio/whatsapp.webp" alt="WhatsApp" className="w-12 h-12" style={{ filter: 'brightness(1.2)' }} />
       </motion.a>
 
       {/* Chat Button */}

@@ -70,7 +70,7 @@ const Header = () => {
 						whileTap={{ scale: 0.95 }}
 					>
 						<motion.img
-							src="/thinkmoreai-logo.png"
+							src="/thinkmoreai-logo.webp"
 							alt="ThinkMoreAI Logo"
 							className="h-20 w-auto transition-transform duration-300 group-hover:rotate-3"
 							whileHover={{ rotate: [0, 5, -5, 0] }}

@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="lg:col-span-2">
             <div className="flex items-center gap-3 mb-4">
               <img
-                src="/thinkmoreai-logo.png"
+                src="/thinkmoreai-logo.webp"
                 alt="ThinkMoreAI Logo"
                 className="h-20 w-auto"
               />

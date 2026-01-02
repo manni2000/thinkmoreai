@@ -21,7 +21,7 @@ const portfolioItems = [
     tags: ["React Native", "Firebase", "Stripe"],
     gradient: "from-purple-500 to-pink-500",
     url: "https://e-commerce-thinkmoreai.vercel.app/",
-    image: "/images/portfolio/ecommerce.png",
+    image: "/images/portfolio/ecommerce.webp",
   },
   {
     id: 2,
@@ -32,7 +32,7 @@ const portfolioItems = [
     tags: ["Flutter", "Node.js", "MongoDB"],
     gradient: "from-indigo-500 to-purple-500",
     url: "https://fintech-mobile-app-thinkmoreai.vercel.app/",
-    image: "/images/portfolio/mobile.png",
+    image: "/images/portfolio/mobile.webp",
   },
   {
     id: 3,
@@ -43,7 +43,7 @@ const portfolioItems = [
     tags: ["Vue.js", "Python", "AWS"],
     gradient: "from-green-500 to-emerald-500",
     url: "https://yumrushthinkmoreai.vercel.app",
-    image: "/images/portfolio/food.png",
+    image: "/images/portfolio/food.webp",
   },
   {
     id: 4,
@@ -54,7 +54,7 @@ const portfolioItems = [
     tags: ["Motion Graphics", "4K Production"],
     gradient: "from-red-500 to-rose-500",
     url: "https://drive.google.com/file/d/134pW1Ai3qzkDdVnT4DAKf_73s0gaW_E8/view?usp=drivesdk",
-    image: "/images/portfolio/video.png",
+    image: "/images/portfolio/video.webp",
   },
   {
     id: 5,
@@ -65,7 +65,7 @@ const portfolioItems = [
     tags: ["Data Analysis", "Visualization"],
     gradient: "from-yellow-500 to-orange-500",
     url: "https://drive.google.com/file/d/18U6DK0hfOQD0A4KXeyvBAtGWB_2S7lLS/view?usp=sharing",
-    image: "/images/portfolio/Research-report.png",
+    image: "/images/portfolio/Research-report.webp",
   },
   {
     id: 6,
@@ -76,7 +76,7 @@ const portfolioItems = [
     tags: ["React", "Node.js", "PostgreSQL"],
     gradient: "from-blue-500 to-cyan-500",
     url: "https://enterprise-saas-platform-thinkmorea.vercel.app/",
-    image: "/images/portfolio/saas.png",
+    image: "/images/portfolio/saas.webp",
   },
 ];
 

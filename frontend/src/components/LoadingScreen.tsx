@@ -76,7 +76,7 @@ const LoadingScreen = ({ isLoading }: LoadingScreenProps) => {
               className="mb-8"
             >
               <motion.img
-                src="/thinkmoreai-logo.png"
+                src="/thinkmoreai-logo.webp"
                 alt="ThinkMoreAI Logo"
                 className="w-32 h-32 md:w-40 md:h-40"
                 animate={{
