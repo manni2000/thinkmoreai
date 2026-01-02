@@ -25,14 +25,13 @@ const teamMembers = [
     role: "Advisor Board Member",
     company: "ThinkMoreAI",
     avatar: "/aniket-avatar.jpg",
-    colClass: "lg:col-start-2",
   },
   {
     name: "Prince Choudhary",
     role: "Advisor Board Member",
     company: "ThinkMoreAI",
     avatar: "/prince-avatar.jpg",
-    colClass: "lg:col-start-3",
+    colClass: "lg:col-start-2",
   },
 ];
 
