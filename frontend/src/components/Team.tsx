@@ -25,14 +25,7 @@ const teamMembers = [
     role: "Advisor Board Member",
     company: "ThinkMoreAI",
     avatar: "/aniket-avatar.jpg",
-  },
-  {
-    name: "Prince Choudhary",
-    role: "Advisor Board Member",
-    company: "ThinkMoreAI",
-    avatar: "/prince-avatar.jpg",
-    colClass: "lg:col-start-2",
-  },
+  }
 ];
 
 const Team = () => {
@@ -76,7 +69,7 @@ const Team = () => {
               className={`bg-primary-foreground/5 backdrop-blur-sm 
                 border border-primary-foreground/10 rounded-2xl p-6 
                 text-center hover:bg-primary-foreground/10 
-                transition-all duration-300 ${member.colClass || ""}`}
+                transition-all duration-300 `}
             >
               {/* Avatar */}
               <div className="w-20 h-20 rounded-full mx-auto mb-4 overflow-hidden border-2 border-accent/30">
