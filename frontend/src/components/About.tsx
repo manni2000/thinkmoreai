@@ -74,7 +74,7 @@ const About = () => {
 									initial={{ opacity: 0, x: -20 }}
 									animate={isInView ? { opacity: 1, x: 0 } : {}}
 									transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-									className="flex items-center gap-3"
+									className="flex items-center gap-3 justify-center lg:justify-start"
 								>
 									<CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
 									<span className="text-foreground">{feature}</span>
