@@ -48,10 +48,10 @@ const Contact = () => {
     'Web Development',
     'Mobile App Development',
     'Social Media Management',
-    'AI/ML Solutions',
-    'Cloud Services',
-    'Digital Marketing',
-    'AI Consulting',
+    'Research Report',
+    'Data Analytics',
+    'AI Chatbot',
+    'CA Services',
     'Custom Digital Solution'
   ];
 
