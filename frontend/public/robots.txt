@@ -20,6 +20,9 @@ Disallow: /wp-includes/
 Disallow: /wp-content/
 Disallow: /trackback/
 Disallow: /comments/feed/
+
+# Sitemap
+Sitemap: https://www.thinkmoreai.com/sitemap.xml
 Disallow: /*.php$
 
 # Allow specific file types
@@ -34,5 +37,3 @@ Allow: /*.webp
 # Crawl delay (optional)
 Crawl-delay: 1
 
-# Sitemap
-Sitemap: https://www.thinkmoreai.com/sitemap.xml
