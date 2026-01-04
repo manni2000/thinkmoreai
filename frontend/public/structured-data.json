@@ -14,7 +14,7 @@
   "sameAs": [
     "https://www.thinkmoreai.com"
   ],
-  "description": "AI-driven web development, webite, mobile apps, automation, analytics, social media & video editing services,and professional CA services. Transform your ideas into scalable solutions.",
+  "description": "AI-driven web development, webite, mobile apps, automation, analytics, social media & video editing services,and SEO Optimization. Transform your ideas into scalable solutions.",
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "IN"
@@ -68,7 +68,7 @@
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
-          "name": "CA Services",
+          "name": "SEO Optimization",
           "description": "Tax, GST, and compliance services"
         }
       }

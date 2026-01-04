@@ -61,6 +61,10 @@ const Footer = () => {
                   href: "/portfolio",
                 },
                 {
+                  name: "Technologies",
+                  href: "/technologies",
+                },
+                {
                   name: "Team",
                   href: "/team",
                 },
@@ -93,7 +97,8 @@ const Footer = () => {
                 "Mobile Apps",
                 "AI Chatbots",
                 "Data Analytics",
-                "CA Services",
+                "Social Media Marketing",
+                "SEO Optimization",
               ].map((service) => (
                 <li key={service}>
                   <a

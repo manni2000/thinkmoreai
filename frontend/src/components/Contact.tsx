@@ -51,7 +51,7 @@ const Contact = () => {
     'Research Report',
     'Data Analytics',
     'AI Chatbot',
-    'CA Services',
+    'SEO Optimization',
     'Custom Digital Solution'
   ];
 

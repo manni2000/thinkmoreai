@@ -10,14 +10,6 @@ import {
   FileSpreadsheet,
   Megaphone,
   Video,
-  Receipt,
-  Calculator,
-  BookOpen,
-  Lightbulb,
-  Building2,
-  FileCheck,
-  FileText,
-  Scale,
   Cpu,
 } from "lucide-react";
 
@@ -48,9 +40,9 @@ const techServices = [
   },
   {
     icon: FileSpreadsheet,
-    title: "Research Reports",
-    tagline: "Clarity Over Complexity.",
-    description: "Market research and data storytelling from publicly available insights.",
+    title: "SEO Optimization",
+    tagline: "Rank Higher. Convert Better.",
+    description: "Strategic SEO implementation to boost search rankings, drive organic traffic, and increase conversion rates.",
   },
   {
     icon: Megaphone,
@@ -69,57 +61,6 @@ const techServices = [
     title: "Custom AI & Digital Solutions",
     tagline: "Built Around Your Business.",
     description: "Tailored AI systems and digital platforms solving complex business challenges secure and scalable.",
-  },
-];
-
-const caServices = [
-  {
-    icon: Receipt,
-    title: "Income Tax Return (ITR)",
-    tagline: "Accurate Filing. Full Compliance. On-Time Delivery.",
-    description: "Professional income tax return filing with complete accuracy and timely submission.",
-  },
-  {
-    icon: Calculator,
-    title: "GST Services",
-    tagline: "End-to-End Registration, Filing & Compliance — Made Simple.",
-    description: "Comprehensive GST services from registration to filing and compliance management.",
-  },
-  {
-    icon: BookOpen,
-    title: "Accounting & Bookkeeping",
-    tagline: "Structured Records. Transparent Financials.",
-    description: "Maintain clean, organized financial records with complete transparency.",
-  },
-  {
-    icon: Lightbulb,
-    title: "Tax Planning & Consultancy",
-    tagline: "Strategic, Legal Tax Optimization.",
-    description: "Expert tax planning strategies for legal optimization and maximum savings.",
-  },
-  {
-    icon: Building2,
-    title: "Company Incorporation & ROC",
-    tagline: "From Concept to Compliant Entity.",
-    description: "Complete company incorporation services with ROC compliance management.",
-  },
-  {
-    icon: FileCheck,
-    title: "TDS / TCS Compliance",
-    tagline: "Error-Free Filings. Complete Peace of Mind.",
-    description: "Hassle-free TDS/TCS compliance with accurate and timely filings.",
-  },
-  {
-    icon: FileText,
-    title: "Project Reports & Loan Documentation",
-    tagline: "Professionally Prepared, Bank-Ready Reports.",
-    description: "Expert preparation of project reports and loan documentation for banking needs.",
-  },
-  {
-    icon: Scale,
-    title: "Notice Handling & Assessments",
-    tagline: "Trusted Representation. Confident Resolution.",
-    description: "Professional representation for tax notices and assessments with confident resolution.",
   },
 ];
 
@@ -283,7 +224,6 @@ const ServiceCard = ({ service, index }: { service: ServiceItem; index: number }
           className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-300"
           whileHover={{ scale: 1.2, rotate: 45 }}
         >
-          <ArrowRight className={`w-5 h-5 ${isSpecialService ? "text-blue-600" : "text-accent"}`} />
         </motion.div>
       </motion.div>
     </motion.div>
@@ -313,8 +253,7 @@ const Services = () => {
             <span className="gradient-text">Your Business</span>
           </h2>
           <p className="text-lg text-muted-foreground">
-            From cutting-edge technology solutions to professional CA services, 
-            we deliver excellence across every domain.
+            we deliver cutting-edge technology solutions.
           </p>
         </motion.div>
 
@@ -330,23 +269,6 @@ const Services = () => {
           </motion.h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
             {techServices.map((service, index) => (
-              <ServiceCard key={service.title} service={service} index={index} />
-            ))}
-          </div>
-        </div>
-
-        {/* CA Services */}
-        <div>
-          <motion.h3
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="font-heading text-2xl font-bold text-foreground mb-8 text-center"
-          >
-            Chartered Accountant Services
-          </motion.h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {caServices.map((service, index) => (
               <ServiceCard key={service.title} service={service} index={index} />
             ))}
           </div>

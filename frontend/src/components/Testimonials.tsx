@@ -30,11 +30,11 @@ const testimonials = [
   },
   {
     id: 4,
-    name: "Priya Patel",
-    role: "Owner, Patel Enterprises",
-    country: "🇮🇳 India",
+    name: "Michael Chen",
+    role: "Marketing Director, Digital Growth",
+    country: "Europe (UK)",
     rating: 5,
-    text: "Their CA services are top-notch. Complete peace of mind with all our compliance needs handled professionally.",
+    text: "Their SEO optimization services transformed our online presence. We went from page 3 to #1 in Google rankings within 3 months. Organic traffic increased by 200%!",
   },
 ];
 

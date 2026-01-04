@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 const botResponses: Record<string, string> = {
   "about": "ThinkmoreAI is an AI-driven technology and professional services company focused on building scalable, high-impact digital solutions. We help startups, SMEs, and enterprises turn ideas into production-ready products through intelligent automation, advanced analytics, and modern engineering. Our team brings experience from global MNCs and fast-scaling startups, with a strong emphasis on execution quality, clarity, and long-term partnerships.",
 
-  "services": "We provide end-to-end digital and professional services, including:\n\n💻 Website & Mobile App Development\n🤖 AI Chatbots & Automation\n📊 Data Analytics & Research Reports\n📣 Social Media Management & Videoediting\n\nAdditionally, we offer Chartered Accountant (CA) services:\n🧾 ITR Filing, GST & Tax Planning\n🏢 Company Incorporation & ROC Services\n📄 Compliance, Notices & Assessments",
+  "services": "We provide end-to-end digital services, including:\n\n💻 Website & Mobile App Development\n🤖 AI Chatbots & Automation\n📊 Data Analytics & SEO Optimization\n📣 Social Media Management & Video Editing\n🔧 Custom AI & Digital Solutions",
 
   "contact": "You can get in touch with us through the following channels:\n\n📧 Email: info@thinkmoreai.com\n📍 Office: Kestopur, Kolkata, West Bengal, India\n\n💬 You can also reach out via the contact form on our website, and our team will respond promptly.",
 
@@ -14,7 +14,7 @@ const botResponses: Record<string, string> = {
 
   "technologies": "We work with modern, production-grade technologies across the stack:\n\n⚛️ React, Next.js, Vue, Angular\n🔧 Node.js, Python, Django\n📱 React Native, Flutter\n🤖 TensorFlow, PyTorch, OpenAI\n☁️ AWS, GCP, Vercel",
 
-  "team": "Meet Our Leadership Team \n\n👨‍💼 Charan Kumar  \nfounder & CEO  \n\nOur team combines technical expertise with business acumen to deliver exceptional results for our clients.",
+  "team": "Meet Our Leadership Team \n\n👨‍💼 Charan Kumar  \nFounder & CEO  \n\n👨‍💻 Manish Kumar  \nCTO & Founder  \n\nOur team combines technical expertise with business acumen to deliver exceptional results for our clients.",
 
   "default": "Hello! I’m ThinkmoreAI’s virtual assistant. I can help you with information about:\n\n• Our company and expertise\n• Services we provide\n• Technologies we work with\n• Contact details\n• Pricing and consultation\n\nJust type your question to get started!",
 };

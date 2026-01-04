@@ -18,10 +18,6 @@ const faqs = [
     answer: "Absolutely! We offer comprehensive post-launch support including monitoring, bug fixes, updates, and scaling assistance. We believe in building long-term partnerships with our clients.",
   },
   {
-    question: "Are CA services available PAN-India?",
-    answer: "Yes, our Chartered Accountant services are available across India. We handle ITR, GST, company incorporation, and compliance services for clients nationwide.",
-  },
-  {
     question: "Can services be customized?",
     answer: "Definitely. Every business is unique, and we tailor our solutions to meet your specific requirements. During the discovery phase, we work closely with you to understand and address your exact needs.",
   },

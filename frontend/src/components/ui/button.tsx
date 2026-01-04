@@ -20,7 +20,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         accent: "bg-accent text-accent-foreground hover:-translate-y-0.5 shadow-lg hover:shadow-[0_0_30px_hsla(38,95%,55%,0.4)]",
         hero: "bg-accent text-accent-foreground font-bold hover:-translate-y-1 shadow-lg hover:shadow-[0_0_40px_hsla(38,95%,55%,0.5)] transition-all duration-300",
-        heroOutline: "border-2 border-white/50 bg-transparent text-white font-bold hover:bg-white hover:text-accent hover:-translate-y-1 transition-all duration-300",
+        heroOutline: "border-2 border-white/50 bg-transparent text-white font-bold hover:bg-white hover:text-black hover:-translate-y-1 transition-all duration-300",
         glass: "bg-card/80 backdrop-blur-xl border border-border/50 text-foreground hover:bg-card hover:-translate-y-0.5 shadow-md",
       },
       size: {
