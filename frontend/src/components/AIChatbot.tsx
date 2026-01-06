@@ -60,33 +60,9 @@ const AIChatbot = () => {
   const getResponse = (query: string): string => {
     const lowerQuery = query.toLowerCase();
     
-    // About/Company queries
-    if (lowerQuery.includes("about") || lowerQuery.includes("company") || lowerQuery.includes("who") || lowerQuery.includes("thinkmoreai")) {
-      return botResponses.about;
-    }
-    
-    // Services queries
-    if (lowerQuery.includes("service") || lowerQuery.includes("offer") || lowerQuery.includes("do") || lowerQuery.includes("provide") || lowerQuery.includes("help")) {
-      return botResponses.services;
-    }
-    
-    // Contact queries
-    if (lowerQuery.includes("contact") || lowerQuery.includes("email") || lowerQuery.includes("reach") || lowerQuery.includes("address") || lowerQuery.includes("location")) {
-      return botResponses.contact;
-    }
-    
-    // Pricing queries
-    if (lowerQuery.includes("pricing") || lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("rate") || lowerQuery.includes("charge") || lowerQuery.includes("affordable")) {
-      return botResponses.pricing;
-    }
-    
-    // Technologies queries
-    if (lowerQuery.includes("tech") || lowerQuery.includes("stack") || lowerQuery.includes("tool") || lowerQuery.includes("technology") || lowerQuery.includes("framework") || lowerQuery.includes("language")) {
-      return botResponses.technologies;
-    }
-    
-    // Team queries
-    if (lowerQuery.includes("team") || lowerQuery.includes("founder") || lowerQuery.includes("ceo") || lowerQuery.includes("cto") || lowerQuery.includes("employee")) {
+    // Team queries (most specific - check first)
+    if (lowerQuery.includes("team") || lowerQuery.includes("founder") || lowerQuery.includes("ceo") || lowerQuery.includes("cto") || lowerQuery.includes("employee") || 
+        (lowerQuery.includes("who") && (lowerQuery.includes("ceo") || lowerQuery.includes("founder") || lowerQuery.includes("cto") || lowerQuery.includes("runs") || lowerQuery.includes("leads") || lowerQuery.includes("manages")))) {
       return botResponses.team;
     }
     
@@ -106,18 +82,45 @@ const AIChatbot = () => {
     }
     
     // Support queries
-    if (lowerQuery.includes("support") || lowerQuery.includes("maintenance") || lowerQuery.includes("help") || lowerQuery.includes("assist")) {
+    if (lowerQuery.includes("support") || lowerQuery.includes("maintenance") || lowerQuery.includes("assist")) {
       return botResponses.support;
     }
     
     // Timeline queries
-    if (lowerQuery.includes("timeline") || lowerQuery.includes("duration") || lowerQuery.includes("time") || lowerQuery.includes("delivery") || lowerQuery.includes("deadline")) {
+    if (lowerQuery.includes("timeline") || lowerQuery.includes("duration") || lowerQuery.includes("delivery") || lowerQuery.includes("deadline")) {
       return botResponses.timeline;
     }
     
     // Industries queries
     if (lowerQuery.includes("industry") || lowerQuery.includes("sector") || lowerQuery.includes("domain") || lowerQuery.includes("vertical")) {
       return botResponses.industries;
+    }
+    
+    // Services queries
+    if (lowerQuery.includes("service") || lowerQuery.includes("offer") || lowerQuery.includes("provide") || 
+        (lowerQuery.includes("what") && lowerQuery.includes("do"))) {
+      return botResponses.services;
+    }
+    
+    // Pricing queries
+    if (lowerQuery.includes("pricing") || lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("rate") || lowerQuery.includes("charge") || lowerQuery.includes("affordable")) {
+      return botResponses.pricing;
+    }
+    
+    // Technologies queries
+    if (lowerQuery.includes("tech") || lowerQuery.includes("stack") || lowerQuery.includes("tool") || lowerQuery.includes("technology") || lowerQuery.includes("framework") || lowerQuery.includes("language")) {
+      return botResponses.technologies;
+    }
+    
+    // Contact queries
+    if (lowerQuery.includes("contact") || lowerQuery.includes("email") || lowerQuery.includes("reach") || lowerQuery.includes("address") || lowerQuery.includes("location") || 
+        (lowerQuery.includes("how") && lowerQuery.includes("contact"))) {
+      return botResponses.contact;
+    }
+    
+    // About/Company queries (check last - most general)
+    if (lowerQuery.includes("about") || lowerQuery.includes("company") || lowerQuery.includes("who") || lowerQuery.includes("thinkmoreai")) {
+      return botResponses.about;
     }
     
     // Greeting queries
