@@ -16,17 +16,21 @@ const botResponses: Record<string, string> = {
 
   "team": "Meet Our Leadership Team \n\n👨‍💼 Charan Kumar  \nFounder & CEO  \n\n👨‍💻 Manish Kumar  \nCTO & Founder  \n\nOur team combines technical expertise with business acumen to deliver exceptional results for our clients.",
 
-  "default": "Hello! I’m ThinkmoreAI’s virtual assistant. I can help you with information about:\n\n• Our company and expertise\n• Services we provide\n• Technologies we work with\n• Contact details\n• Pricing and consultation\n\nJust type your question to get started!",
+  "experience": "Our team brings extensive experience from global MNCs and fast-scaling startups. We have worked on diverse projects ranging from enterprise applications to AI-powered solutions, helping businesses across various industries achieve their digital transformation goals.",
+
+  "process": "Our development process follows industry best practices:\n\n1. Discovery & Requirement Analysis\n2. Design & Prototyping\n3. Development & Testing\n4. Deployment & Launch\n5. Maintenance & Support\n\nWe ensure transparency and collaboration throughout the project lifecycle.",
+
+  "portfolio": "We have successfully delivered projects for startups, SMEs, and enterprises across various domains including e-commerce, healthcare, education, finance, and more. Our portfolio showcases our expertise in creating scalable and user-friendly digital solutions.",
+
+  "support": "We offer comprehensive post-launch support including:\n\n🔧 Bug fixes and troubleshooting\n📈 Performance optimization\n🔄 Regular updates and maintenance\n📞 24/7 technical support for critical issues\n\nOur support team ensures your application runs smoothly at all times.",
+
+  "timeline": "Project timelines vary based on complexity and scope:\n\n• Simple websites: 2-4 weeks\n• Complex web applications: 2-3 months\n• Mobile apps: 3-4 months\n• Enterprise solutions: 4-6 months\n\nWe provide detailed timelines during the consultation phase.",
+
+  "industries": "We serve clients across multiple industries:\n\n🏥 Healthcare & MedTech\n🏦 Banking & Finance\n🛒 E-commerce & Retail\n🎓 Education & EdTech\n🏭 Manufacturing & Industrial\n📱 Media & Entertainment\n🚗 Automotive\n🏥 Real Estate",
+
+  "default": "Hello! I'm ThinkmoreAI's virtual assistant. I can help you with information about our company, services, technologies, team, pricing, contact details, development process, portfolio, support services, project timelines, and industries we serve. Feel free to ask any question!"
 };
 
-const quickQuestions = [
-  "About ThinkmoreAI",
-  "Our Services", 
-  "Technologies",
-  "Our Team",
-  "Contact Info",
-  "Pricing",
-];
 
 interface Message {
   id: number;
@@ -55,25 +59,73 @@ const AIChatbot = () => {
 
   const getResponse = (query: string): string => {
     const lowerQuery = query.toLowerCase();
-    if (lowerQuery.includes("about") || lowerQuery.includes("company") || lowerQuery.includes("who")) {
+    
+    // About/Company queries
+    if (lowerQuery.includes("about") || lowerQuery.includes("company") || lowerQuery.includes("who") || lowerQuery.includes("thinkmoreai")) {
       return botResponses.about;
     }
-    if (lowerQuery.includes("service") || lowerQuery.includes("offer") || lowerQuery.includes("do")) {
+    
+    // Services queries
+    if (lowerQuery.includes("service") || lowerQuery.includes("offer") || lowerQuery.includes("do") || lowerQuery.includes("provide") || lowerQuery.includes("help")) {
       return botResponses.services;
     }
-    if (lowerQuery.includes("contact") || lowerQuery.includes("email") || lowerQuery.includes("reach")) {
+    
+    // Contact queries
+    if (lowerQuery.includes("contact") || lowerQuery.includes("email") || lowerQuery.includes("reach") || lowerQuery.includes("address") || lowerQuery.includes("location")) {
       return botResponses.contact;
     }
-    if (lowerQuery.includes("pricing") || lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("rate")) {
+    
+    // Pricing queries
+    if (lowerQuery.includes("pricing") || lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("rate") || lowerQuery.includes("charge") || lowerQuery.includes("affordable")) {
       return botResponses.pricing;
     }
-    if (lowerQuery.includes("tech") || lowerQuery.includes("stack") || lowerQuery.includes("tool")) {
+    
+    // Technologies queries
+    if (lowerQuery.includes("tech") || lowerQuery.includes("stack") || lowerQuery.includes("tool") || lowerQuery.includes("technology") || lowerQuery.includes("framework") || lowerQuery.includes("language")) {
       return botResponses.technologies;
     }
-    if (lowerQuery.includes("team") || lowerQuery.includes("who")) {
+    
+    // Team queries
+    if (lowerQuery.includes("team") || lowerQuery.includes("founder") || lowerQuery.includes("ceo") || lowerQuery.includes("cto") || lowerQuery.includes("employee")) {
       return botResponses.team;
     }
-    return "I'd be happy to help! Could you ask about our services, technologies, pricing, or how to contact us? Or click one of the quick options below.";
+    
+    // Experience queries
+    if (lowerQuery.includes("experience") || lowerQuery.includes("expertise") || lowerQuery.includes("background") || lowerQuery.includes("history")) {
+      return botResponses.experience;
+    }
+    
+    // Process queries
+    if (lowerQuery.includes("process") || lowerQuery.includes("methodology") || lowerQuery.includes("workflow") || lowerQuery.includes("approach")) {
+      return botResponses.process;
+    }
+    
+    // Portfolio queries
+    if (lowerQuery.includes("portfolio") || lowerQuery.includes("project") || lowerQuery.includes("work") || lowerQuery.includes("client") || lowerQuery.includes("case study")) {
+      return botResponses.portfolio;
+    }
+    
+    // Support queries
+    if (lowerQuery.includes("support") || lowerQuery.includes("maintenance") || lowerQuery.includes("help") || lowerQuery.includes("assist")) {
+      return botResponses.support;
+    }
+    
+    // Timeline queries
+    if (lowerQuery.includes("timeline") || lowerQuery.includes("duration") || lowerQuery.includes("time") || lowerQuery.includes("delivery") || lowerQuery.includes("deadline")) {
+      return botResponses.timeline;
+    }
+    
+    // Industries queries
+    if (lowerQuery.includes("industry") || lowerQuery.includes("sector") || lowerQuery.includes("domain") || lowerQuery.includes("vertical")) {
+      return botResponses.industries;
+    }
+    
+    // Greeting queries
+    if (lowerQuery.includes("hello") || lowerQuery.includes("hi") || lowerQuery.includes("hey") || lowerQuery.includes("greetings")) {
+      return botResponses.default;
+    }
+    
+    return "I'd be happy to help! You can ask me about our company, services, technologies, team, pricing, contact details, development process, portfolio, support services, project timelines, or industries we serve. What would you like to know?";
   };
 
   const handleSend = (text?: string) => {
@@ -182,19 +234,6 @@ const AIChatbot = () => {
                 </motion.div>
               ))}
               <div ref={messagesEndRef} />
-            </div>
-
-            {/* Quick Questions */}
-            <div className="px-4 pb-2 flex flex-wrap gap-2">
-              {quickQuestions.map((q) => (
-                <button
-                  key={q}
-                  onClick={() => handleSend(q)}
-                  className="text-xs px-3 py-1.5 rounded-full bg-secondary hover:bg-secondary/80 text-secondary-foreground transition-colors"
-                >
-                  {q}
-                </button>
-              ))}
             </div>
 
             {/* Input */}

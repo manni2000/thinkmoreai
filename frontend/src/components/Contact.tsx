@@ -257,7 +257,7 @@ const Contact = () => {
                       onChange={handleInputChange}
                       onBlur={handleInputBlur}
                       required
-                      className={`h-12 bg-card border-border focus:border-accent transition-all duration-300 ${
+                      className={`h-12 bg-card border-border focus:border-accent transition-all duration-300 placeholder:text-muted-foreground/60 ${
                         fieldErrors[field] ? 'border-red-500 focus:border-red-500' : ''
                       } ${isSuccess ? 'border-green-500' : ''}`}
                     />
@@ -306,7 +306,7 @@ const Contact = () => {
                   value={formData.phone}
                   onChange={handleInputChange}
                   onBlur={handleInputBlur}
-                  className={`h-12 bg-card border-border transition-all duration-300 ${
+                  className={`h-12 bg-card border-border transition-all duration-300 placeholder:text-muted-foreground/60 ${
                     fieldErrors.phone ? 'border-red-500 focus:border-red-500' : ''
                   }`}
                 />
@@ -328,7 +328,7 @@ const Contact = () => {
                 <Briefcase className="w-4 h-4" />
                 Services Interested In (Multiple tick allowed - select as many as you need)
               </label>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {services.map((service) => (
                   <motion.div
                     key={service}
@@ -347,9 +347,9 @@ const Contact = () => {
                         value={service}
                         checked={formData.services.includes(service)}
                         onChange={(e) => handleServiceChange(service, e.target.checked)}
-                        className="w-4 h-4 text-accent border-border rounded focus:ring-accent focus:ring-2"
+                        className="w-4 h-4 text-accent border-border rounded focus:ring-accent focus:ring-2 flex-shrink-0"
                       />
-                      <span className="text-sm text-foreground">{service}</span>
+                      <span className="text-sm text-foreground leading-tight">{service}</span>
                     </label>
                   </motion.div>
                 ))}
@@ -371,7 +371,7 @@ const Contact = () => {
                   onBlur={handleInputBlur}
                   required
                   rows={5}
-                  className={`bg-card border-border resize-none focus:border-accent transition-all duration-300 ${
+                  className={`bg-card border-border resize-none focus:border-accent transition-all duration-300 placeholder:text-muted-foreground/60 ${
                     fieldErrors.message ? 'border-red-500 focus:border-red-500' : ''
                   } ${isSuccess ? 'border-green-500' : ''}`}
                   minLength={10}

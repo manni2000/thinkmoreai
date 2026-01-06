@@ -22,7 +22,11 @@ const Header = () => {
 	const isHomePage = location.pathname === "/";
 
 	const handleClickOutside = (event: MouseEvent) => {
-		if (sidebarRef.current && !sidebarRef.current.contains(event.target as Node)) {
+		const target = event.target as Element;
+		// Check if click is outside the sidebar and not on the menu button
+		if (sidebarRef.current && 
+			!sidebarRef.current.contains(target) && 
+			!target.closest('[data-menu-button]')) {
 			setIsMobileMenuOpen(false);
 			setActiveDropdown(null);
 		}
@@ -155,10 +159,14 @@ const Header = () => {
 
 					{/* Mobile Menu Button */}
 					<motion.button
+						data-menu-button
 						className={`lg:hidden p-2 transition-colors ${
 							isHomePage && !isScrolled ? "text-primary-foreground" : "text-foreground"
 						}`}
-						onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+						onClick={(e) => {
+							e.stopPropagation();
+							setIsMobileMenuOpen(!isMobileMenuOpen);
+						}}
 						whileHover={{ scale: 1.1 }}
 						whileTap={{ scale: 0.9 }}
 						transition={{ type: "spring", stiffness: 400, damping: 17 }}
