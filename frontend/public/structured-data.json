@@ -8,13 +8,13 @@
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "",
-    "contactType": "customer service",
+    "contactType": "Business service",
     "availableLanguage": "English"
   },
   "sameAs": [
     "https://www.thinkmoreai.com"
   ],
-  "description": "AI-driven web development, webite, mobile apps, automation, analytics, social media & video editing services,and SEO Optimization. Transform your ideas into scalable solutions.",
+  "description": "AI-driven web development, mobile apps, automation, analytics, social media & video editing services, and SEO Optimization. Transform your ideas into scalable solutions.",
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "IN"
@@ -24,13 +24,13 @@
     "latitude": "",
     "longitude": ""
   },
-  "founder": "",
-  "foundingDate": "",
+  "founder": "Charan Kumar and Manish Kumar",
+  "foundingDate": "2026-01-01",
   "areaServed": "Worldwide",
   "knowsLanguage": "English",
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
-    "name": "Digital Services",
+    "name": "Digital Business Services",
     "itemListElement": [
       {
         "@type": "Offer",
@@ -69,7 +69,7 @@
         "itemOffered": {
           "@type": "Service",
           "name": "SEO Optimization",
-          "description": "Tax, GST, and compliance services"
+          "description": "Search engine optimization and digital marketing"
         }
       },
         {
