@@ -52,7 +52,7 @@ const Contact = () => {
     'Data Analytics',
     'AI Chatbot',
     'SEO Optimization',
-    'Custom Digital Solution'
+    'AI Consultant'
   ];
 
   const validateField = (name: string, value: string) => {
