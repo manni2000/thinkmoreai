@@ -20,7 +20,7 @@ const portfolioItems = [
     description: "Feature-rich shopping application with seamless UX",
     tags: ["React Native", "Firebase", "Stripe"],
     gradient: "from-purple-500 to-pink-500",
-    url: "https://e-commerce-thinkmoreai.vercel.app/",
+    url: "https://maison.thinkmoreai.com/",
     image: "/images/portfolio/ecommerce.webp",
   },
   {
@@ -31,7 +31,7 @@ const portfolioItems = [
     description: "Secure payment and banking application",
     tags: ["Flutter", "Node.js", "MongoDB"],
     gradient: "from-indigo-500 to-purple-500",
-    url: "https://fintech-mobile-app-thinkmoreai.vercel.app/",
+    url: "https://nexapay.thinkmoreai.com/",
     image: "/images/portfolio/mobile.webp",
   },
   {
@@ -42,7 +42,7 @@ const portfolioItems = [
     description: "Real-time order tracking and restaurant management platform",
     tags: ["Vue.js", "Python", "AWS"],
     gradient: "from-green-500 to-emerald-500",
-    url: "https://yumrushthinkmoreai.vercel.app",
+    url: "https://yumrush.thinkmoreai.com/",
     image: "/images/portfolio/food.webp",
   },
   {
@@ -75,7 +75,7 @@ const portfolioItems = [
     description: "Modern business platform with advanced analytics dashboard",
     tags: ["React", "Node.js", "PostgreSQL"],
     gradient: "from-blue-500 to-cyan-500",
-    url: "https://enterprise-saas-platform-thinkmorea.vercel.app/",
+    url: "https://enterprise.thinkmoreai.com/",
     image: "/images/portfolio/saas.webp",
   },
 ];

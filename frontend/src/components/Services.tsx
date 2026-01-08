@@ -58,9 +58,9 @@ const techServices = [
   },
   {
     icon: Cpu,
-    title: "Custom AI & Digital Solutions",
-    tagline: "Built Around Your Business.",
-    description: "Tailored AI systems and digital platforms solving complex business challenges secure and scalable.",
+    title: "AI Consultant",
+    tagline: "Strategic AI Guidance.",
+    description: "Expert consulting to transform your business with AI-driven strategies, implementation roadmap, and measurable ROI optimization.",
   },
 ];
 
@@ -74,7 +74,7 @@ interface ServiceItem {
 const ServiceCard = ({ service, index }: { service: ServiceItem; index: number }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const isSpecialService = service.title === "Custom AI & Digital Solutions";
+  const isSpecialService = service.title === "AI Consultant";
 
   return (
     <motion.div
