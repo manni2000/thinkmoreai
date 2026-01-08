@@ -36,7 +36,7 @@ const portfolioItems = [
   },
   {
     id: 3,
-    title: "Food Delivery Dashboard",
+    title: "Food Delivery Website",
     category: "Website",
     icon: Globe,
     description: "Real-time order tracking and restaurant management platform",
@@ -69,7 +69,7 @@ const portfolioItems = [
   },
   {
     id: 6,
-    title: "Enterprise SaaS Platform",
+    title: "Enterprise SaaS Website",
     category: "Website",
     icon: Globe,
     description: "Modern business platform with advanced analytics dashboard",
