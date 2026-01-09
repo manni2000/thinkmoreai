@@ -1,10 +1,22 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
+import { 
+	CiDesktop, 
+	CiServer, 
+	CiMobile1, 
+	CiMicrochip, 
+	CiChat1, 
+	CiSettings, 
+	CiCloud, 
+	CiLock 
+} from "react-icons/ci";
 
 const techCategories = [
 	{
 		category: "Frontend",
+		icon: CiDesktop,
+		color: "from-blue-500 to-cyan-500",
 		techs: [
 			"React.js",
 			"Next.js",
@@ -17,6 +29,8 @@ const techCategories = [
 	},
 	{
 		category: "Backend",
+		icon: CiServer,
+		color: "from-green-500 to-emerald-500",
 		techs: [
 			"Node.js",
 			"Express.js",
@@ -29,6 +43,8 @@ const techCategories = [
 	},
 	{
 		category: "Mobile",
+		icon: CiMobile1,
+		color: "from-purple-500 to-pink-500",
 		techs: [
 			"React Native",
 			"Flutter",
@@ -40,6 +56,8 @@ const techCategories = [
 	},
 	{
 		category: "AI / ML",
+		icon: CiMicrochip,
+		color: "from-orange-500 to-red-500",
 		techs: [
 			"TensorFlow",
 			"PyTorch",
@@ -54,6 +72,8 @@ const techCategories = [
 	},
 	{
 		category: "LLMs",
+		icon: CiChat1,
+		color: "from-indigo-500 to-purple-500",
 		techs: [
 			"OpenAI (GPT-4)",
 			"Google Gemini",
@@ -65,6 +85,8 @@ const techCategories = [
 	},
 	{
 		category: "DevOps & Infrastructure",
+		icon: CiSettings,
+		color: "from-gray-600 to-slate-600",
 		techs: [
 			"Docker",
 			"Kubernetes",
@@ -77,6 +99,8 @@ const techCategories = [
 	},
 	{
 		category: "Cloud & Monitoring",
+		icon: CiCloud,
+		color: "from-sky-500 to-blue-500",
 		techs: [
 			"AWS",
 			"Google Cloud (GCP)",
@@ -88,6 +112,8 @@ const techCategories = [
 	},
 	{
 		category: "Security & Reliability",
+		icon: CiLock,
+		color: "from-red-500 to-orange-500",
 		techs: [
 			"IAM",
 			"Secrets Management",
@@ -133,14 +159,14 @@ const Technologies = () => {
 					className="text-center max-w-3xl mx-auto mb-20"
 				>
 					<motion.span
-						className="inline-block px-4 py-2 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold uppercase tracking-widest mb-4"
+						className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-xs font-semibold uppercase tracking-widest mb-4"
 						whileHover={{ scale: 1.05 }}
 					>
 						Tech Stack
 					</motion.span>
 					<h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-6 text-foreground">
 						Technologies We{" "}
-						<span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600">
+						<span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-400">
 							Master
 						</span>
 					</h2>
@@ -156,47 +182,57 @@ const Technologies = () => {
 					animate={isInView ? "visible" : "hidden"}
 					className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6"
 				>
-					{techCategories.map((category, catIndex) => (
-						<motion.div
-							key={category.category}
-							variants={cardVariants}
-							whileHover={{ y: -6 }}
-							className="group bg-white border border-slate-200 rounded-xl p-6 shadow-sm hover:shadow-lg transition-all duration-300"
-						>
-							{/* Category Label */}
-							<div className="mb-4">
-								<span className="text-xs uppercase tracking-widest font-semibold text-slate-500">
-									Technology
-								</span>
-							</div>
-
-							{/* Category Title */}
-							<h3 className="font-heading font-bold text-lg text-slate-900 mb-4 group-hover:text-blue-600 transition-colors duration-300">
-								{category.category}
-							</h3>
-
-							{/* Divider */}
-							<div className="border-t border-slate-100 mb-5" />
-
-							{/* Tech Items */}
-							<div className="space-y-2.5">
-								{category.techs.map((tech, idx) => (
-									<motion.div
-										key={idx}
-										initial={{ opacity: 0, x: -10 }}
-										whileInView={{ opacity: 1, x: 0 }}
-										transition={{ delay: idx * 0.05 }}
-										className="flex items-center gap-3"
-									>
-										<span className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-blue-500 to-cyan-500 flex-shrink-0" />
-										<span className="text-sm text-slate-700 group-hover:text-slate-900 transition-colors">
-											{tech}
+					{techCategories.map((category, catIndex) => {
+						const Icon = category.icon;
+						return (
+							<motion.div
+								key={category.category}
+								variants={cardVariants}
+								whileHover={{ y: -8, scale: 1.02 }}
+								className="group bg-white/80 backdrop-blur-sm border border-slate-200/50 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-500 relative overflow-hidden"
+							>
+								{/* Background gradient overlay */}
+								<div className={`absolute inset-0 bg-gradient-to-br ${category.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
+								
+								{/* Icon and Header */}
+								<div className="relative z-10 mb-6 text-center sm:text-left">
+									<div className="flex justify-center sm:justify-start">
+										<div className={`inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br ${category.color} shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300`}>
+											<Icon className="w-6 h-6 text-white" />
+										</div>
+									</div>
+									<div className="mb-2">
+										<span className="text-xs uppercase tracking-widest font-semibold text-slate-500">
+											Category
 										</span>
-									</motion.div>
-								))}
-							</div>
-						</motion.div>
-					))}
+									</div>
+									<h3 className="font-heading font-bold text-xl text-slate-900 mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-cyan-600 transition-all duration-300">
+										{category.category}
+									</h3>
+									<div className={`h-0.5 bg-gradient-to-r ${category.color} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center sm:origin-left mx-auto sm:mx-0`} />
+								</div>
+
+								{/* Tech Items */}
+								<div className="relative z-10 space-y-3 text-center sm:text-left">
+									{category.techs.map((tech, idx) => (
+										<motion.div
+											key={idx}
+											initial={{ opacity: 0, x: -10 }}
+											whileInView={{ opacity: 1, x: 0 }}
+											transition={{ delay: idx * 0.05 }}
+											whileHover={{ x: 4 }}
+											className="flex items-center justify-center sm:justify-start gap-3 group/item"
+										>
+											<div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${category.color} flex-shrink-0 group-hover/item:scale-150 transition-transform duration-200`} />
+											<span className="text-sm text-slate-700 group-hover/item:text-slate-900 group-hover/item:font-medium transition-all duration-200">
+												{tech}
+											</span>
+										</motion.div>
+									))}
+								</div>
+							</motion.div>
+						);
+					})}
 				</motion.div>
 			</div>
 		</section>
