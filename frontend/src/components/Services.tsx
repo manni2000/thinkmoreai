@@ -68,7 +68,7 @@ const techServices = [
     tagline: "Narratives That Perform.",
     description: "High-quality written content and visual storytelling aligned with brand strategy and measurable outcomes.",
     color: "from-cyan-500 to-blue-500",
-    features: ["Video Production", "Copywriting", "Brand Storytelling"],
+    features: ["Video Editing", "Copywriting", "Brand Storytelling"],
   },
   {
     icon: Cpu,
@@ -240,7 +240,7 @@ const Services = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-accent font-semibold text-sm uppercase tracking-wider">
+          <span className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold uppercase tracking-wider mb-6">
             Our Services
           </span>
           <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-4 mb-6">

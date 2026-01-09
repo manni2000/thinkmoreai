@@ -93,7 +93,7 @@ const Team = () => {
           </span>
 
           <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-            Battle-Tested <span className="text-accent">Experts</span>
+            Battle Tested <span className="text-accent">Experts</span>
           </h2>
 
           <p className="text-xl text-primary-foreground/70 mb-10 leading-relaxed">
