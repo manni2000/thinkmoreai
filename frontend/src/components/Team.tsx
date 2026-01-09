@@ -4,13 +4,13 @@ import { useRef } from "react";
 const teamMembers = [
   {
     name: "Charan Kumar",
-    role: "CEO & founder",
+    role: "CEO & Founder",
     company: "ThinkMoreAI",
     avatar: "/charan-avatar.jpg",
   },
   {
     name: "Manish Kumar",
-    role: "CTO & founder",
+    role: "CTO & Founder",
     company: "ThinkMoreAI",
     avatar: "/manish-avatar.jpg",
   },
@@ -52,7 +52,7 @@ const Team = () => {
           </h2>
 
           <p className="text-xl text-primary-foreground/70 mb-10 leading-relaxed">
-            A dedicated team from global MNCs and high-growth startups — combining
+            A dedicated team from global MNCs and high-growth startups combining
             strategy, engineering, design, and compliance expertise to deliver
             measurable results.
           </p>
