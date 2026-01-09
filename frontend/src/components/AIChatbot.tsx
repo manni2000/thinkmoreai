@@ -12,6 +12,8 @@ const botResponses: Record<string, string> = {
 
   "pricing": "Our pricing is flexible and project-based, determined by scope, complexity, and timelines. We follow a transparent pricing model with no hidden costs. Schedule a free consultation to receive a customized quote tailored to your specific requirements.",
 
+  "plans": "We offer flexible pricing plans tailored to your needs:\n\n🚀 **Startup Plan**\nPerfect for new businesses and MVPs\n• Basic web development\n• Essential features\n• 2-4 week delivery\n• Budget-friendly pricing\n\n💼 **Business Plan**\nIdeal for growing companies\n• Advanced web/mobile apps\n• Custom integrations\n• 2-3 month delivery\n• Scalable solutions\n\n🏢 **Enterprise Plan**\nFor large-scale projects\n• Full-stack development\n• AI/ML integration\n• 4-6 month delivery\n• Premium support\n\n💡 **Custom Plan**\nTailored solutions for unique requirements\n• Personalized consultation\n• Flexible timelines\n• Custom features\n\nContact us for a detailed quote based on your specific project requirements!",
+
   "technologies": "We work with modern, production-grade technologies across the stack:\n\n⚛️ React, Next.js, Vue, Angular\n🔧 Node.js, Python, Django\n📱 React Native, Flutter\n🤖 TensorFlow, PyTorch, OpenAI\n☁️ AWS, GCP, Vercel",
 
   "team": "Meet Our Leadership Team \n\n👨‍💼 Charan Kumar  \nFounder & CEO  \n\n👨‍💻 Manish Kumar  \nCTO & Founder  \n\nOur team combines technical expertise with business acumen to deliver exceptional results for our clients.",
@@ -28,7 +30,7 @@ const botResponses: Record<string, string> = {
 
   "industries": "We serve clients across multiple industries:\n\n🏥 Healthcare & MedTech\n🏦 Banking & Finance\n🛒 E-commerce & Retail\n🎓 Education & EdTech\n🏭 Manufacturing & Industrial\n📱 Media & Entertainment\n🚗 Automotive\n🏥 Real Estate",
 
-  "default": "Hello! I'm ThinkmoreAI's virtual assistant. I can help you with information about our company, services, technologies, team, pricing, contact details, development process, portfolio, support services, project timelines, and industries we serve. Feel free to ask any question!"
+  "default": "Hello! I'm ThinkmoreAI's virtual assistant. I can help you with information about our company, services, pricing plans, technologies, team, pricing, contact details, development process, portfolio, support services, project timelines, and industries we serve. Feel free to ask any question!"
 };
 
 
@@ -102,6 +104,12 @@ const AIChatbot = () => {
       return botResponses.services;
     }
     
+    // Plans queries (check before pricing - more specific)
+    if (lowerQuery.includes("plan") || lowerQuery.includes("package") || lowerQuery.includes("subscription") || 
+        (lowerQuery.includes("pricing") && (lowerQuery.includes("plan") || lowerQuery.includes("package") || lowerQuery.includes("tier")))) {
+      return botResponses.plans;
+    }
+    
     // Pricing queries
     if (lowerQuery.includes("pricing") || lowerQuery.includes("price") || lowerQuery.includes("cost") || lowerQuery.includes("rate") || lowerQuery.includes("charge") || lowerQuery.includes("affordable")) {
       return botResponses.pricing;
@@ -128,7 +136,7 @@ const AIChatbot = () => {
       return botResponses.default;
     }
     
-    return "I'd be happy to help! You can ask me about our company, services, technologies, team, pricing, contact details, development process, portfolio, support services, project timelines, or industries we serve. What would you like to know?";
+    return "I'd be happy to help! You can ask me about our company, services, pricing plans, technologies, team, pricing, contact details, development process, portfolio, support services, project timelines, or industries we serve. What would you like to know?";
   };
 
   const handleSend = (text?: string) => {
