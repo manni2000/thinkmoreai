@@ -150,7 +150,41 @@ const ServiceCard = ({ service, index }: { service: ServiceItem; index: number }
         <div className="relative z-10 mb-6 text-center sm:text-left">
           <div className="flex justify-center sm:justify-start">
             <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${serviceColor} shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300`}>
-              <service.icon className="w-8 h-8 text-white" />
+              <motion.div
+                // Different animations for different icons
+                animate={
+                  service.icon === Globe ? 
+                    { 
+                      rotate: [0, 15, -15, 10, -10, 5, -5, 0],
+                      scale: [1, 1.05, 1.1, 1.05, 1]
+                    } :
+                  service.icon === Smartphone ? 
+                    { scale: [1, 1.1, 1] } :
+                  service.icon === Bot ? 
+                    { y: [0, -3, 0] } :
+                  service.icon === BarChart3 ? 
+                    { scale: [1, 1.2, 1], rotate: [0, 5, -5, 0] } :
+                  service.icon === FileSpreadsheet ? 
+                    { rotate: [0, -5, 5, 0] } :
+                  service.icon === Megaphone ? 
+                    { scale: [1, 1.15, 1] } :
+                  service.icon === Video ? 
+                    { rotate: [0, 10, -10, 0] } :
+                  service.icon === Cpu ? 
+                    { scale: [1, 1.1, 1], rotate: [0, 180] } :
+                    { scale: [1, 1.05, 1] }
+                }
+                transition={{
+                  duration: service.icon === Globe ? 2 : 
+                            service.icon === Cpu ? 2 :
+                            1,
+                  repeat: Infinity,
+                  ease: service.icon === Globe ? "easeInOut" : "easeInOut",
+                  delay: service.icon === Bot ? 0.5 : 0
+                }}
+              >
+                <service.icon className="w-8 h-8 text-white" />
+              </motion.div>
             </div>
           </div>
           

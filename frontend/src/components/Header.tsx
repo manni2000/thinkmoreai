@@ -8,7 +8,7 @@ const navLinks = [
 	{ name: "About", href: "/about" },
 	{ name: "Services", href: "/services" },
 	{ name: "Portfolio", href: "/portfolio" },
-	{ name: "Technologies", href: "/technologies" },
+	// { name: "Technologies", href: "/technologies" },
     { name: "Team", href: "/team"},
 	{ name: "Contact", href: "/contact" },
 ];
@@ -23,7 +23,6 @@ const Header = () => {
 
 	const handleClickOutside = (event: MouseEvent) => {
 		const target = event.target as Element;
-		// Check if click is outside the sidebar and not on the menu button
 		if (sidebarRef.current && 
 			!sidebarRef.current.contains(target) && 
 			!target.closest('[data-menu-button]')) {
@@ -99,25 +98,44 @@ const Header = () => {
 						{navLinks.map((link) => (
 							<motion.div
 								key={link.name}
-								className="relative group"
+								className="relative"
 								whileHover={{ y: -2 }}
 								transition={{ type: "spring", stiffness: 300, damping: 17 }}
 							>
-								<a
-									href={link.href}
-									className={`font-medium transition-colors duration-300 relative flex items-center gap-1 ${
-										isHomePage && !isScrolled
-											? "text-primary-foreground/80 hover:text-primary-foreground"
-											: "text-muted-foreground hover:text-foreground"
-									}`}
+								<motion.div
+									className="group"
+									whileHover="hovered"
 								>
-									{link.name}
+									<a
+										href={link.href}
+										className={`font-medium text-lg transition-colors duration-300 relative flex items-center gap-1 ${
+											isHomePage && !isScrolled
+												? "text-primary-foreground/80 hover:text-primary-foreground"
+												: "text-muted-foreground hover:text-foreground"
+										}`}
+									>
+										{link.name}
+									</a>
 									<motion.div
-										className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all duration-300 group-hover:w-full"
+										className="absolute -bottom-1 left-0 h-0.5 bg-yellow-500 origin-left"
 										initial={false}
-										animate={{ width: location.pathname === link.href ? "100%" : "0%" }}
+										animate={{ 
+											width: location.pathname === link.href ? "100%" : "0%",
+											scaleX: location.pathname === link.href ? 1 : 0
+										}}
+										variants={{
+											hovered: { 
+												width: "100%", 
+												scaleX: 1,
+												transition: { duration: 0.3, ease: "easeOut" }
+											}
+										}}
+										transition={{ 
+											width: { duration: 0.3, ease: "easeOut" },
+											scaleX: { duration: 0.3, ease: "easeOut" }
+										}}
 									/>
-								</a>
+								</motion.div>
 								{location.pathname === link.href && (
 									<motion.div
 										layoutId="activeTab"

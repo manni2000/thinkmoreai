@@ -9,7 +9,7 @@ import AIChatbot from "@/components/AIChatbot";
 import Index from "./pages/Index";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
-import TechnologiesPage from "./pages/TechnologiesPage";
+// import TechnologiesPage from "./pages/TechnologiesPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import TeamPage from "@/pages/TeamPage";
 import NotFound from "./pages/NotFound";
@@ -32,7 +32,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/services" element={<ServicesPage />} />
-          <Route path="/technologies" element={<TechnologiesPage />} />
+          {/* <Route path="/technologies" element={<TechnologiesPage />} /> */}
           <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/process" element={<Process />} />
           <Route path="/faq" element={<FAQ />} />
