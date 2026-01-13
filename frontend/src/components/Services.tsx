@@ -150,41 +150,7 @@ const ServiceCard = ({ service, index }: { service: ServiceItem; index: number }
         <div className="relative z-10 mb-6 text-center sm:text-left">
           <div className="flex justify-center sm:justify-start">
             <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${serviceColor} shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300`}>
-              <motion.div
-                // Different animations for different icons
-                animate={
-                  service.icon === Globe ? 
-                    { 
-                      rotate: [0, 15, -15, 10, -10, 5, -5, 0],
-                      scale: [1, 1.05, 1.1, 1.05, 1]
-                    } :
-                  service.icon === Smartphone ? 
-                    { scale: [1, 1.1, 1] } :
-                  service.icon === Bot ? 
-                    { y: [0, -3, 0] } :
-                  service.icon === BarChart3 ? 
-                    { scale: [1, 1.2, 1], rotate: [0, 5, -5, 0] } :
-                  service.icon === FileSpreadsheet ? 
-                    { rotate: [0, -5, 5, 0] } :
-                  service.icon === Megaphone ? 
-                    { scale: [1, 1.15, 1] } :
-                  service.icon === Video ? 
-                    { rotate: [0, 10, -10, 0] } :
-                  service.icon === Cpu ? 
-                    { scale: [1, 1.1, 1], rotate: [0, 180] } :
-                    { scale: [1, 1.05, 1] }
-                }
-                transition={{
-                  duration: service.icon === Globe ? 2 : 
-                            service.icon === Cpu ? 2 :
-                            1,
-                  repeat: Infinity,
-                  ease: service.icon === Globe ? "easeInOut" : "easeInOut",
-                  delay: service.icon === Bot ? 0.5 : 0
-                }}
-              >
                 <service.icon className="w-8 h-8 text-white" />
-              </motion.div>
             </div>
           </div>
           
@@ -193,7 +159,7 @@ const ServiceCard = ({ service, index }: { service: ServiceItem; index: number }
             <motion.div
               className="absolute -top-2 left-1/2 -translate-x-1/2 sm:left-auto sm:-right-2 sm:translate-x-0 inline-flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-yellow-400 to-orange-400 text-white text-xs font-bold rounded-full shadow-lg"
               animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
             >
               <Sparkles className="w-3 h-3" />
               Featured
@@ -264,7 +230,7 @@ const Services = () => {
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="services" className="pt-2 pb-20 md:pt-4 md:pb-28 lg:pt-6 lg:pb-32 bg-gradient-to-b from-slate-50 via-white to-slate-50 relative overflow-hidden">
+    <section id="services" className="pt-2 pb-20 md:pt-4 md:pb-28 lg:pt-6 lg:pb-32 bg-gray-100 relative overflow-hidden">
       <div className="container-custom">
         {/* Section Header */}
         <motion.div
