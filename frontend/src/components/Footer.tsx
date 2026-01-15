@@ -60,10 +60,10 @@ const Footer = () => {
                   name: "Portfolio",
                   href: "/portfolio",
                 },
-                {
-                  name: "Technologies",
-                  href: "/technologies",
-                },
+                // {
+                //   name: "Technologies",
+                //   href: "/technologies",
+                // },
                 {
                   name: "Team",
                   href: "/team",
