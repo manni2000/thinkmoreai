@@ -1,6 +1,7 @@
 import Services from "@/components/Services";
 import Process from "@/components/Process";
 import FAQ from "@/components/FAQ";
+import TransformSection from "@/components/TransformSection";
 import Contact from "@/components/Contact";
 import AIChatbot from "@/components/AIChatbot";
 
@@ -12,6 +13,7 @@ const ServicesPage = () => {
         <Services />
         <Process />
         <FAQ />
+        <TransformSection />
         <Contact />
       </main>
       <AIChatbot />

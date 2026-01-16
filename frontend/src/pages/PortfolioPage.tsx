@@ -1,6 +1,7 @@
 import Portfolio from "@/components/Portfolio";
 import Process from "@/components/Process";
 import FAQ from "@/components/FAQ";
+import TransformSection from "@/components/TransformSection";
 import Contact from "@/components/Contact";
 import AIChatbot from "@/components/AIChatbot";
 
@@ -12,6 +13,7 @@ const PortfolioPage = () => {
         <Portfolio />
         <Process />
         <FAQ />
+        <TransformSection />
         <Contact />
       </main>
       <AIChatbot />
