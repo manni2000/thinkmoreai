@@ -33,7 +33,3 @@ Allow: /*.png
 Allow: /*.gif
 Allow: /*.svg
 Allow: /*.webp
-
-# Crawl delay (optional)
-Crawl-delay: 1
-
