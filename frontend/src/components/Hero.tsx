@@ -214,7 +214,7 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col items-center justify-center pt-8"
+              className="flex flex-col items-center justify-center pt-8 sm:items-start sm:justify-start"
             >
               <div className="flex flex-wrap items-center justify-center gap-4 mb-4 sm:justify-start">
                 <div className="flex items-center gap-2">
@@ -231,7 +231,7 @@ const Hero = () => {
                 </div>
               </div>
               <div className="flex items-start gap-2">
-                <span className="text-sm text-white/80 text-center sm:text-left max-w-md">
+                <span className="text-sm text-white/80 text-center max-w-md sm:text-left">
                   Trusted by 50+ companies • 3x average ROI • 6-month implementation
                 </span>
               </div>
