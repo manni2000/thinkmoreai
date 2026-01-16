@@ -123,7 +123,7 @@ const Hero = () => {
           {/* Left Content */}
           <div className="space-y-8">
             {/* Badge */}
-            <motion.div variants={itemVariants} className="flex justify-start mt-8 sm:mt-6 lg:mt-6">
+            <motion.div variants={itemVariants} className="flex justify-center mt-8 sm:justify-start sm:mt-6 lg:mt-6">
               <div className="inline-flex items-center gap-3 px-5 py-3 rounded-full bg-accent/20 backdrop-blur-md border border-accent/40 hover:border-accent/60 transition-all duration-300 group">
                 <motion.div
                   animate={{ rotate: 360 }}

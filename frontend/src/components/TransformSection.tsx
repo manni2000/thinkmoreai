@@ -18,7 +18,7 @@ const TransformSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl font-bold mb-6"
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 px-4"
           >
             Ready to Transform Your Business?
           </motion.h2>
@@ -28,7 +28,7 @@ const TransformSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-lg text-foreground/70 mb-8 max-w-2xl mx-auto"
+            className="text-base sm:text-lg text-foreground/70 mb-8 max-w-2xl mx-auto px-4"
           >
             Get a personalized demo tailored to your specific needs and see exactly how our AI solutions can drive your growth.
           </motion.p>
@@ -46,7 +46,7 @@ const TransformSection = () => {
               variant="accent" 
               size="lg" 
               asChild 
-              className="group bg-gradient-to-r from-accent to-blue-500 hover:from-accent/90 hover:to-blue-500/90 text-white px-8 py-4 text-lg"
+              className="group bg-gradient-to-r from-accent to-blue-500 hover:from-accent/90 hover:to-blue-500/90 text-white px-8 py-4 text-lg w-full sm:w-auto"
             >
               <a 
                 href="https://cal.id/enquire.thinkmoreai" 
