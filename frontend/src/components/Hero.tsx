@@ -1,7 +1,8 @@
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, Zap, Shield, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -28,6 +29,7 @@ const Hero = () => {
   const y = useTransform(scrollY, [0, 1000], [0, -150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
   const scale = useSpring(useTransform(scrollY, [0, 300], [1, 0.8]), { stiffness: 300, damping: 30 });
+  const [showStickyCTA, setShowStickyCTA] = useState(false);
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -38,6 +40,13 @@ const Hero = () => {
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = scrollY.on("change", (latest) => {
+      setShowStickyCTA(latest > 400);
+    });
+    return unsubscribe;
+  }, [scrollY]);
 
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden pt-20 pb-20 bg-gradient-to-br from-primary via-primary/95 to-navy-deep">
@@ -67,11 +76,11 @@ const Hero = () => {
           className="absolute inset-0"
         />
 
-        {/* Animated Grid */}
+        Animated Grid
         <svg className="absolute inset-0 w-full h-full opacity-10" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M 40 0 L 0 0 0 40" fill="none" stroke="white" strokeWidth="0.5" />
+              <path d="M 0 0 L 40 0 M 0 40 L 40 40" fill="none" stroke="white" strokeWidth="0.5" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#grid)" />
@@ -163,14 +172,14 @@ const Hero = () => {
                   transition={{ duration: 0.3 }}
                 />
                 <Button variant="hero" size="xl" asChild className="group relative w-full sm:w-auto">
-                  <a href="/contact" className="inline-flex items-center justify-center gap-3 w-full">
+                  <a href="https://cal.id/enquire.thinkmoreai" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-3 w-full">
                     <motion.div
                       animate={{ rotate: [0, 5, -5, 0] }}
                       transition={{ duration: 1, repeat: Infinity, repeatDelay: 1.5 }}
                     >
                       <Zap className="w-4 h-4" />
                     </motion.div>
-                    Get a Free Consultation
+                    Book a Discovery Call
                     <motion.div
                       className="overflow-hidden"
                       whileHover={{ x: 5 }}
@@ -337,10 +346,69 @@ const Hero = () => {
                 repeat: Infinity,
                 ease: "easeInOut"
               }}
-            />
+          />
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Sticky CTA Button */}
+      <AnimatePresence>
+        {showStickyCTA && (
+          <motion.div
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ duration: 0.3 }}
+            className="fixed left-6 top-1/3 -translate-y-1/2 z-40 hidden sm:block"
+          >
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                variant="hero"
+                size="lg"
+                asChild
+                className="shadow-2xl min-h-[240px] w-16 py-4 px-2 rounded-2xl hover:shadow-accent/50 hover:shadow-2xl transition-all duration-300"
+              >
+                <a
+                  href="https://cal.id/enquire.thinkmoreai"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex flex-col items-center justify-center h-full gap-2"
+                >
+                  {/* ⚡ Zap – TOP */}
+                  <motion.div
+                    animate={{ y: [0, -4, 0] }}
+                    transition={{ duration: 1.4, repeat: Infinity }}
+                  >
+                    <Zap className="w-5 h-5" />
+                  </motion.div>
+
+                  {/* 📝 Vertical Text – CENTER */}
+                  <span
+                    className="text-sm font-medium text-center"
+                    style={{
+                      writingMode: "vertical-rl",
+                      textOrientation: "mixed",
+                    }}
+                  >
+                    Book a Discovery Call
+                  </span>
+
+                  {/* ➡ Arrow – BOTTOM */}
+                  <motion.div
+                    animate={{ y: [0, 4, 0] }}
+                    transition={{ duration: 1.4, repeat: Infinity }}
+                  >
+                    <ArrowRight className="w-5 h-5 rotate-90" />
+                  </motion.div>
+                </a>
+              </Button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   );
 };

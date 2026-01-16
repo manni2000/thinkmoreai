@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot, MessageSquare } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useScroll } from "framer-motion";
 
 const botResponses: Record<string, string> = {
   "about": "ThinkmoreAI is an AI-driven technology and professional services company focused on building scalable, high-impact digital solutions. We help startups, SMEs, and enterprises turn ideas into production-ready products through intelligent automation, advanced analytics, and modern engineering. Our team brings experience from global MNCs and fast-scaling startups, with a strong emphasis on execution quality, clarity, and long-term partnerships.",
@@ -42,6 +43,8 @@ interface Message {
 
 const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showFloatingButtons, setShowFloatingButtons] = useState(false);
+  const { scrollY } = useScroll();
   const [messages, setMessages] = useState<Message[]>([
     { id: 1, text: botResponses.default, isBot: true }
   ]);
@@ -58,6 +61,13 @@ const AIChatbot = () => {
     }, 300); 
     return () => clearTimeout(timeoutId);
   }, [messages]);
+
+  useEffect(() => {
+    const unsubscribe = scrollY.on("change", (latest) => {
+      setShowFloatingButtons(latest > 200);
+    });
+    return unsubscribe;
+  }, [scrollY]);
 
   const getResponse = (query: string): string => {
     const lowerQuery = query.toLowerCase();
@@ -148,38 +158,56 @@ const AIChatbot = () => {
   return (
     <>
       {/* WhatsApp Button */}
-      <motion.a
-        href="https://wa.me/919608826629?text=Hi%20there!%20I'm%20interested%20in%20your%20services%20and%20would%20like%20to%20know%20more"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={`fixed bottom-24 right-5 z-50 w-20 h-20 rounded-full shadow-2xl flex items-center justify-center ${isOpen ? 'hidden' : ''}`}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        animate={{
-          boxShadow: ["0 0 0 0 rgba(34, 197, 94, 0.4)", "0 0 0 20px rgba(34, 197, 94, 0)", "0 0 0 0 rgba(34, 197, 94, 0)"]
-        }}
-        transition={{
-          boxShadow: { duration: 1, repeat: Infinity }
-        }}
-      >
-        <img src="/images/portfolio/whatsapp.png" alt="WhatsApp" className="w-16 h-16" style={{ filter: 'brightness(1.2)' }} />
-      </motion.a>
+      <AnimatePresence>
+        {showFloatingButtons && (
+          <motion.a
+            href="https://wa.me/919608826629?text=Hi%20there!%20I'm%20interested%20in%20your%20services%20and%20would%20like%20to%20know%20more"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`fixed bottom-24 right-5 z-50 w-16 h-16 rounded-full shadow-2xl flex items-center justify-center ${isOpen ? 'hidden' : ''}`}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ 
+              opacity: 1, 
+              x: 0,
+              boxShadow: ["0 0 0 0 rgba(34, 197, 94, 0.4)", "0 0 0 20px rgba(34, 197, 94, 0)", "0 0 0 0 rgba(34, 197, 94, 0)"]
+            }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ 
+              duration: 0.3,
+              boxShadow: { duration: 1, repeat: Infinity }
+            }}
+          >
+            <img src="/images/portfolio/whatsapp.png" alt="WhatsApp" className="w-14 h-14" style={{ filter: 'brightness(1.2)' }} />
+          </motion.a>
+        )}
+      </AnimatePresence>
 
       {/* Chat Button */}
-      <motion.button
-        onClick={() => setIsOpen(true)}
-        className={`fixed bottom-8 right-6 z-50 w-16 h-16 rounded-full bg-accent text-accent-foreground shadow-2xl flex items-center justify-center ${isOpen ? 'hidden' : ''}`}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.95 }}
-        animate={{ 
-          boxShadow: ["0 0 0 0 rgba(245, 166, 35, 0.4)", "0 0 0 20px rgba(245, 166, 35, 0)", "0 0 0 0 rgba(245, 166, 35, 0)"]
-        }}
-        transition={{ 
-          boxShadow: { duration: 1, repeat: Infinity }
-        }}
-      >
-        <img src="/images/portfolio/chats.webp" alt="Chat" className="w-13 h-13"/>
-      </motion.button>
+      <AnimatePresence>
+        {showFloatingButtons && (
+          <motion.button
+            onClick={() => setIsOpen(true)}
+            className={`fixed bottom-8 right-6 z-50 w-14 h-14 rounded-full bg-accent text-accent-foreground shadow-2xl flex items-center justify-center ${isOpen ? 'hidden' : ''}`}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, x: -100 }}
+            animate={{ 
+              opacity: 1, 
+              x: 0,
+              boxShadow: ["0 0 0 0 rgba(245, 166, 35, 0.4)", "0 0 0 20px rgba(245, 166, 35, 0)", "0 0 0 0 rgba(245, 166, 35, 0)"]
+            }}
+            exit={{ opacity: 0, x: -100 }}
+            transition={{ 
+              duration: 0.3,
+              boxShadow: { duration: 1, repeat: Infinity }
+            }}
+          >
+            <img src="/images/portfolio/chats.webp" alt="Chat" className="w-10 h-10"/>
+          </motion.button>
+        )}
+      </AnimatePresence>
 
       {/* Chat Window */}
       <AnimatePresence>
@@ -189,7 +217,7 @@ const AIChatbot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-8 right-6 z-50 w-[360px] h-[500px] bg-card rounded-2xl shadow-2xl border border-border/50 flex flex-col overflow-hidden"
+            className="fixed bottom-8 right-6 z-50 w-[450px] h-[600px] bg-card rounded-2xl shadow-2xl border border-border/50 flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="bg-primary p-4 flex items-center justify-between">
