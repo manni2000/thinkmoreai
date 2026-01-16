@@ -175,7 +175,7 @@ const Portfolio = () => {
   return (
     <section
       id="portfolio"
-      className="pt-2 pb-20 md:pt-4 md:pb-28 lg:pt-6 lg:pb-32 bg-gradient-to-b from-gray-50 to-gray-50 relative overflow-hidden"
+      className="pt-2 pb-20 md:pt-4 md:pb-28 lg:pt-6 lg:pb-32 bg-gradient-to-b from-blue-50 to-indigo-100 relative overflow-hidden"
     >
       {/* Background Animation */}
       <div className="absolute inset-0 overflow-hidden">

@@ -230,7 +230,7 @@ const Services = () => {
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="services" className="pt-2 pb-20 md:pt-4 md:pb-28 lg:pt-6 lg:pb-32 bg-gray-100 relative overflow-hidden">
+    <section id="services" className="pt-2 pb-20 md:pt-4 md:pb-28 lg:pt-6 lg:pb-32 bg-gradient-to-b from-amber-50 to-orange-100 relative overflow-hidden">
       <div className="container-custom">
         {/* Section Header */}
         <motion.div

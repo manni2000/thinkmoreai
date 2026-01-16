@@ -132,11 +132,10 @@ const Hero = () => {
             {/* Headline */}
             <motion.div variants={itemVariants} className="space-y-4">
               <h1 className="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold leading-tight text-primary-foreground">
-                Building{" "}
+                AI Solutions That{" "}
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent via-orange-400 to-yellow-300">
-                  Intelligent
-                </span>{" "}
-                Digital Solutions That Scale
+                  Double Your Efficiency
+                </span>
               </h1>
             </motion.div>
 
@@ -145,7 +144,7 @@ const Hero = () => {
               variants={itemVariants}
               className="text-lg text-primary-foreground/75 max-w-xl leading-relaxed"
             >
-              AI-driven development, automation, analytics, and compliance delivered with precision and execution excellence. Transform your ideas into scalable, profitable products.
+              Enterprise AI development that delivers 3x ROI in 6 months. Trusted by 50+ companies for automation, analytics, and intelligent digital transformation.
             </motion.p>
 
             {/* CTA Buttons */}
@@ -208,14 +207,23 @@ const Hero = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="flex flex-col items-center justify-center sm:items-start sm:justify-start pt-8"
             >
-              <div className="flex items-center gap-3 mb-3">
-                <span className="text-2xl font-bold text-white tracking-wide text-center sm:text-left">
-                  Security. Scale. Intelligence.
-                </span>
+              <div className="flex flex-wrap items-center gap-4 mb-4">
+                <div className="flex items-center gap-2">
+                  <Shield className="w-4 h-4 text-accent" />
+                  <span className="text-sm font-medium text-white">SOC 2 Compliant</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-green-400"></div>
+                  <span className="text-sm font-medium text-white">98% Success Rate</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-accent" />
+                  <span className="text-sm font-medium text-white">40% Faster Delivery</span>
+                </div>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-sm text-white/80 text-center sm:text-left max-w-md">
-                  Enterprise-grade AI & digital solutions built for growth and compliance
+                  Trusted by 50+ companies • 3x average ROI • 6-month implementation
                 </span>
               </div>
             </motion.div>

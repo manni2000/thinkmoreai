@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-import { MapPin, Mail, Phone, Send, ArrowRight, CheckCircle, AlertCircle, User, MessageSquare, Briefcase } from "lucide-react";
+import { MapPin, Mail, Phone, Send, ArrowRight, CheckCircle, AlertCircle, User, MessageSquare, Briefcase, Clock, Shield, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -210,10 +210,41 @@ const Contact = () => {
           </motion.h2>
           <motion.p
             variants={itemVariants}
-            className="text-lg text-muted-foreground"
+            className="text-lg text-muted-foreground mb-6"
           >
             Ready to transform your ideas into reality? We'd love to hear from you.
           </motion.p>
+
+          {/* Conversion Optimization Elements */}
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-wrap justify-center gap-4 mb-8"
+          >
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
+              <Clock className="w-3 h-3" />
+              <span className="font-medium">24-hour response</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm">
+              <Shield className="w-3 h-3" />
+              <span className="font-medium">Free consultation</span>
+            </div>
+            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-sm">
+              <Star className="w-3 h-3" />
+              <span className="font-medium">No obligation</span>
+            </div>
+          </motion.div>
+
+          <motion.div
+            variants={itemVariants}
+            className="text-center p-4 bg-accent/5 rounded-lg border border-accent/20"
+          >
+            <div className="text-sm text-foreground/70 mb-2">
+              <strong>Limited Time:</strong> Book your free consultation this week and receive a complimentary AI readiness assessment ($100 value)
+            </div>
+            <div className="text-xs text-foreground/50">
+              Only 3 spots remaining this month
+            </div>
+          </motion.div>
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-16">

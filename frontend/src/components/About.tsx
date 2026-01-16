@@ -34,7 +34,7 @@ const About = () => {
   return (
     <section
       id="about"
-      className="section-padding bg-white relative overflow-hidden"
+      className="section-padding bg-gradient-to-b from-slate-50 to-blue-50 relative overflow-hidden"
     >
       {/* Background Accent */}
       <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-accent/5 to-transparent" />
