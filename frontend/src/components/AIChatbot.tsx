@@ -7,7 +7,7 @@ import { useScroll } from "framer-motion";
 const botResponses: Record<string, string> = {
   "about": "ThinkmoreAI is an AI-driven technology and professional services company focused on building scalable, high-impact digital solutions. We help startups, SMEs, and enterprises turn ideas into production-ready products through intelligent automation, advanced analytics, and modern engineering. Our team brings experience from global MNCs and fast-scaling startups, with a strong emphasis on execution quality, clarity, and long-term partnerships.",
 
-  "services": "We provide end-to-end digital services, including:\n\n💻 Website & Mobile App Development\n🤖 AI Chatbots & Automation\n📊 Data Analytics & SEO Optimization\n📣 Social Media Management & Video Editing\n🔧 Custom AI & Digital Solutions",
+  "services": "We provide end-to-end digital services, including:\n\n💻 Website & Mobile App Development\n🤖 AI Chatbots & Automation\n📊 Data Analytics & SEO Optimization\n📣 Social Media Management & Video Editing\n🔧 AI Consultant",
 
   "contact": "You can get in touch with us through the following channels:\n\n📧 Email: info@thinkmoreai.com\n📍 Office: Kestopur, Kolkata, West Bengal, India\n\n💬 You can also reach out via the contact form on our website, and our team will respond promptly.",
 
@@ -217,7 +217,7 @@ const AIChatbot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-50 w-full h-full bg-card md:fixed md:bottom-4 md:right-4 md:inset-auto md:w-[calc(100vw-2rem)] md:max-w-[450px] md:h-[calc(100vh-2rem)] md:max-h-[600px] md:rounded-2xl md:shadow-2xl md:border md:border-border/50 md:flex md:flex-col"
+            className="fixed inset-0 z-50 w-full h-full bg-card flex flex-col md:fixed md:bottom-4 md:right-4 md:inset-auto md:w-[calc(100vw-2rem)] md:max-w-[450px] md:h-[calc(100vh-2rem)] md:max-h-[600px] md:rounded-2xl md:shadow-2xl md:border md:border-border/50"
           >
             {/* Header */}
             <div className="bg-primary p-4 flex items-center justify-between">
