@@ -217,7 +217,7 @@ const AIChatbot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.2 }}
-            className="fixed bottom-8 right-6 z-50 w-[450px] h-[600px] bg-card rounded-2xl shadow-2xl border border-border/50 flex flex-col overflow-hidden"
+            className="fixed bottom-4 right-4 z-50 w-[calc(100vw-2rem)] max-w-[450px] h-[calc(100vh-2rem)] max-h-[600px] bg-card rounded-2xl shadow-2xl border border-border/50 flex flex-col md:bottom-8 md:right-6 md:w-[450px] md:h-[600px]"
           >
             {/* Header */}
             <div className="bg-primary p-4 flex items-center justify-between">

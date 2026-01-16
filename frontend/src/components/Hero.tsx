@@ -214,9 +214,9 @@ const Hero = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.6 }}
-              className="flex flex-col items-center justify-center sm:items-start sm:justify-start pt-8"
+              className="flex flex-col items-center justify-center pt-8"
             >
-              <div className="flex flex-wrap items-center gap-4 mb-4">
+              <div className="flex flex-wrap items-center justify-center gap-4 mb-4 sm:justify-start">
                 <div className="flex items-center gap-2">
                   <Shield className="w-4 h-4 text-accent" />
                   <span className="text-sm font-medium text-white">SOC 2 Compliant</span>
