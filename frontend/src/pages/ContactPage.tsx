@@ -1,20 +1,12 @@
-import Services from "@/components/Services";
-import Process from "@/components/Process";
-import FAQ from "@/components/FAQ";
-import TransformSection from "@/components/TransformSection";
 import Contact from "@/components/Contact";
 import AIChatbot from "@/components/AIChatbot";
 import DiscoveryCallButton from "@/components/DiscoveryCallButton";
 
-const ServicesPage = () => {
+const ContactPage = () => {
   return (
     <div className="min-h-screen bg-background">
       <main>
         <div className="pt-20" />
-        <Services />
-        <TransformSection />
-        <Process />
-        <FAQ />
         <Contact />
       </main>
       <AIChatbot />
@@ -23,4 +15,4 @@ const ServicesPage = () => {
   );
 };
 
-export default ServicesPage;
+export default ContactPage;

@@ -110,11 +110,12 @@ const ServiceCard = ({ service, index }: { service: ServiceItem; index: number }
           scale: 1.02,
           transition: { duration: 0.4, ease: "easeOut" }
         }}
-        className={`relative h-full backdrop-blur-sm border rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-500 relative overflow-hidden ${
+        whileTap={{ scale: 0.98 }}
+        className={`relative h-full backdrop-blur-sm border rounded-2xl p-4 sm:p-6 shadow-sm hover:shadow-xl transition-all duration-500 relative overflow-hidden sm:hover:shadow-xl ${
           service.featured 
-            ? 'bg-gradient-to-br from-purple-50 to-pink-50 border-purple-300/50' 
-            : 'bg-white/80 border-slate-200/50'
-        }`}
+            ? 'bg-gradient-to-br from-purple-50 to-pink-50 border-purple-300/50 sm:border-purple-300/50' 
+            : 'bg-white/80 border-slate-200/50 sm:border-slate-200/50'
+        } mobile-card-enhanced`}
       >
         {/* Background gradient overlay */}
         <div className={`absolute inset-0 bg-gradient-to-br ${serviceColor} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
@@ -231,6 +232,52 @@ const Services = () => {
 
   return (
     <section id="services" className="pt-2 pb-20 md:pt-4 md:pb-28 lg:pt-6 lg:pb-32 bg-gradient-to-b from-amber-50 to-orange-100 relative overflow-hidden">
+      {/* Mobile-specific styles */}
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @media (max-width: 640px) {
+            .mobile-card-enhanced {
+              background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(249,250,251,0.9) 100%);
+              border: 1px solid rgba(148, 163, 184, 0.2);
+              box-shadow: 
+                0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+              transform: perspective(1000px) rotateX(0deg);
+              transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .mobile-card-enhanced:hover {
+              transform: perspective(1000px) rotateX(2deg) translateY(-8px) scale(1.02);
+              box-shadow: 
+                0 20px 25px -5px rgba(0, 0, 0, 0.15),
+                0 10px 10px -5px rgba(0, 0, 0, 0.04),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            }
+            
+            .mobile-card-enhanced:active {
+              transform: perspective(1000px) rotateX(1deg) translateY(-4px) scale(0.98);
+            }
+            
+            .mobile-card-enhanced::before {
+              content: '';
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              height: 2px;
+              background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
+              transform: translateX(-100%);
+              transition: transform 0.6s ease;
+            }
+            
+            .mobile-card-enhanced:hover::before {
+              transform: translateX(100%);
+            }
+          }
+        `
+      }} />
+      
       <div className="container-custom">
         {/* Section Header */}
         <motion.div
