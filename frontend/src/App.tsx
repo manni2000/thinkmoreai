@@ -14,7 +14,7 @@ import PortfolioPage from "./pages/PortfolioPage";
 import TeamPage from "@/pages/TeamPage";
 import NotFound from "./pages/NotFound";
 import Process from "@/components/Process";
-import Contact from "@/components/Contact";
+import ContactPage from "./pages/ContactPage";
 import FAQ from "@/components/FAQ";
 import PrivacyPolicy from "@/components/PrivacyPolicy";
 import TermsOfService from "@/components/TermsOfService";
@@ -37,7 +37,7 @@ const App = () => (
           <Route path="/process" element={<Process />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/team" element={<TeamPage />} />
-          <Route path="/contact" element={<Contact />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="*" element={<NotFound />} />

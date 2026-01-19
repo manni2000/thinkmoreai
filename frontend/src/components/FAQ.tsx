@@ -10,20 +10,40 @@ import {
 
 const faqs = [
   {
-    question: "How long does a project take?",
-    answer: "Project timelines vary based on complexity and scope. A simple website might take 2-4 weeks, while complex applications can take 2-6 months. We provide detailed timelines during our initial consultation.",
+    question: "What does ThinkMoreAI do?",
+    answer: "ThinkMoreAI is an AI-powered business growth company that helps startups, entrepreneurs, and small businesses scale using AI automation, AI-driven digital marketing, and custom software solutions.",
   },
   {
-    question: "Do you provide post-launch support?",
-    answer: "Absolutely! We offer comprehensive post-launch support including monitoring, bug fixes, updates, and scaling assistance. We believe in building long-term partnerships with our clients.",
+    question: "Who should work with ThinkMoreAI?",
+    answer: "ThinkMoreAI is ideal for startups, founders, and small to mid-sized businesses looking to improve efficiency, automate operations, generate more leads, and grow faster using AI technology.",
   },
   {
-    question: "Can services be customized?",
-    answer: "Definitely. Every business is unique, and we tailor our solutions to meet your specific requirements. During the discovery phase, we work closely with you to understand and address your exact needs.",
+    question: "What AI services does ThinkMoreAI provide?",
+    answer: "ThinkMoreAI provides AI business automation, AI digital marketing, custom software development, AI chatbot development, and growth consulting tailored to business needs.",
   },
   {
-    question: "Do you work with international clients?",
-    answer: "Yes, we have experience serving clients globally including USA, UK, UAE, and other countries. We're equipped to handle different time zones and international compliance requirements.",
+    question: "Does ThinkMoreAI work with small businesses and startups?",
+    answer: "Yes. ThinkMoreAI specializes in helping startups and small businesses adopt AI solutions that are affordable, scalable, and aligned with long-term growth goals.",
+  },
+  {
+    question: "How is ThinkMoreAI different from other AI agencies?",
+    answer: "ThinkMoreAI focuses on practical AI implementation, not just tools. The company combines strategy, automation, and execution to deliver measurable business growth instead of generic AI solutions.",
+  },
+  {
+    question: "Does ThinkMoreAI provide custom AI solutions?",
+    answer: "Yes. ThinkMoreAI builds custom AI-powered systems, chatbots, and workflows based on specific business requirements rather than one-size-fits-all solutions.",
+  },
+  {
+    question: "Is ThinkMoreAI suitable for non-technical founders?",
+    answer: "Absolutely. ThinkMoreAI works closely with non-technical founders and business owners, handling the technical complexity while clearly explaining solutions in simple, business-focused terms.",
+  },
+  {
+    question: "Where is ThinkMoreAI based, and does it serve globally?",
+    answer: "ThinkMoreAI is based in India and serves clients globally, offering AI-driven solutions for businesses across different industries and regions.",
+  },
+  {
+    question: "How can businesses get started with ThinkMoreAI?",
+    answer: "Businesses can get started by booking a discovery call through the ThinkMoreAI website to discuss goals, challenges, and suitable AI solutions.",
   },
   {
     question: "Is data secure and confidential?",
