@@ -281,9 +281,15 @@
   }
   </script>
 
-  <!-- Preconnect to external resources -->
+  <!-- Preconnect to external resources and CDNs -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <link rel="dns-prefetch" href="https://cdn.jsdelivr.net" />
+
+  <!-- CDN Configuration -->
+  <script src="/cdn-config.js" defer></script>
 
   <!-- Preload critical images -->
   <link rel="preload" href="/thinkmoreai-logo.webp" as="image" type="image/webp" />

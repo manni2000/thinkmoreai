@@ -1,6 +1,30 @@
 # Custom 404 Error Page
 ErrorDocument 404 /404.html
 
+# CDN and Performance Headers
+<IfModule mod_headers.c>
+    # Enable CORS for external resources
+    <FilesMatch "\.(js|css|webp|png|jpg|jpeg|gif|svg|woff|woff2|ttf|eot)$">
+        Header set Access-Control-Allow-Origin "*"
+        Header set Cache-Control "public, max-age=31536000, immutable"
+    </FilesMatch>
+    
+    # Enable HSTS
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    
+    # Enable X-Content-Type-Options
+    Header always set X-Content-Type-Options "nosniff"
+    
+    # Enable X-Frame-Options
+    Header always set X-Frame-Options "DENY"
+    
+    # Enable X-XSS-Protection
+    Header always set X-XSS-Protection "1; mode=block"
+    
+    # Enable Referrer-Policy
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
 # Enable Gzip compression
 <IfModule mod_deflate.c>
     AddOutputFilterByType DEFLATE text/plain
