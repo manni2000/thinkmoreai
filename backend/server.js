@@ -13,16 +13,13 @@ const nodemailer = require("nodemailer");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Trust proxy
 app.set("trust proxy", 1);
 
-// Request logging
 app.use((req, res, next) => {
   console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
   next();
 });
 
-// CORS configuration
 const corsOptions = {
   origin: function (origin, callback) {
     const allowedOrigins = [
@@ -49,15 +46,12 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(helmet());
 
-// Body parsing
 app.use(express.json({ limit: "10kb" }));
 app.use(express.urlencoded({ extended: true, limit: "10kb" }));
 
-// Security middleware
 app.use(mongoSanitize());
 app.use(hpp());
 
-// XSS protection
 app.use((req, res, next) => {
   if (req.body) {
     Object.keys(req.body).forEach((key) => {
@@ -69,7 +63,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
@@ -84,7 +77,6 @@ const contactLimiter = rateLimit({
 
 app.use(limiter);
 
-// Mail transporter
 const transporter = nodemailer.createTransport({
   host: process.env.SMTP_HOST,
   port: Number(process.env.SMTP_PORT),
@@ -95,7 +87,6 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-// Contact validation
 const contactValidation = [
   body("name")
     .trim()
@@ -137,7 +128,6 @@ const contactValidation = [
     .escape(),
 ];
 
-// Routes
 app.post("/api/contact", contactLimiter, contactValidation, async (req, res) => {
   try {
     const errors = validationResult(req);
@@ -187,17 +177,14 @@ ${message}
   }
 });
 
-// Health check
 app.get("/", (req, res) => {
   res.send("Backend is running");
 });
 
-// Start server for local development only
 if (process.env.NODE_ENV !== 'production') {
   app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
   });
 }
 
-// Export for Vercel (serverless)
 module.exports = app;
