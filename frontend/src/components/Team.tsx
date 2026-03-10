@@ -34,10 +34,10 @@ const teamMembers = [
     name: "Achyut Kumar Chaudhary",
     role: "CMO & Advisor Board Member",
     company: "ThinkMoreAI",
-    avatar: "/satyam-avatar.jpg",
+    avatar: "/Achyut-Kumar-Chaudhary.jpg",
     bio: "Strategic advisor with deep industry expertise",
     social: {
-      linkedin: "https://www.linkedin.com/in/satyam-lohiya/",
+      linkedin: "",
       email: "info@thinkmoreai.com"
     }
   },
