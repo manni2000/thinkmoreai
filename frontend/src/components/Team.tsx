@@ -31,8 +31,8 @@ const teamMembers = [
     }
   },
   {
-    name: "Satyam Lohiya",
-    role: "Advisor Board Member",
+    name: "Achyut Kumar Chaudhary",
+    role: "CMO & Advisor Board Member",
     company: "ThinkMoreAI",
     avatar: "/satyam-avatar.jpg",
     bio: "Strategic advisor with deep industry expertise",
