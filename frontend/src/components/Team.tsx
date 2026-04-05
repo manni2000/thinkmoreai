@@ -32,13 +32,13 @@ const teamMembers = [
   },
   {
     name: "Achyut Kumar Chaudhary",
-    role: "CMO & Advisor Board Member",
+    role: "CMO",
     company: "ThinkMoreAI",
     avatar: "/Achyut-Kumar-Chaudhary.jpg",
     bio: "Strategic advisor with deep industry expertise",
     social: {
-      linkedin: "",
-      email: "info@thinkmoreai.com"
+      linkedin: "https://www.linkedin.com/in/achyuta-kumar-choudhury-323887234",
+      email: "achyutchoudhury26@gmail.com"
     }
   },
   {
