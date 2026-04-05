@@ -43,7 +43,7 @@ const teamMembers = [
   },
   {
     name: "Aniket Kr Mandal",
-    role: "Advisor Board Member",
+    role: "Project Manager",
     company: "ThinkMoreAI",
     avatar: "/aniket-avatar.jpg",
     bio: "Growth strategist and business development expert",
