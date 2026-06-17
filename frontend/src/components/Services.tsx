@@ -1,321 +1,181 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { ArrowRight, Sparkles, CheckCircle } from "lucide-react";
 import {
-  Globe,
-  Smartphone,
-  Bot,
+  ArrowRight,
   BarChart3,
-  FileSpreadsheet,
-  Megaphone,
-  Video,
+  Bot,
   Cpu,
+  FileSpreadsheet,
+  Globe,
+  Megaphone,
+  Smartphone,
+  Video,
 } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const techServices = [
   {
     icon: Globe,
     title: "Website Development",
-    tagline: "Engineered for Scale. Security. Performance.",
-    description: "Enterprise-grade websites designed for reliability, speed, and long-term growth.",
-    color: "from-blue-500 to-cyan-500",
-    features: ["Responsive Design", "SEO Optimized", "Fast Loading"],
+    tagline: "High-performance web presence",
+    description: "Conversion-ready websites and web apps with speed, SEO, and secure architecture built in.",
+    tone: "border-cyan-500/20 bg-cyan-500/10 text-cyan-600",
+    features: ["Responsive UI", "SEO foundations", "Fast loading"],
   },
   {
     icon: Smartphone,
     title: "Mobile App Development",
-    tagline: "Enterprise Mobility, Built Right.",
-    description: "High-performance iOS and Android applications with robust architecture and refined user experience.",
-    color: "from-purple-500 to-pink-500",
-    features: ["Cross-Platform", "Native Performance", "UI/UX Design"],
+    tagline: "Launch-ready mobile products",
+    description: "iOS and Android apps shaped around product clarity, performance, and release quality.",
+    tone: "border-violet-500/20 bg-violet-500/10 text-violet-600",
+    features: ["Cross-platform builds", "Native feel", "API integration"],
   },
   {
     icon: Bot,
     title: "AI Chatbots",
-    tagline: "Intelligent Automation at Scale.",
-    description: "Secure, trainable AI chatbots for enterprise support, sales enablement, and operational efficiency.",
-    color: "from-green-500 to-emerald-500",
-    features: ["NLP Integration", "24/7 Support", "Multi-language"],
+    tagline: "Customer and team automation",
+    description: "Secure assistants for support, lead qualification, knowledge search, and workflow execution.",
+    tone: "border-emerald-500/20 bg-emerald-500/10 text-emerald-600",
+    features: ["NLP flows", "24/7 support", "CRM handoff"],
   },
   {
     icon: BarChart3,
     title: "Data Analytics",
-    tagline: "From Data to Strategic Decisions.",
-    description: "Advanced dashboards, actionable insights, and predictive analytics for business leadership.",
-    color: "from-orange-500 to-red-500",
-    features: ["Real-time Dashboards", "Predictive Models", "BI Integration"],
+    tagline: "Decision-grade intelligence",
+    description: "Dashboards, data pipelines, reports, and predictive insight for leadership teams.",
+    tone: "border-amber-500/25 bg-amber-500/10 text-amber-600",
+    features: ["BI dashboards", "Predictive models", "KPI reporting"],
   },
   {
     icon: FileSpreadsheet,
     title: "SEO Optimization",
-    tagline: "Rank Higher. Convert Better.",
-    description: "Strategic SEO implementation to boost search rankings, drive organic traffic, and increase conversion rates.",
-    color: "from-indigo-500 to-purple-500",
-    features: ["On-page SEO", "Link Building", "Analytics"],
+    tagline: "Visibility that compounds",
+    description: "Technical SEO, content structure, analytics, and ranking systems built for qualified traffic.",
+    tone: "border-sky-500/20 bg-sky-500/10 text-sky-600",
+    features: ["Technical audits", "Content plans", "Analytics"],
   },
   {
     icon: Megaphone,
     title: "Social Media Management",
-    tagline: "Strategic Brand Presence. Measurable Impact.",
-    description: "Data-driven strategy, content, analytics, and corporate storytelling for sustained brand growth.",
-    color: "from-pink-500 to-rose-500",
-    features: ["Content Strategy", "Analytics", "Brand Management"],
+    tagline: "Sharper brand momentum",
+    description: "Campaign planning, content calendars, reporting, and creative execution for consistent growth.",
+    tone: "border-rose-500/20 bg-rose-500/10 text-rose-600",
+    features: ["Content strategy", "Performance reports", "Brand systems"],
   },
   {
     icon: Video,
-    title: "Content Writer & Video Editing",
-    tagline: "Narratives That Perform.",
-    description: "High-quality written content and visual storytelling aligned with brand strategy and measurable outcomes.",
-    color: "from-cyan-500 to-blue-500",
-    features: ["Video Editing", "Copywriting", "Brand Storytelling"],
+    title: "Content Writing & Video Editing",
+    tagline: "Narratives that perform",
+    description: "Copy, scripts, short-form videos, motion edits, and visual storytelling aligned to business goals.",
+    tone: "border-fuchsia-500/20 bg-fuchsia-500/10 text-fuchsia-600",
+    features: ["Copywriting", "Video editing", "Storytelling"],
   },
   {
     icon: Cpu,
     title: "AI Consultant",
-    tagline: "Strategic AI Guidance.",
-    description: "Expert consulting to transform your business with AI-driven strategies, implementation roadmap, and measurable ROI optimization.",
-    color: "from-purple-600 to-pink-600",
-    features: ["AI Strategy", "Implementation", "ROI Optimization"],
+    tagline: "Strategy before implementation",
+    description: "AI readiness audits, opportunity mapping, roadmap design, and implementation governance.",
+    tone: "border-accent/30 bg-accent/10 text-accent",
+    features: ["AI strategy", "Implementation map", "ROI model"],
     featured: true,
   },
 ];
-
-interface ServiceItem {
-  icon: React.ComponentType<{ className?: string }>;
-  title: string;
-  description: string;
-  tagline?: string;
-  color?: string;
-  features?: string[];
-  featured?: boolean;
-}
-
-const ServiceCard = ({ service, index }: { service: ServiceItem; index: number }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-50px" });
-  const serviceColor = service.color || "from-blue-500 to-cyan-500";
-
-  return (
-    <motion.div
-      ref={ref}
-      initial={{ opacity: 0, y: 40 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.6, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="group relative"
-    >
-      <motion.div
-        whileHover={{ 
-          y: -8,
-          scale: 1.02,
-          transition: { duration: 0.4, ease: "easeOut" }
-        }}
-        whileTap={{ scale: 0.98 }}
-        className={`relative h-full backdrop-blur-sm border rounded-2xl p-4 sm:p-6 shadow-sm hover:shadow-xl transition-all duration-500 relative overflow-hidden sm:hover:shadow-xl ${
-          service.featured 
-            ? 'bg-gradient-to-br from-purple-50 to-pink-50 border-purple-300/50 sm:border-purple-300/50' 
-            : 'bg-white/80 border-slate-200/50 sm:border-slate-200/50'
-        } mobile-card-enhanced`}
-      >
-        {/* Background gradient overlay */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${serviceColor} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-        
-        {/* Floating particles for featured service */}
-        {service.featured && (
-          <div className="absolute inset-0 overflow-hidden pointer-events-none">
-            {[...Array(4)].map((_, i) => (
-              <motion.div
-                key={i}
-                className="absolute w-1 h-1 bg-yellow-400/30 rounded-full"
-                style={{
-                  left: `${20 + Math.random() * 60}%`,
-                  top: `${20 + Math.random() * 60}%`,
-                }}
-                animate={{
-                  opacity: [0, 1, 0],
-                  scale: [0, 1, 0],
-                  y: [0, -10, 0],
-                }}
-                transition={{
-                  duration: 3 + Math.random() * 2,
-                  repeat: Infinity,
-                  delay: Math.random() * 2,
-                  ease: "easeInOut"
-                }}
-              />
-            ))}
-          </div>
-        )}
-
-        {/* Icon and Header */}
-        <div className="relative z-10 mb-6 text-center sm:text-left">
-          <div className="flex justify-center sm:justify-start">
-            <div className={`inline-flex items-center justify-center w-16 h-16 rounded-xl bg-gradient-to-br ${serviceColor} shadow-lg mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                <service.icon className="w-8 h-8 text-white" />
-            </div>
-          </div>
-          
-          {/* Featured badge */}
-          {service.featured && (
-            <motion.div
-              className="absolute -top-2 left-1/2 -translate-x-1/2 sm:left-auto sm:-right-2 sm:translate-x-0 inline-flex items-center gap-1 px-2 py-1 bg-gradient-to-r from-yellow-400 to-orange-400 text-white text-xs font-bold rounded-full shadow-lg"
-              animate={{ scale: [1, 1.05, 1] }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            >
-              <Sparkles className="w-3 h-3" />
-              Featured
-            </motion.div>
-          )}
-
-          <div className="mb-2">
-            <span className="text-xs uppercase tracking-widest font-semibold text-slate-500">
-              Service
-            </span>
-          </div>
-          <h3 className="font-heading font-bold text-xl text-slate-900 mb-2 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-cyan-600 transition-all duration-300">
-            {service.title}
-          </h3>
-          <div className={`h-0.5 bg-gradient-to-r ${serviceColor} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center sm:origin-left mx-auto sm:mx-0`} />
-        </div>
-
-        {/* Tagline */}
-        {service.tagline && (
-          <div className="relative z-10 mb-4 text-center sm:text-left">
-            <p className={`font-semibold text-xs uppercase tracking-wider bg-gradient-to-r ${serviceColor} bg-clip-text text-transparent flex items-center justify-center sm:justify-start gap-2`}>
-              {service.tagline}
-              {service.featured && <CheckCircle className="w-3 h-3" />}
-            </p>
-          </div>
-        )}
-
-        {/* Description */}
-        <div className="relative z-10 mb-4 text-center sm:text-left">
-          <p className="text-sm text-slate-600 leading-relaxed">
-            {service.description}
-          </p>
-        </div>
-
-        {/* Features */}
-        {service.features && (
-          <div className="relative z-10 space-y-2 text-center sm:text-left">
-            <div className="text-xs uppercase tracking-wider font-semibold text-slate-500 mb-2">
-              Key Features
-            </div>
-            {service.features.map((feature, idx) => (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, x: -10 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: idx * 0.05 }}
-                whileHover={{ x: 4 }}
-                className="flex items-center justify-center sm:justify-start gap-2 group/item"
-              >
-                <div className={`w-1.5 h-1.5 rounded-full bg-gradient-to-r ${serviceColor} flex-shrink-0 group-hover/item:scale-150 transition-transform duration-200`} />
-                <span className="text-xs text-slate-600 group-hover/item:text-slate-900 group-hover/item:font-medium transition-all duration-200">
-                  {feature}
-                </span>
-              </motion.div>
-            ))}
-          </div>
-        )}
-
-        {/* Bottom accent line */}
-        <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r ${serviceColor} transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`} />
-      </motion.div>
-    </motion.div>
-  );
-};
 
 const Services = () => {
   const headerRef = useRef(null);
   const isHeaderInView = useInView(headerRef, { once: true, margin: "-100px" });
 
   return (
-    <section id="services" className="pt-2 pb-20 md:pt-4 md:pb-28 lg:pt-6 lg:pb-32 bg-gradient-to-b from-amber-50 to-orange-100 relative overflow-hidden">
-      {/* Mobile-specific styles */}
-      <style dangerouslySetInnerHTML={{
-        __html: `
-          @media (max-width: 640px) {
-            .mobile-card-enhanced {
-              background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(249,250,251,0.9) 100%);
-              border: 1px solid rgba(148, 163, 184, 0.2);
-              box-shadow: 
-                0 4px 6px -1px rgba(0, 0, 0, 0.1),
-                0 2px 4px -1px rgba(0, 0, 0, 0.06),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
-              transform: perspective(1000px) rotateX(0deg);
-              transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            }
-            
-            .mobile-card-enhanced:hover {
-              transform: perspective(1000px) rotateX(2deg) translateY(-8px) scale(1.02);
-              box-shadow: 
-                0 20px 25px -5px rgba(0, 0, 0, 0.15),
-                0 10px 10px -5px rgba(0, 0, 0, 0.04),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            }
-            
-            .mobile-card-enhanced:active {
-              transform: perspective(1000px) rotateX(1deg) translateY(-4px) scale(0.98);
-            }
-            
-            .mobile-card-enhanced::before {
-              content: '';
-              position: absolute;
-              top: 0;
-              left: 0;
-              right: 0;
-              height: 2px;
-              background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.5), transparent);
-              transform: translateX(-100%);
-              transition: transform 0.6s ease;
-            }
-            
-            .mobile-card-enhanced:hover::before {
-              transform: translateX(100%);
-            }
-          }
-        `
-      }} />
-      
-      <div className="container-custom">
-        {/* Section Header */}
+    <section id="services" className="section-padding relative overflow-hidden bg-[#f5f7fb]">
+      <div className="absolute inset-0 surface-grid opacity-70" />
+      <div className="container-custom relative z-10">
         <motion.div
           ref={headerRef}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isHeaderInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          transition={{ duration: 0.55 }}
+          className="mx-auto mb-12 max-w-3xl text-center"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold uppercase tracking-wider mb-6">
-            Our Services
-          </span>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-4 mb-6">
-            Comprehensive Solutions for{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-400">
-              Your Business
-            </span>
+          <span className="section-eyebrow">Services</span>
+          <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
+            One partner for the systems that move your business forward.
           </h2>
-          <p className="text-lg text-muted-foreground">
-            we deliver cutting-edge technology solutions.
+          <p className="mt-5 text-lg leading-8 text-muted-foreground">
+            From AI workflows to full product builds, each service is packaged around clear scope,
+            commercial outcomes, and production-grade delivery.
           </p>
         </motion.div>
 
-        {/* Technology Services */}
-        <div className="mb-20">
-          <motion.h3
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="font-heading text-2xl font-bold text-foreground mb-8 text-center"
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {techServices.map((service, index) => (
+            <motion.article
+              key={service.title}
+              initial={{ opacity: 0, y: 28 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.45, delay: index * 0.04 }}
+              className={`premium-card group relative flex min-h-[310px] flex-col p-5 ${
+                service.featured ? "border-accent/45 bg-primary text-primary-foreground" : ""
+              }`}
+            >
+              {service.featured && (
+                <span className="absolute right-4 top-4 border border-accent/30 bg-accent/10 px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  Featured
+                </span>
+              )}
+
+              <div className={`flex h-12 w-12 items-center justify-center border ${service.tone}`}>
+                <service.icon className="h-6 w-6" />
+              </div>
+
+              <p
+                className={`mt-6 text-xs font-semibold uppercase tracking-[0.22em] ${
+                  service.featured ? "text-accent" : "text-muted-foreground"
+                }`}
+              >
+                {service.tagline}
+              </p>
+              <h3
+                className={`mt-3 font-heading text-xl font-bold leading-tight ${
+                  service.featured ? "text-primary-foreground" : "text-foreground"
+                }`}
+              >
+                {service.title}
+              </h3>
+              <p
+                className={`mt-3 flex-1 text-sm leading-6 ${
+                  service.featured ? "text-primary-foreground/[0.68]" : "text-muted-foreground"
+                }`}
+              >
+                {service.description}
+              </p>
+
+              <div className="mt-5 space-y-2">
+                {service.features.map((feature) => (
+                  <div key={feature} className="flex items-center gap-2 text-sm">
+                    <span
+                      className={`h-1.5 w-1.5 ${
+                        service.featured ? "bg-accent" : "bg-foreground/40"
+                      }`}
+                    />
+                    <span className={service.featured ? "text-primary-foreground/[0.74]" : "text-foreground/[0.76]"}>
+                      {feature}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </motion.article>
+          ))}
+        </div>
+
+        <div className="mt-10 flex justify-center">
+          <Link
+            to="/contact"
+            className="group inline-flex items-center gap-3 border border-foreground/10 bg-white px-5 py-3 text-sm font-semibold text-foreground shadow-sm transition-all duration-300 hover:border-accent/50 hover:text-accent"
           >
-            Technology Services
-          </motion.h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-            {techServices.map((service, index) => (
-              <ServiceCard key={service.title} service={service} index={index} />
-            ))}
-          </div>
+            Scope a service roadmap
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          </Link>
         </div>
       </div>
     </section>

@@ -1,84 +1,61 @@
-import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Zap } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useEffect, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Zap } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface DiscoveryCallButtonProps {
   link: string;
 }
 
-const DiscoveryCallButton: React.FC<DiscoveryCallButtonProps> = ({ link }) => {
-  const [showStickyCTA, setShowStickyCTA] = React.useState(false);
+const DiscoveryCallButton = ({ link }: DiscoveryCallButtonProps) => {
+  const [showStickyCTA, setShowStickyCTA] = useState(false);
 
-  React.useEffect(() => {
-    const handleScroll = () => {
-      // Show button after scrolling down 200px
-      if (window.scrollY > 200) {
-        setShowStickyCTA(true);
-      } else {
-        setShowStickyCTA(false);
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+  useEffect(() => {
+    const handleScroll = () => setShowStickyCTA(window.scrollY > 200);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
     <AnimatePresence>
       {showStickyCTA && (
         <motion.div
-          initial={{ opacity: 0, x: -100 }}
+          initial={{ opacity: 0, x: -80 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -100 }}
-          transition={{ duration: 0.3 }}
-          className="fixed left-6 top-1/3 -translate-y-1/2 z-40 hidden sm:block"
+          exit={{ opacity: 0, x: -80 }}
+          transition={{ duration: 0.25 }}
+          className="fixed left-6 top-1/3 z-40 hidden -translate-y-1/2 sm:block"
         >
-          <motion.div
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+          <Button
+            variant="hero"
+            size="lg"
+            asChild
+            className="min-h-[220px] w-14 border border-accent/40 px-2 py-4 shadow-[0_22px_55px_-25px_rgba(245,166,35,0.9)] transition-all duration-300 hover:-translate-y-1 hover:shadow-accent/40"
           >
-            <Button
-              variant="hero"
-              size="lg"
-              asChild
-              className="shadow-2xl min-h-[240px] w-16 py-4 px-2 rounded-2xl hover:shadow-accent/50 hover:shadow-2xl transition-all duration-300"
+            <a
+              href={link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex h-full flex-col items-center justify-center gap-3"
             >
-              <a
-                href={link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex flex-col items-center justify-center h-full gap-2"
+              <motion.div animate={{ y: [0, -4, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>
+                <Zap className="h-5 w-5" />
+              </motion.div>
+              <span
+                className="text-center text-xs font-semibold uppercase tracking-[0.16em]"
+                style={{
+                  writingMode: "vertical-rl",
+                  textOrientation: "mixed",
+                }}
               >
-                {/* ⚡ Zap – TOP */}
-                <motion.div
-                  animate={{ y: [0, -4, 0] }}
-                  transition={{ duration: 1.4, repeat: Infinity }}
-                >
-                  <Zap className="w-5 h-5" />
-                </motion.div>
-
-                {/* 📝 Vertical Text – CENTER */}
-                <span
-                  className="text-sm font-medium text-center"
-                  style={{
-                    writingMode: "vertical-rl",
-                    textOrientation: "mixed",
-                  }}
-                >
-                  Book a Discovery Call
-                </span>
-
-                {/* ➡ Arrow – BOTTOM */}
-                <motion.div
-                  animate={{ y: [0, 4, 0] }}
-                  transition={{ duration: 1.4, repeat: Infinity }}
-                >
-                  <ArrowRight className="w-5 h-5 rotate-90" />
-                </motion.div>
-              </a>
-            </Button>
-          </motion.div>
+                Discovery Call
+              </span>
+              <motion.div animate={{ y: [0, 4, 0] }} transition={{ duration: 1.4, repeat: Infinity }}>
+                <ArrowRight className="h-5 w-5 rotate-90" />
+              </motion.div>
+            </a>
+          </Button>
         </motion.div>
       )}
     </AnimatePresence>

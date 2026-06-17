@@ -5,22 +5,22 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-semibold ring-offset-background transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:opacity-90 hover:-translate-y-0.5 shadow-md",
+        default: "bg-primary text-primary-foreground shadow-md hover:-translate-y-0.5 hover:bg-primary/[0.92]",
         destructive:
           "bg-destructive text-destructive-foreground hover:bg-destructive/90",
         outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
+          "border border-input bg-background hover:border-accent hover:text-accent",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
-        accent: "bg-accent text-accent-foreground hover:-translate-y-0.5 shadow-lg hover:shadow-[0_0_30px_hsla(38,95%,55%,0.4)]",
-        hero: "bg-accent text-accent-foreground font-bold hover:-translate-y-1 shadow-lg hover:shadow-[0_0_40px_hsla(38,95%,55%,0.5)] transition-all duration-300",
-        heroOutline: "border-2 border-white/50 bg-transparent text-white font-bold hover:bg-white hover:text-black hover:-translate-y-1 transition-all duration-300",
+        accent: "bg-accent text-accent-foreground shadow-[0_14px_35px_-22px_rgba(245,166,35,0.9)] hover:-translate-y-0.5 hover:shadow-[0_20px_45px_-24px_rgba(245,166,35,1)]",
+        hero: "bg-accent text-accent-foreground font-bold shadow-[0_18px_46px_-24px_rgba(245,166,35,0.95)] hover:-translate-y-1 hover:shadow-[0_24px_60px_-26px_rgba(245,166,35,1)]",
+        heroOutline: "border border-white/35 bg-white/[0.04] text-white font-bold backdrop-blur-md hover:bg-white hover:text-black hover:-translate-y-1",
         glass: "bg-card/80 backdrop-blur-xl border border-border/50 text-foreground hover:bg-card hover:-translate-y-0.5 shadow-md",
       },
       size: {

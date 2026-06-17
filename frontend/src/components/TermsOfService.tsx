@@ -96,9 +96,9 @@ const TermsOfService = () => {
   ];
 
   return (
-    <section className="section-padding bg-gradient-to-b from-slate-50 via-white to-slate-50 relative overflow-hidden">
+    <section className="section-padding surface-grid bg-background relative overflow-hidden">
       {/* Background Animation */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="hidden">
         <motion.div
           animate={{
             background: [
@@ -121,7 +121,7 @@ const TermsOfService = () => {
         >
           <motion.div
             variants={itemVariants}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 text-green-600 text-sm font-semibold uppercase tracking-wider mb-6"
+            className="section-eyebrow mb-6"
           >
             <FileText className="w-4 h-4" />
             Legal Terms
@@ -132,9 +132,7 @@ const TermsOfService = () => {
             className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
           >
             Terms of{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-emerald-500">
-              Service
-            </span>
+            <span className="gradient-text">Service</span>
           </motion.h1>
           
           <motion.p
@@ -158,7 +156,7 @@ const TermsOfService = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="bg-white rounded-2xl shadow-xl border border-border/50 p-8 md:p-12">
+          <div className="premium-card bg-white p-8 md:p-12">
             {sections.map((section, index) => {
               const Icon = section.icon;
               return (
@@ -172,9 +170,9 @@ const TermsOfService = () => {
                   <div className="flex items-start gap-4 mb-4">
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 5 }}
-                      className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-emerald-400 flex items-center justify-center flex-shrink-0"
+                      className="flex h-12 w-12 flex-shrink-0 items-center justify-center border border-accent/25 bg-accent/10 text-accent"
                     >
-                      <Icon className="w-6 h-6 text-white" />
+                      <Icon className="w-6 h-6" />
                     </motion.div>
                     <div className="flex-grow">
                       <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
@@ -193,13 +191,13 @@ const TermsOfService = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.3, delay: 0.1 * sections.length }}
-              className="mt-12 p-6 bg-green-50 rounded-xl border border-green-200"
+              className="mt-12 border border-accent/25 bg-accent/10 p-6"
             >
               <div className="flex items-center gap-3 mb-3">
-                <AlertTriangle className="w-5 h-5 text-green-600" />
-                <h3 className="font-semibold text-green-900">Important Notice</h3>
+                <AlertTriangle className="w-5 h-5 text-accent" />
+                <h3 className="font-semibold text-foreground">Important Notice</h3>
               </div>
-              <p className="text-green-800 text-sm leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 By accessing or using our website and services, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. 
                 If you do not agree to these terms, please do not use our services. We reserve the right to modify these terms at any time, and such modifications shall be effective immediately upon posting.
               </p>
@@ -209,19 +207,19 @@ const TermsOfService = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.3, delay: 0.1 * (sections.length + 1) }}
-              className="mt-8 p-6 bg-amber-50 rounded-xl border border-amber-200"
+              className="mt-8 border border-border bg-secondary/70 p-6"
             >
               <div className="flex items-center gap-3 mb-3">
-                <Gavel className="w-5 h-5 text-amber-600" />
-                <h3 className="font-semibold text-amber-900">Contact Information</h3>
+                <Gavel className="w-5 h-5 text-accent" />
+                <h3 className="font-semibold text-foreground">Contact Information</h3>
               </div>
-              <p className="text-amber-800 text-sm leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 If you have any questions about these Terms of Service, please contact us at:
               </p>
               <div className="mt-3">
                 <a 
                   href="mailto:info@thinkmoreai.com" 
-                  className="text-amber-700 hover:text-amber-900 font-medium underline"
+                  className="font-medium text-accent underline"
                 >
                   info@thinkmoreai.com
                 </a>

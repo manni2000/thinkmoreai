@@ -50,12 +50,12 @@ const PrivacyPolicy = () => {
     {
       icon: Lock,
       title: "3. How We Use Information",
-      content: "We use data to:\n\n• Provide, operate, and improve services\n• Respond to contact or support requests\n• Personalize content and marketing\n• Analyze usage to optimize performance"
+      content: "We use data to:\n\n- Provide, operate, and improve services\n- Respond to contact or support requests\n- Personalize content and marketing\n- Analyze usage to optimize performance"
     },
     {
       icon: Shield,
       title: "4. Legal Basis for Processing",
-      content: "We process personal data:\n\n• With user consent\n• To perform a contract or deliver services\n• To comply with law or legal requirements"
+      content: "We process personal data:\n\n- With user consent\n- To perform a contract or deliver services\n- To comply with law or legal requirements"
     },
     {
       icon: Globe,
@@ -65,7 +65,7 @@ const PrivacyPolicy = () => {
     {
       icon: Mail,
       title: "6. Data Sharing",
-      content: "We may share data with:\n\n• Service providers (hosting, analytics)\n• Legal authorities if required\n• Third parties only with consent"
+      content: "We may share data with:\n\n- Service providers (hosting, analytics)\n- Legal authorities if required\n- Third parties only with consent"
     },
     {
       icon: AlertTriangle,
@@ -100,9 +100,9 @@ const PrivacyPolicy = () => {
   ];
 
   return (
-    <section className="section-padding bg-gradient-to-b from-slate-50 via-white to-slate-50 relative overflow-hidden">
+    <section className="section-padding surface-grid bg-background relative overflow-hidden">
       {/* Background Animation */}
-      <div className="absolute inset-0 overflow-hidden">
+      <div className="hidden">
         <motion.div
           animate={{
             background: [
@@ -125,7 +125,7 @@ const PrivacyPolicy = () => {
         >
           <motion.div
             variants={itemVariants}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-blue-50 text-blue-600 text-sm font-semibold uppercase tracking-wider mb-6"
+            className="section-eyebrow mb-6"
           >
             <Shield className="w-4 h-4" />
             Legal & Privacy
@@ -136,9 +136,7 @@ const PrivacyPolicy = () => {
             className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
           >
             Privacy{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-500">
-              Policy
-            </span>
+            <span className="gradient-text">Policy</span>
           </motion.h1>
           
           <motion.p
@@ -162,7 +160,7 @@ const PrivacyPolicy = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="bg-white rounded-2xl shadow-xl border border-border/50 p-8 md:p-12">
+          <div className="premium-card bg-white p-8 md:p-12">
             {sections.map((section, index) => {
               const Icon = section.icon;
               return (
@@ -176,9 +174,9 @@ const PrivacyPolicy = () => {
                   <div className="flex items-start gap-4 mb-4">
                     <motion.div
                       whileHover={{ scale: 1.1, rotate: 5 }}
-                      className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center flex-shrink-0"
+                      className="flex h-12 w-12 flex-shrink-0 items-center justify-center border border-accent/25 bg-accent/10 text-accent"
                     >
-                      <Icon className="w-6 h-6 text-white" />
+                      <Icon className="w-6 h-6" />
                     </motion.div>
                     <div className="flex-grow">
                       <h2 className="text-2xl font-bold text-foreground mb-4 font-heading">
@@ -213,13 +211,13 @@ const PrivacyPolicy = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.3, delay: 0.1 * sections.length }}
-              className="mt-12 p-6 bg-blue-50 rounded-xl border border-blue-200"
+              className="mt-12 border border-accent/25 bg-accent/10 p-6"
             >
               <div className="flex items-center gap-3 mb-3">
-                <AlertTriangle className="w-5 h-5 text-blue-600" />
-                <h3 className="font-semibold text-blue-900">Important Notice</h3>
+                <AlertTriangle className="w-5 h-5 text-accent" />
+                <h3 className="font-semibold text-foreground">Important Notice</h3>
               </div>
-              <p className="text-blue-800 text-sm leading-relaxed">
+              <p className="text-muted-foreground text-sm leading-relaxed">
                 By using our website and services, you acknowledge that you have read, understood, and agree to be bound by this Privacy Policy. 
                 We may update this policy from time to time, and any changes will be posted on this page with an updated revision date.
               </p>

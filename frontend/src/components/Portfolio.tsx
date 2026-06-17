@@ -1,80 +1,65 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
-import { ExternalLink, Globe, Smartphone, Video, FileText } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { ArrowUpRight, FileText, Globe, Smartphone, Video } from "lucide-react";
 
 const portfolioItems = [
   {
     id: 1,
-    title: "E-Commerce Website",
+    title: "Maison Commerce",
     category: "Website",
-    icon: Smartphone,
-    description: "Feature-rich shopping application with seamless UX",
-    tags: ["React Native", "Firebase", "Stripe"],
-    gradient: "from-purple-500 to-pink-500",
+    icon: Globe,
+    description: "A polished e-commerce storefront built for premium product discovery and conversion.",
+    tags: ["React", "Commerce UX", "Performance"],
     url: "https://maison.thinkmoreai.com/",
     image: "/images/portfolio/ecommerce.webp",
   },
   {
     id: 2,
-    title: "FinTech Mobile App",
+    title: "NexaPay FinTech",
     category: "Mobile App",
     icon: Smartphone,
-    description: "Secure payment and banking application",
-    tags: ["Flutter", "Node.js", "MongoDB"],
-    gradient: "from-indigo-500 to-purple-500",
+    description: "A secure payment experience with modern onboarding and transaction-first flows.",
+    tags: ["Flutter", "Node.js", "Secure APIs"],
     url: "https://nexapay.thinkmoreai.com/",
     image: "/images/portfolio/mobile.webp",
   },
   {
     id: 3,
-    title: "Food Delivery Website",
+    title: "YumRush Delivery",
     category: "Website",
     icon: Globe,
-    description: "Real-time order tracking and restaurant management platform",
-    tags: ["Vue.js", "Python", "AWS"],
-    gradient: "from-green-500 to-emerald-500",
+    description: "Restaurant ordering and delivery platform with real-time order visibility.",
+    tags: ["Vue", "Python", "AWS"],
     url: "https://yumrush.thinkmoreai.com/",
     image: "/images/portfolio/food.webp",
   },
   {
     id: 4,
-    title: "Professional Video Editing",
+    title: "Brand Video Production",
     category: "Video Editing",
     icon: Video,
-    description: "High-quality video editing services delivering polished, engaging, and brand-aligned content.",
-    tags: ["Motion Graphics", "4K Production"],
-    gradient: "from-red-500 to-rose-500",
+    description: "High-retention video edits and motion graphics for social and brand campaigns.",
+    tags: ["Motion", "4K", "Brand Story"],
     url: "https://drive.google.com/file/d/134pW1Ai3qzkDdVnT4DAKf_73s0gaW_E8/view?usp=drivesdk",
     image: "/images/portfolio/video.webp",
   },
   {
     id: 5,
-    title: "Research Report",
+    title: "Market Research Report",
     category: "Research",
     icon: FileText,
-    description: "Comprehensive market analysis for venture capital",
-    tags: ["Data Analysis", "Visualization"],
-    gradient: "from-yellow-500 to-orange-500",
+    description: "Investor-ready market research with data analysis and concise executive storytelling.",
+    tags: ["Research", "Charts", "Insights"],
     url: "https://drive.google.com/file/d/18U6DK0hfOQD0A4KXeyvBAtGWB_2S7lLS/view?usp=sharing",
     image: "/images/portfolio/Research-report.webp",
   },
   {
     id: 6,
-    title: "Enterprise SaaS Website",
+    title: "Enterprise SaaS",
     category: "Website",
     icon: Globe,
-    description: "Modern business platform with advanced analytics dashboard",
-    tags: ["React", "Node.js", "PostgreSQL"],
-    gradient: "from-blue-500 to-cyan-500",
+    description: "SaaS marketing experience with analytics-forward messaging and clean product framing.",
+    tags: ["React", "SaaS", "Analytics"],
     url: "https://enterprise.thinkmoreai.com/",
     image: "/images/portfolio/saas.webp",
   },
@@ -82,90 +67,10 @@ const portfolioItems = [
 
 const categories = ["All", "Website", "Mobile App", "Video Editing", "Research"];
 
-const CardContent = ({ item }: { item: any }) => (
-  <>
-    {/* Image Placeholder with Gradient */}
-    <motion.div
-      className={`aspect-video bg-gradient-to-br ${item.gradient} relative overflow-hidden`}
-      whileHover={{ scale: 1.05 }}
-    >
-      {item.image ? (
-        <img
-          src={item.image}
-          alt={item.title}
-          className="w-full h-full object-cover"
-          onError={(e) => {
-            const target = e.target as HTMLImageElement;
-            target.style.display = "none";
-            const parent = target.parentElement;
-            if (parent) {
-              const iconDiv = document.createElement("div");
-              iconDiv.className =
-                "absolute inset-0 flex items-center justify-center";
-              iconDiv.innerHTML = `<svg class="w-16 h-16 text-white/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>`;
-              parent.appendChild(iconDiv);
-            }
-          }}
-        />
-      ) : (
-        <div className="absolute inset-0 flex items-center justify-center">
-          <item.icon className="w-16 h-16 text-white/30" />
-        </div>
-      )}
-
-      {/* Hover Overlay */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileHover={{ opacity: 1 }}
-        transition={{ duration: 0.2 }}
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center"
-      >
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          className="w-14 h-14 rounded-full bg-white/20 flex items-center justify-center"
-        >
-          <ExternalLink className="w-7 h-7 text-white" />
-        </motion.div>
-      </motion.div>
-    </motion.div>
-
-    {/* Content */}
-    <div className="p-6 flex flex-col flex-grow">
-      <motion.span
-        initial={{ opacity: 0, x: -10 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.1 }}
-        className="text-accent text-sm font-semibold"
-      >
-        {item.category}
-      </motion.span>
-      <h3 className="font-heading font-bold text-lg text-foreground mt-2 mb-2">
-        {item.title}
-      </h3>
-      <p className="text-muted-foreground text-sm mb-4 flex-grow">
-        {item.description}
-      </p>
-      <div className="flex flex-wrap gap-2">
-        {item.tags.map((tag: string) => (
-          <motion.span
-            key={tag}
-            initial={{ opacity: 0, scale: 0.8 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            className="px-3 py-1 bg-secondary text-secondary-foreground text-xs font-medium rounded-lg"
-          >
-            {tag}
-          </motion.span>
-        ))}
-      </div>
-    </div>
-  </>
-);
-
 const Portfolio = () => {
   const [activeCategory, setActiveCategory] = useState("All");
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-
 
   const filteredItems =
     activeCategory === "All"
@@ -173,107 +78,100 @@ const Portfolio = () => {
       : portfolioItems.filter((item) => item.category === activeCategory);
 
   return (
-    <section
-      id="portfolio"
-      className="pt-2 pb-20 md:pt-4 md:pb-28 lg:pt-6 lg:pb-32 bg-gradient-to-b from-blue-50 to-indigo-100 relative overflow-hidden"
-    >
-      {/* Background Animation */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          animate={{ y: [0, 20, 0] }}
-          transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-          className="absolute top-1/2 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl"
-        />
-      </div>
-
+    <section id="portfolio" className="section-padding relative overflow-hidden bg-background">
       <div className="container-custom relative z-10">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          transition={{ duration: 0.55 }}
+          className="mx-auto mb-10 max-w-3xl text-center"
         >
-          <motion.span
-            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold uppercase tracking-wider mb-4"
-            whileHover={{ scale: 1.05 }}
-          >
-            Portfolio
-          </motion.span>
-          <h2 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-6">
-            Featured{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-400">
-              Projects
-            </span>
+          <span className="section-eyebrow">Portfolio</span>
+          <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
+            Digital work with product polish and business intent.
           </h2>
-          <p className="text-lg text-muted-foreground">
-            Showcasing our expertise across diverse domains and technologies
+          <p className="mt-5 text-lg leading-8 text-muted-foreground">
+            A focused sample of websites, apps, content, and analysis systems delivered
+            across growth, product, and operational workflows.
           </p>
         </motion.div>
 
-        {/* Filter Tabs */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="flex flex-wrap justify-center gap-3 mb-16"
+          transition={{ duration: 0.45, delay: 0.1 }}
+          className="mb-10 flex flex-wrap justify-center gap-2"
         >
           {categories.map((category) => (
-            <motion.button
+            <button
               key={category}
+              type="button"
               onClick={() => setActiveCategory(category)}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className={`px-6 py-3 rounded-full font-semibold text-sm transition-all duration-300 ${
+              className={`border px-4 py-2 text-sm font-semibold transition-all duration-300 ${
                 activeCategory === category
-                  ? "bg-gradient-to-r from-accent to-orange-400 text-accent-foreground shadow-lg shadow-accent/50"
-                  : "bg-card text-muted-foreground hover:text-foreground border border-border hover:border-accent/50"
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border bg-white text-muted-foreground hover:border-accent/50 hover:text-foreground"
               }`}
             >
               {category}
-            </motion.button>
+            </button>
           ))}
         </motion.div>
 
-        {/* Portfolio Grid */}
-        <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div layout className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {filteredItems.map((item, index) => (
-            <motion.div
+            <motion.a
               key={item.id}
               layout
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              whileHover={{ y: -8 }}
-              className="group relative h-full"
+              href={item.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: index * 0.04 }}
+              className="premium-card group block overflow-hidden"
             >
-              {/* Glow Effect */}
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r opacity-0 group-hover:opacity-100 blur-2xl rounded-2xl transition-opacity duration-300"
-                style={{
-                  backgroundImage: `linear-gradient(135deg, var(--tw-gradient-stops))`,
-                }}
-              />
-
-              {item.url ? (
-                <a
-                  href={item.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="relative h-full bg-card border border-border/50 rounded-2xl overflow-hidden group-hover:border-accent/50 transition-all duration-300 flex flex-col block"
-                >
-                  <CardContent item={item} />
-                </a>
-              ) : (
-                <div className="relative h-full bg-card border border-border/50 rounded-2xl overflow-hidden group-hover:border-accent/50 transition-all duration-300 flex flex-col">
-                  <CardContent item={item} />
+              <div className="relative aspect-[16/10] overflow-hidden bg-primary">
+                <img
+                  src={item.image}
+                  alt={item.title}
+                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/[0.88] via-primary/[0.12] to-transparent" />
+                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                  <div>
+                    <span className="border border-white/[0.15] bg-white/[0.12] px-2.5 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-white">
+                      {item.category}
+                    </span>
+                    <h3 className="mt-3 font-heading text-xl font-bold text-white">
+                      {item.title}
+                    </h3>
+                  </div>
+                  <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center border border-white/20 bg-white/[0.12] text-white transition-colors duration-300 group-hover:bg-accent group-hover:text-accent-foreground">
+                    <ArrowUpRight className="h-5 w-5" />
+                  </div>
                 </div>
-              )}
-            </motion.div>
+              </div>
+
+              <div className="p-5">
+                <p className="text-sm leading-6 text-muted-foreground">
+                  {item.description}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {item.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="border border-border bg-secondary/70 px-2.5 py-1 text-xs font-medium text-secondary-foreground"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </motion.a>
           ))}
         </motion.div>
-
       </div>
     </section>
   );

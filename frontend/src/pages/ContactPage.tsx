@@ -1,5 +1,4 @@
 import Contact from "@/components/Contact";
-import AIChatbot from "@/components/AIChatbot";
 import DiscoveryCallButton from "@/components/DiscoveryCallButton";
 
 const ContactPage = () => {
@@ -9,7 +8,6 @@ const ContactPage = () => {
         <div className="pt-20" />
         <Contact />
       </main>
-      <AIChatbot />
       <DiscoveryCallButton link="https://cal.id/enquire.thinkmoreai" />
     </div>
   );

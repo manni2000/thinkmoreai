@@ -1,109 +1,98 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Phone, Calculator, PenTool, Code2, HeadphonesIcon } from "lucide-react";
+import { Calculator, Code2, HeadphonesIcon, PenTool, Phone } from "lucide-react";
 
 const steps = [
-	{
-		number: "01",
-		icon: Phone,
-		title: "Discovery Call",
-		description: "Understand your goals, scope, and challenges.",
-	},
-	{
-		number: "02",
-		icon: Calculator,
-		title: "Get a Ballpark",
-		description: "Clear cost & timeline estimate. No surprises.",
-	},
-	{
-		number: "03",
-		icon: PenTool,
-		title: "Design & Roadmap",
-		description: "UX, architecture, milestones defined.",
-	},
-	{
-		number: "04",
-		icon: Code2,
-		title: "Build & Grow",
-		description: "Agile development with continuous updates.",
-	},
-	{
-		number: "05",
-		icon: HeadphonesIcon,
-		title: "Post-Launch Support",
-		description: "Monitoring, scaling, and long-term support.",
-	},
+  {
+    number: "01",
+    icon: Phone,
+    title: "Discovery",
+    description: "We clarify goals, constraints, stakeholders, and measurable success criteria.",
+  },
+  {
+    number: "02",
+    icon: Calculator,
+    title: "Estimate",
+    description: "You get a realistic scope, timeline, cost range, and implementation path.",
+  },
+  {
+    number: "03",
+    icon: PenTool,
+    title: "Design",
+    description: "We define UX, architecture, data flow, integrations, and launch milestones.",
+  },
+  {
+    number: "04",
+    icon: Code2,
+    title: "Build",
+    description: "Agile delivery with weekly demos, quality checks, and transparent progress.",
+  },
+  {
+    number: "05",
+    icon: HeadphonesIcon,
+    title: "Scale",
+    description: "Post-launch monitoring, improvements, documentation, and long-term support.",
+  },
 ];
 
 const Process = () => {
-	const ref = useRef(null);
-	const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-	return (
-		<section
-			id="process"
-			className="section-padding bg-primary text-primary-foreground overflow-hidden"
-		>
-			<div className="container-custom">
-				<motion.div
-					ref={ref}
-					initial={{ opacity: 0, y: 30 }}
-					animate={isInView ? { opacity: 1, y: 0 } : {}}
-					transition={{ duration: 0.6 }}
-					className="text-center max-w-3xl mx-auto mb-16"
-				>
-					<span className="text-accent font-semibold text-sm uppercase tracking-wider">
-						Our Process
-					</span>
-					<h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mt-4 mb-6">
-						From Idea to{" "}
-						<span className="text-accent">Reality</span>
-					</h2>
-					<p className="text-lg text-primary-foreground/70">
-						A streamlined, transparent process designed for success.
-					</p>
-				</motion.div>
+  return (
+    <section id="process" className="section-padding dark-surface-grid relative overflow-hidden bg-primary text-primary-foreground">
+      <div className="absolute inset-0 bg-[linear-gradient(135deg,rgba(255,191,69,0.08)_0%,transparent_38%,rgba(86,242,228,0.08)_100%)]" />
 
-				{/* Process Steps */}
-				<div className="relative">
-					{/* Connection Line */}
-					<div className="hidden lg:block absolute top-1/2 left-0 right-0 h-0.5 bg-primary-foreground/10 -translate-y-1/2" />
+      <div className="container-custom relative z-10">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55 }}
+          className="mx-auto mb-14 max-w-3xl text-center"
+        >
+          <span className="section-eyebrow border-white/[0.15] bg-white/[0.08] text-amber-soft">
+            Process
+          </span>
+          <h2 className="mt-5 font-heading text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
+            A delivery rhythm that keeps momentum visible.
+          </h2>
+          <p className="mt-5 text-lg leading-8 text-primary-foreground/[0.68]">
+            Every project is structured around decisions, demos, and measurable outcomes,
+            so progress never disappears into a black box.
+          </p>
+        </motion.div>
 
-					<div className="grid sm:grid-cols-2 lg:grid-cols-5 gap-8">
-						{steps.map((step, index) => (
-							<motion.div
-								key={step.number}
-								initial={{ opacity: 0, y: 40 }}
-								animate={isInView ? { opacity: 1, y: 0 } : {}}
-								transition={{ duration: 0.6, delay: index * 0.15 }}
-								className="relative text-center"
-							>
-								{/* Step Card */}
-								<div className="relative z-10 bg-primary-foreground/5 backdrop-blur-sm border border-primary-foreground/10 rounded-2xl p-6 hover:bg-primary-foreground/10 transition-all duration-300 group h-full flex flex-col justify-between">
-									{/* Number Badge */}
-									<div className="absolute -top-4 left-1/2 -translate-x-1/2 w-8 h-8 rounded-full bg-accent text-accent-foreground font-bold text-sm flex items-center justify-center shadow-lg">
-										{step.number}
-									</div>
-
-									<div className="w-16 h-16 rounded-xl bg-accent/20 flex items-center justify-center mx-auto mb-4 mt-2 group-hover:bg-accent/30 transition-colors">
-										<step.icon className="w-8 h-8 text-accent" />
-									</div>
-
-									<h3 className="font-heading font-semibold text-lg mb-2">
-										{step.title}
-									</h3>
-									<p className="text-primary-foreground/60 text-sm">
-										{step.description}
-									</p>
-								</div>
-							</motion.div>
-						))}
-					</div>
-				</div>
-			</div>
-		</section>
-	);
+        <div className="relative">
+          <div className="absolute left-0 right-0 top-8 hidden h-px bg-white/[0.12] lg:block" />
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {steps.map((step, index) => (
+              <motion.article
+                key={step.number}
+                initial={{ opacity: 0, y: 28 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.45, delay: index * 0.07 }}
+                className="relative border border-white/10 bg-white/[0.055] p-5 backdrop-blur-xl"
+              >
+                <div className="flex h-16 w-16 items-center justify-center border border-accent/35 bg-accent/10 text-accent">
+                  <step.icon className="h-7 w-7" />
+                </div>
+                <p className="mt-6 text-xs font-semibold uppercase tracking-[0.24em] text-white/[0.42]">
+                  {step.number}
+                </p>
+                <h3 className="mt-2 font-heading text-xl font-semibold text-white">
+                  {step.title}
+                </h3>
+                <p className="mt-3 text-sm leading-6 text-primary-foreground/[0.62]">
+                  {step.description}
+                </p>
+              </motion.article>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default Process;

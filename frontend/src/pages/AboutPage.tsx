@@ -1,7 +1,6 @@
 import About from "@/components/About";
 import TransformSection from "@/components/TransformSection";
 import Contact from "@/components/Contact";
-import AIChatbot from "@/components/AIChatbot";
 import DiscoveryCallButton from "@/components/DiscoveryCallButton";
 
 const AboutPage = () => {
@@ -13,7 +12,6 @@ const AboutPage = () => {
         <TransformSection />
         <Contact />
       </main>
-      <AIChatbot />
       <DiscoveryCallButton link="https://cal.id/enquire.thinkmoreai" />
     </div>
   );

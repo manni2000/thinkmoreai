@@ -10,7 +10,6 @@ import Team from "@/components/Team";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
-import AIChatbot from "@/components/AIChatbot";
 
 const Index = () => {
   return (
@@ -29,7 +28,6 @@ const Index = () => {
         <FAQ />
         <Contact />
       </main>
-      <AIChatbot />
     </div>
   );
 };

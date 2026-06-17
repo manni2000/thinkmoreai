@@ -1,32 +1,42 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
-import { MapPin, Mail, Phone, Send, ArrowRight, CheckCircle, AlertCircle, User, MessageSquare, Briefcase, Clock, Shield, Star } from "lucide-react";
+import { motion, useInView } from "framer-motion";
+import type { ChangeEvent, FocusEvent, FormEvent } from "react";
+import { useRef, useState } from "react";
+import {
+  AlertCircle,
+  ArrowRight,
+  Briefcase,
+  CheckCircle,
+  Clock,
+  Mail,
+  MessageSquare,
+  Phone,
+  Send,
+  Shield,
+  Star,
+  User,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "@/hooks/use-toast";
 import { submitContactForm } from "@/lib/api";
 
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.05,
-    },
-  },
-};
+const services = [
+  "Website Development",
+  "Mobile App Development",
+  "Social Media Management",
+  "Research Report",
+  "Data Analytics",
+  "AI Chatbot",
+  "SEO Optimization",
+  "AI Consultant",
+];
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.3 },
-  },
-};
+const trustItems = [
+  { icon: Clock, label: "24-hour response" },
+  { icon: Shield, label: "Confidential discovery" },
+  { icon: Star, label: "No-obligation scope" },
+];
 
 const Contact = () => {
   const ref = useRef(null);
@@ -34,99 +44,90 @@ const Contact = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
+    name: "",
+    email: "",
+    phone: "",
     services: [] as string[],
-    message: ''
+    message: "",
   });
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
   const [isSuccess, setIsSuccess] = useState(false);
   const [charCount, setCharCount] = useState(0);
 
-  const services = [
-    'Website Development',
-    'Mobile App Development',
-    'Social Media Management',
-    'Research Report',
-    'Data Analytics',
-    'AI Chatbot',
-    'SEO Optimization',
-    'AI Consultant'
-  ];
-
   const validateField = (name: string, value: string) => {
     const errors: Record<string, string> = {};
-    
+
     switch (name) {
-      case 'name':
+      case "name":
         if (!value || value.trim().length < 2) {
-          errors.name = 'Name must be at least 2 characters';
+          errors.name = "Name must be at least 2 characters";
         } else if (value.trim().length > 50) {
-          errors.name = 'Name must be less than 50 characters';
+          errors.name = "Name must be less than 50 characters";
         }
         break;
-      case 'email':
+      case "email":
         if (!value) {
-          errors.email = 'Email is required';
+          errors.email = "Email is required";
         } else if (!value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-          errors.email = 'Please enter a valid email address';
+          errors.email = "Please enter a valid email address";
         }
         break;
-      case 'phone':
-        if (value && !value.match(/^[+]?[\d\s\-\(\)]+$/)) {
-          errors.phone = 'Please enter a valid phone number';
+      case "phone":
+        if (value && !value.match(/^[+]?[\d\s\-()]+$/)) {
+          errors.phone = "Please enter a valid phone number";
         }
         break;
-      case 'message':
+      case "message":
         if (!value || value.trim().length < 10) {
-          errors.message = 'Message must be at least 10 characters';
+          errors.message = "Message must be at least 10 characters";
         } else if (value.trim().length > 1000) {
-          errors.message = 'Message must be less than 1000 characters';
+          errors.message = "Message must be less than 1000 characters";
         }
+        break;
+      default:
         break;
     }
-    
-    setFieldErrors(prev => ({ ...prev, [name]: errors[name] || '' }));
+
+    setFieldErrors((prev) => ({ ...prev, [name]: errors[name] || "" }));
     return !errors[name];
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
-    if (name === 'message') {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "message") {
       setCharCount(value.length);
     }
-    
-    // Clear error when user starts typing
+
     if (fieldErrors[name]) {
-      setFieldErrors(prev => ({ ...prev, [name]: '' }));
+      setFieldErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
   const handleServiceChange = (service: string, checked: boolean) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      services: checked 
+      services: checked
         ? [...prev.services, service]
-        : prev.services.filter(s => s !== service)
+        : prev.services.filter((item) => item !== service),
     }));
   };
 
-  const handleInputBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputBlur = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     validateField(name, value);
     setFocusedField(null);
   };
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Validate all fields except services (which is optional)
-    const fieldsToValidate = ['name', 'email', 'phone', 'message'];
-    const isValid = fieldsToValidate.every(key => validateField(key, formData[key as keyof typeof formData] as string));
-    
+
+    const fieldsToValidate = ["name", "email", "phone", "message"];
+    const isValid = fieldsToValidate.every((key) =>
+      validateField(key, formData[key as keyof typeof formData] as string)
+    );
+
     if (!isValid) {
       toast({
         title: "Validation Error",
@@ -135,9 +136,9 @@ const Contact = () => {
       });
       return;
     }
-    
+
     setIsSubmitting(true);
-    
+
     const data = {
       name: formData.name.trim(),
       email: formData.email.trim().toLowerCase(),
@@ -145,7 +146,7 @@ const Contact = () => {
       services: formData.services,
       message: formData.message.trim(),
     };
-    
+
     try {
       await submitContactForm(data);
       setIsSuccess(true);
@@ -153,9 +154,9 @@ const Contact = () => {
         title: "Message sent successfully!",
         description: "We'll get back to you within 24 hours.",
       });
-      setFormData({ name: '', email: '', phone: '', services: [], message: '' });
+      setFormData({ name: "", email: "", phone: "", services: [], message: "" });
       setCharCount(0);
-      
+
       setTimeout(() => setIsSuccess(false), 5000);
     } catch (error) {
       toast({
@@ -169,389 +170,229 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="section-padding bg-gradient-to-b from-rose-50 via-rose-50 to-pink-100 relative overflow-hidden">
-      {/* Background Animation */}
-      <div className="absolute inset-0 overflow-hidden">
-        <motion.div
-          animate={{
-            background: [
-              "radial-gradient(circle 800px at 20% 50%, rgba(245, 166, 35, 0.1) 0%, transparent 50%)",
-              "radial-gradient(circle 800px at 80% 50%, rgba(245, 166, 35, 0.1) 0%, transparent 50%)",
-            ],
-          }}
-          transition={{ duration: 4, repeat: Infinity }}
-          className="absolute inset-0"
-        />
-      </div>
+    <section id="contact" className="section-padding relative overflow-hidden bg-background">
+      <div className="surface-grid absolute inset-0 opacity-70" />
 
       <div className="container-custom relative z-10">
         <motion.div
           ref={ref}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={containerVariants}
-          className="text-center max-w-3xl mx-auto mb-20"
+          initial={{ opacity: 0, y: 24 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.55 }}
+          className="mb-12 grid gap-8 lg:grid-cols-[0.85fr_1fr] lg:items-end"
         >
-          <motion.span
-            variants={itemVariants}
-            className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold uppercase tracking-wider mb-4 mt-4 sm:mt-0"
-            whileHover={{ scale: 1.05 }}
-          >
-            Get In Touch
-          </motion.span>
-          <motion.h2
-            variants={itemVariants}
-            className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold mb-6"
-          >
-            Let's Build Something{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent to-orange-400">
-              Amazing
-            </span>
-          </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="text-lg text-muted-foreground mb-6"
-          >
-            Ready to transform your ideas into reality? We'd love to hear from you.
-          </motion.p>
-
-          {/* Conversion Optimization Elements */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-wrap justify-center gap-4 mb-8"
-          >
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-green-100 text-green-700 text-sm">
-              <Clock className="w-3 h-3" />
-              <span className="font-medium">24-hour response</span>
+          <div>
+            <span className="section-eyebrow">Contact</span>
+            <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
+              Tell us what you want to build, automate, or grow.
+            </h2>
+          </div>
+          <div>
+            <p className="text-lg leading-8 text-muted-foreground">
+              Share a few details and we will respond with next steps, rough scope,
+              and the best path to move from idea to execution.
+            </p>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {trustItems.map((item) => (
+                <span
+                  key={item.label}
+                  className="inline-flex items-center gap-2 border border-border bg-white px-3 py-2 text-sm font-medium text-foreground"
+                >
+                  <item.icon className="h-4 w-4 text-accent" />
+                  {item.label}
+                </span>
+              ))}
             </div>
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-sm">
-              <Shield className="w-3 h-3" />
-              <span className="font-medium">Free consultation</span>
-            </div>
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-sm">
-              <Star className="w-3 h-3" />
-              <span className="font-medium">No obligation</span>
-            </div>
-          </motion.div>
-
-          <motion.div
-            variants={itemVariants}
-            className="text-center p-4 bg-accent/5 rounded-lg border border-accent/20"
-          >
-            <div className="text-sm text-foreground/70 mb-2">
-              <strong>Limited Time:</strong> Book your free consultation this week and receive a complimentary AI readiness assessment ($100 value)
-            </div>
-            <div className="text-xs text-foreground/50">
-              Only 3 spots remaining this month
-            </div>
-          </motion.div>
+          </div>
         </motion.div>
 
-        <div className="grid lg:grid-cols-2 gap-16">
-          {/* Form */}
+        <div className="grid gap-8 lg:grid-cols-[1fr_0.55fr]">
           <motion.form
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.3, delay: 0.2 }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.1 }}
             onSubmit={handleSubmit}
-            className="space-y-6"
+            className="premium-card space-y-6 bg-white p-5 sm:p-7"
           >
-            <div className="grid sm:grid-cols-2 gap-6">
-              {['name', 'email'].map((field) => (
-                <motion.div
-                  key={field}
-                  whileHover={{ y: -2 }}
-                  onFocus={() => setFocusedField(field)}
-                  className="relative"
-                >
-                  <label htmlFor={field} className="block text-sm font-semibold text-foreground mb-3 capitalize flex items-center gap-2">
-                    {field === 'name' ? <User className="w-4 h-4" /> : <Mail className="w-4 h-4" />}
-                    {field} *
+            <div className="grid gap-5 sm:grid-cols-2">
+              {["name", "email"].map((field) => (
+                <div key={field} onFocus={() => setFocusedField(field)} className="relative">
+                  <label htmlFor={field} className="mb-2 flex items-center gap-2 text-sm font-semibold text-foreground">
+                    {field === "name" ? <User className="h-4 w-4" /> : <Mail className="h-4 w-4" />}
+                    {field === "name" ? "Name" : "Email"} *
                   </label>
-                  <motion.div
-                    className="relative"
-                    animate={{
-                      boxShadow: focusedField === field
-                        ? "0 0 20px rgba(245, 166, 35, 0.2)"
-                        : fieldErrors[field]
-                        ? "0 0 20px rgba(239, 68, 68, 0.2)"
-                        : "0 0 0px rgba(245, 166, 35, 0)",
-                    }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <Input
-                      id={field}
-                      name={field}
-                      type={field === 'email' ? 'email' : 'text'}
-                      placeholder={field === 'name' ? 'John Doe' : 'john@example.com'}
-                      value={formData[field as keyof typeof formData]}
-                      onChange={handleInputChange}
-                      onBlur={handleInputBlur}
-                      required
-                      className={`h-12 bg-card border-border focus:border-accent transition-all duration-300 placeholder:text-muted-foreground/60 ${
-                        fieldErrors[field] ? 'border-red-500 focus:border-red-500' : ''
-                      } ${isSuccess ? 'border-green-500' : ''}`}
-                    />
-                    {fieldErrors[field] && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="absolute -bottom-6 left-0 flex items-center gap-1 text-red-500 text-xs"
-                      >
-                        <AlertCircle className="w-3 h-3" />
-                        {fieldErrors[field]}
-                      </motion.div>
-                    )}
-                    {isSuccess && !fieldErrors[field] && (
-                      <motion.div
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500"
-                      >
-                        <CheckCircle className="w-5 h-5" />
-                      </motion.div>
-                    )}
-                  </motion.div>
-                </motion.div>
+                  <Input
+                    id={field}
+                    name={field}
+                    type={field === "email" ? "email" : "text"}
+                    placeholder={field === "name" ? "Your name" : "you@company.com"}
+                    value={formData[field as keyof typeof formData] as string}
+                    onChange={handleInputChange}
+                    onBlur={handleInputBlur}
+                    required
+                    className={`h-12 border-border bg-background transition-all duration-300 placeholder:text-muted-foreground/60 focus:border-accent ${
+                      focusedField === field ? "shadow-[0_0_0_3px_rgba(245,166,35,0.12)]" : ""
+                    } ${fieldErrors[field] ? "border-red-500 focus:border-red-500" : ""} ${
+                      isSuccess ? "border-green-500" : ""
+                    }`}
+                  />
+                  {fieldErrors[field] && (
+                    <div className="mt-2 flex items-center gap-1 text-xs text-red-500">
+                      <AlertCircle className="h-3 w-3" />
+                      {fieldErrors[field]}
+                    </div>
+                  )}
+                </div>
               ))}
             </div>
 
-            <motion.div whileHover={{ y: -2 }} className="relative">
-              <label htmlFor="phone" className="block text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Phone className="w-4 h-4" />
+            <div className="relative">
+              <label htmlFor="phone" className="mb-2 flex items-center gap-2 text-sm font-semibold text-foreground">
+                <Phone className="h-4 w-4" />
                 Phone Number
               </label>
-              <motion.div
-                className="relative"
-                animate={{
-                  boxShadow: fieldErrors.phone
-                    ? "0 0 20px rgba(239, 68, 68, 0.2)"
-                    : "0 0 0px rgba(245, 166, 35, 0)",
-                }}
-              >
-                <Input
-                  id="phone"
-                  name="phone"
-                  type="tel"
-                  placeholder="+91 98765 43210"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  onBlur={handleInputBlur}
-                  className={`h-12 bg-card border-border transition-all duration-300 placeholder:text-muted-foreground/60 ${
-                    fieldErrors.phone ? 'border-red-500 focus:border-red-500' : ''
-                  }`}
-                />
-                {fieldErrors.phone && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="absolute -bottom-6 left-0 flex items-center gap-1 text-red-500 text-xs"
-                  >
-                    <AlertCircle className="w-3 h-3" />
-                    {fieldErrors.phone}
-                  </motion.div>
-                )}
-              </motion.div>
-            </motion.div>
+              <Input
+                id="phone"
+                name="phone"
+                type="tel"
+                placeholder="+91 98765 43210"
+                value={formData.phone}
+                onChange={handleInputChange}
+                onBlur={handleInputBlur}
+                className={`h-12 border-border bg-background transition-all duration-300 placeholder:text-muted-foreground/60 focus:border-accent ${
+                  fieldErrors.phone ? "border-red-500 focus:border-red-500" : ""
+                }`}
+              />
+              {fieldErrors.phone && (
+                <div className="mt-2 flex items-center gap-1 text-xs text-red-500">
+                  <AlertCircle className="h-3 w-3" />
+                  {fieldErrors.phone}
+                </div>
+              )}
+            </div>
 
-            <motion.div whileHover={{ y: -2 }} className="relative">
-              <label className="block text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <Briefcase className="w-4 h-4" />
-                Services Interested In (Multiple tick allowed - select as many as you need)
+            <div>
+              <label className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground">
+                <Briefcase className="h-4 w-4" />
+                Services Interested In
               </label>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div className="grid gap-3 sm:grid-cols-2">
                 {services.map((service) => (
-                  <motion.div
+                  <label
                     key={service}
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    className="relative"
+                    htmlFor={`service-${service}`}
+                    className={`flex cursor-pointer items-center gap-3 border p-3 text-sm transition-all duration-300 ${
+                      formData.services.includes(service)
+                        ? "border-accent bg-accent/10 text-foreground"
+                        : "border-border bg-background text-muted-foreground hover:border-accent/50 hover:text-foreground"
+                    }`}
                   >
-                    <label
-                      htmlFor={`service-${service}`}
-                      className="flex items-center gap-3 p-3 rounded-lg bg-card border border-border cursor-pointer hover:border-accent/50 transition-all duration-300"
-                    >
-                      <input
-                        type="checkbox"
-                        id={`service-${service}`}
-                        name="services"
-                        value={service}
-                        checked={formData.services.includes(service)}
-                        onChange={(e) => handleServiceChange(service, e.target.checked)}
-                        className="w-4 h-4 text-accent border-border rounded focus:ring-accent focus:ring-2 flex-shrink-0"
-                      />
-                      <span className="text-sm text-foreground leading-tight">{service}</span>
-                    </label>
-                  </motion.div>
+                    <input
+                      type="checkbox"
+                      id={`service-${service}`}
+                      name="services"
+                      value={service}
+                      checked={formData.services.includes(service)}
+                      onChange={(e) => handleServiceChange(service, e.target.checked)}
+                      className="h-4 w-4 flex-shrink-0 border-border text-accent focus:ring-accent"
+                    />
+                    <span>{service}</span>
+                  </label>
                 ))}
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div whileHover={{ y: -2 }} className="relative">
-              <label htmlFor="message" className="block text-sm font-semibold text-foreground mb-3 flex items-center gap-2">
-                <MessageSquare className="w-4 h-4" />
+            <div>
+              <label htmlFor="message" className="mb-2 flex items-center gap-2 text-sm font-semibold text-foreground">
+                <MessageSquare className="h-4 w-4" />
                 Message *
               </label>
               <div className="relative">
                 <Textarea
                   id="message"
                   name="message"
-                  placeholder="Tell us about your project..."
+                  placeholder="Tell us about your goals, workflow, product, or problem..."
                   value={formData.message}
                   onChange={handleInputChange}
                   onBlur={handleInputBlur}
                   required
                   rows={5}
-                  className={`bg-card border-border resize-none focus:border-accent transition-all duration-300 placeholder:text-muted-foreground/60 ${
-                    fieldErrors.message ? 'border-red-500 focus:border-red-500' : ''
-                  } ${isSuccess ? 'border-green-500' : ''}`}
                   minLength={10}
                   maxLength={1000}
+                  className={`resize-none border-border bg-background transition-all duration-300 placeholder:text-muted-foreground/60 focus:border-accent ${
+                    fieldErrors.message ? "border-red-500 focus:border-red-500" : ""
+                  } ${isSuccess ? "border-green-500" : ""}`}
                 />
-                <div className="absolute bottom-2 right-2 text-xs text-muted-foreground flex items-center gap-2">
-                  <span className={`${charCount > 900 ? 'text-orange-500' : charCount > 950 ? 'text-red-500' : ''}`}>
+                <div className="absolute bottom-2 right-2 flex items-center gap-2 text-xs text-muted-foreground">
+                  <span className={charCount > 950 ? "text-red-500" : charCount > 900 ? "text-orange-500" : ""}>
                     {charCount}/1000
                   </span>
                   {charCount >= 10 && charCount <= 1000 && !fieldErrors.message && (
-                    <CheckCircle className="w-3 h-3 text-green-500" />
+                    <CheckCircle className="h-3 w-3 text-green-500" />
                   )}
                 </div>
-                {fieldErrors.message && (
-                  <motion.div
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="absolute -bottom-6 left-0 flex items-center gap-1 text-red-500 text-xs"
-                  >
-                    <AlertCircle className="w-3 h-3" />
-                    {fieldErrors.message}
-                  </motion.div>
-                )}
               </div>
-            </motion.div>
+              {fieldErrors.message && (
+                <div className="mt-2 flex items-center gap-1 text-xs text-red-500">
+                  <AlertCircle className="h-3 w-3" />
+                  {fieldErrors.message}
+                </div>
+              )}
+            </div>
 
-            <motion.div 
-              whileHover={{ scale: 1.02, y: -2 }} 
-              whileTap={{ scale: 0.98 }}
-              transition={{ type: "spring", stiffness: 400, damping: 17 }}
-            >
-              <Button 
-                type="submit" 
-                variant="hero" 
-                size="xl" 
-                className="w-full group relative overflow-hidden"
-                disabled={isSubmitting}
-              >
-                <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                  initial={{ x: "-100%" }}
-                  whileHover={{ x: "100%" }}
-                  transition={{ duration: 0.6 }}
-                />
-                {isSubmitting ? (
-                  <motion.div 
-                    className="flex items-center gap-2"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    <motion.div
-                      animate={{ rotate: 360 }}
-                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                    >
-                      <Send className="w-5 h-5" />
-                    </motion.div>
-                    <motion.span
-                      animate={{ opacity: [0.5, 1, 0.5] }}
-                      transition={{ duration: 1.5, repeat: Infinity }}
-                    >
-                      Sending...
-                    </motion.span>
-                  </motion.div>
-                ) : (
-                  <motion.div 
-                    className="flex items-center justify-center gap-2"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <span>Send Message</span>
-                    <motion.div
-                      className="overflow-hidden"
-                      initial={{ x: 0 }}
-                      whileHover={{ x: 8, rotate: 45 }}
-                      transition={{ type: "spring", stiffness: 300, damping: 15 }}
-                    >
-                      <Send className="w-5 h-5" />
-                    </motion.div>
-                  </motion.div>
-                )}
-              </Button>
-            </motion.div>
+            <Button type="submit" variant="hero" size="xl" className="w-full group" disabled={isSubmitting}>
+              {isSubmitting ? (
+                <span className="inline-flex items-center gap-2">
+                  <Send className="h-5 w-5 animate-spin" />
+                  Sending...
+                </span>
+              ) : (
+                <span className="inline-flex items-center gap-2">
+                  Send Message
+                  <Send className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
+              )}
+            </Button>
           </motion.form>
 
-          {/* Info Cards */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.3, delay: 0.3 }}
-            className="space-y-8 mt-12"
+          <motion.aside
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.5, delay: 0.18 }}
+            className="space-y-4"
           >
-            {/* Contact Information Cards */}
             {[
               { icon: Phone, label: "Phone", info: "+91-9608826629", href: "tel:+919608826629" },
               { icon: Mail, label: "Email", info: "info@thinkmoreai.com", href: "mailto:info@thinkmoreai.com" },
-            ].map((item, idx) => (
-              <motion.div
-                key={idx}
-                whileHover={{ y: -5 }}
-                className="glass-card rounded-2xl p-8 border border-border/50 hover:border-accent/50 transition-all duration-300"
-              >
-                <div className="flex items-start gap-5">
-                  <motion.div
-                    className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent to-orange-400 flex items-center justify-center flex-shrink-0"
-                    whileHover={{ rotate: 10, scale: 1.1 }}
-                  >
-                    <item.icon className="w-7 h-7 text-white" />
-                  </motion.div>
-                  <div className="flex-grow">
-                    <p className="font-semibold text-foreground mb-1">{item.label}</p>
-                    {item.href ? (
-                      <a
-                        href={item.href}
-                        className="text-muted-foreground hover:text-accent transition-colors duration-300"
-                      >
-                        {item.info}
-                      </a>
-                    ) : (
-                      <p className="text-muted-foreground whitespace-pre-line">{item.info}</p>
-                    )}
+            ].map((item) => (
+              <div key={item.label} className="premium-card bg-white p-5">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center border border-accent/25 bg-accent/10 text-accent">
+                    <item.icon className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <p className="font-heading font-semibold text-foreground">{item.label}</p>
+                    <a href={item.href} className="mt-1 block text-sm text-muted-foreground transition-colors hover:text-accent">
+                      {item.info}
+                    </a>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             ))}
 
-            {/* CTA Card */}
-            <motion.div
-              whileHover={{ y: -5 }}
-              className="glass-card rounded-2xl p-8 bg-gradient-to-br from-accent/20 to-orange-400/10 border-accent/30 hover:border-accent/50 transition-all duration-300 mt-8"
-            >
-              <h3 className="font-heading font-bold text-xl text-foreground mb-3">
-                Prefer a call?
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                Schedule a free consultation to discuss your project.
+            <div className="premium-card bg-primary p-6 text-primary-foreground">
+              <h3 className="font-heading text-2xl font-bold">Prefer a call?</h3>
+              <p className="mt-3 text-sm leading-6 text-primary-foreground/[0.68]">
+                Schedule a discovery call and we will map the highest-impact path for your business.
               </p>
-              <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                <Button variant="accent" asChild className="group">
-                  <a href="https://cal.id/enquire.thinkmoreai" target="_blank" rel="noopener noreferrer">
-                    Book a Discovery Call?
-                    <motion.div whileHover={{ x: 3 }}>
-                      <ArrowRight className="w-5 h-5" />
-                    </motion.div>
-                  </a>
-                </Button>
-              </motion.div>
-            </motion.div>
-          </motion.div>
+              <Button variant="hero" asChild className="mt-6 group w-full">
+                <a href="https://cal.id/enquire.thinkmoreai" target="_blank" rel="noopener noreferrer">
+                  Book a Discovery Call
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                </a>
+              </Button>
+            </div>
+          </motion.aside>
         </div>
       </div>
     </section>

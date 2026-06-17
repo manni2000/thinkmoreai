@@ -1,30 +1,35 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { CheckCircle2, Users, Globe, Handshake, Target } from "lucide-react";
+import { CheckCircle2, Globe2, Handshake, Layers3, Target, Users } from "lucide-react";
 
 const trustSignals = [
   {
     icon: Users,
-    title: "Expert Team",
-    description: "Team from MNCs & fast-growing startups",
+    title: "Senior execution team",
+    description: "Operators from MNCs and high-growth startup environments.",
   },
   {
-    icon: Globe,
-    title: "Global Delivery",
-    description: "Experience serving clients worldwide",
+    icon: Globe2,
+    title: "Global delivery",
+    description: "Remote-first collaboration for clients across regions and time zones.",
   },
   {
     icon: Handshake,
-    title: "Long-term Partners",
-    description: "Focus on lasting partnerships",
+    title: "Partnership mindset",
+    description: "Clear communication, roadmap ownership, and post-launch support.",
   },
   {
-    icon: CheckCircle2,
-    title: "Proven Delivery",
-    description:
-      "On-time, production-ready solutions with measurable business impact",
+    icon: Layers3,
+    title: "Full-stack capability",
+    description: "Strategy, product, AI, automation, growth, and compliance support.",
   },
+];
+
+const operatingPoints = [
+  "Business problem mapped before technology decisions",
+  "AI workflows designed around measurable operational lift",
+  "Production-ready engineering with security and maintainability",
+  "Roadmaps, demos, and milestones communicated in plain language",
 ];
 
 const About = () => {
@@ -32,113 +37,81 @@ const About = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section
-      id="about"
-      className="section-padding bg-gradient-to-b from-slate-50 to-blue-50 relative overflow-hidden"
-    >
-      {/* Background Accent */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-accent/5 to-transparent" />
-
+    <section id="about" className="section-padding surface-grid relative overflow-hidden bg-background">
       <div className="container-custom relative z-10">
-        <div ref={ref} className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Content */}
+        <div ref={ref} className="grid items-center gap-12 lg:grid-cols-[0.95fr_1.05fr]">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6 }}
-            className="text-center lg:text-left"
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55 }}
+            className="max-w-2xl"
           >
-            <span className="inline-block px-4 py-2 rounded-full bg-accent/10 text-accent text-sm font-semibold uppercase tracking-wider mb-2">
-              About us
-            </span>
-            <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-4 mb-6">
-              AI-First Solutions for{" "}
-              <span className="gradient-text">Modern Businesses</span>
+            <span className="section-eyebrow">About us</span>
+            <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
+              Practical AI execution for teams that need products, not presentations.
             </h2>
-            <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-              ThinkmoreAI is an AI-first company delivering high-impact digital
-              products, automation, analytics, and professional services. From
-              startups to enterprise, we transform ideas into scalable solutions
-              with speed, clarity, and execution excellence.
+            <p className="mt-6 text-lg leading-8 text-muted-foreground">
+              ThinkMoreAI combines strategy, automation, analytics, product engineering,
+              and growth services into one delivery partner. We help startups, SMEs,
+              and enterprise teams turn ideas into scalable systems with clarity and speed.
             </p>
 
-            <div className="space-y-4">
-              {[
-                "End-to-end product development",
-                "AI & automation expertise",
-                "Compliance & professional services",
-                "Agile delivery methodology",
-              ].map((feature, index) => (
+            <div className="mt-8 grid gap-3">
+              {operatingPoints.map((point, index) => (
                 <motion.div
-                  key={feature}
-                  initial={{ opacity: 0, x: -20 }}
+                  key={point}
+                  initial={{ opacity: 0, x: -16 }}
                   animate={isInView ? { opacity: 1, x: 0 } : {}}
-                  transition={{ duration: 0.4, delay: 0.2 + index * 0.1 }}
-                  className="flex items-center gap-3 justify-center lg:justify-start"
+                  transition={{ duration: 0.35, delay: 0.1 + index * 0.06 }}
+                  className="flex items-start gap-3 border-l-2 border-accent/70 bg-white/70 px-4 py-3"
                 >
-                  <CheckCircle2 className="w-5 h-5 text-accent flex-shrink-0" />
-                  <span className="text-foreground">{feature}</span>
+                  <CheckCircle2 className="mt-0.5 h-5 w-5 flex-shrink-0 text-accent" />
+                  <span className="text-sm font-medium leading-6 text-foreground/[0.82]">
+                    {point}
+                  </span>
                 </motion.div>
               ))}
             </div>
           </motion.div>
 
-          {/* Right - Trust Signals Cards */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid gap-6"
+            initial={{ opacity: 0, y: 24 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.55, delay: 0.1 }}
+            className="grid gap-4 sm:grid-cols-2"
           >
+            <div className="premium-card bg-primary p-6 text-primary-foreground sm:col-span-2">
+              <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+                <div>
+                  <Target className="h-8 w-8 text-accent" />
+                  <h3 className="mt-5 font-heading text-2xl font-bold">
+                    Built around measurable outcomes
+                  </h3>
+                </div>
+                <p className="max-w-sm text-sm leading-6 text-primary-foreground/[0.66]">
+                  Every engagement starts with the operational, revenue, or delivery metric
+                  the system must improve.
+                </p>
+              </div>
+            </div>
+
             {trustSignals.map((signal, index) => (
               <motion.div
                 key={signal.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 18 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.3 + index * 0.1 }}
-                className={`rounded-2xl p-6 hover-lift border transition-all duration-300 ${
-                  index === 0
-                    ? "bg-blue-50 border-blue-200 hover:border-blue-300 hover:shadow-lg"
-                    : index === 1
-                    ? "bg-emerald-50 border-emerald-200 hover:border-emerald-300 hover:shadow-lg"
-                    : index === 2
-                    ? "bg-amber-50 border-amber-200 hover:border-amber-300 hover:shadow-lg"
-                    : "bg-purple-50 border-purple-200 hover:border-purple-300 hover:shadow-lg"
-                }`}
+                transition={{ duration: 0.45, delay: 0.18 + index * 0.06 }}
+                className="premium-card p-6"
               >
-                <div className="flex items-start gap-5">
-                  <div
-                    className={`w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 ${
-                      index === 0
-                        ? "bg-blue-100"
-                        : index === 1
-                        ? "bg-emerald-100"
-                        : index === 2
-                        ? "bg-amber-100"
-                        : "bg-purple-100"
-                    }`}
-                  >
-                    <signal.icon
-                      className={`w-7 h-7 ${
-                        index === 0
-                          ? "text-blue-600"
-                          : index === 1
-                          ? "text-emerald-600"
-                          : index === 2
-                          ? "text-amber-600"
-                          : "text-purple-600"
-                      }`}
-                    />
-                  </div>
-                  <div>
-                    <h3 className="font-heading font-semibold text-lg text-foreground mb-1">
-                      {signal.title}
-                    </h3>
-                    <p className="text-muted-foreground">
-                      {signal.description}
-                    </p>
-                  </div>
+                <div className="flex h-11 w-11 items-center justify-center border border-accent/25 bg-accent/10 text-accent">
+                  <signal.icon className="h-5 w-5" />
                 </div>
+                <h3 className="mt-5 font-heading text-lg font-semibold text-foreground">
+                  {signal.title}
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  {signal.description}
+                </p>
               </motion.div>
             ))}
           </motion.div>

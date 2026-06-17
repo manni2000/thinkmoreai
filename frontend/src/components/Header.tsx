@@ -1,299 +1,138 @@
-import { useState, useEffect, useRef } from "react";
-import { useLocation } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, ArrowRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const navLinks = [
-	{ name: "About", href: "/about" },
-	{ name: "Services", href: "/services" },
-	{ name: "Portfolio", href: "/portfolio" },
-	// { name: "Technologies", href: "/technologies" },
-    { name: "Team", href: "/team"},
-	{ name: "Contact", href: "/contact" },
+  { name: "About", href: "/about" },
+  { name: "Services", href: "/services" },
+  { name: "Portfolio", href: "/portfolio" },
+  { name: "Team", href: "/team" },
+  { name: "Contact", href: "/contact" },
 ];
 
 const Header = () => {
-	const [isScrolled, setIsScrolled] = useState(false);
-	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-	const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
-	const sidebarRef = useRef<HTMLDivElement>(null);
-	const location = useLocation();
-	const isHomePage = location.pathname === "/";
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const location = useLocation();
+  const isHomePage = location.pathname === "/";
+  const isTransparent = isHomePage && !isScrolled;
 
-	const handleClickOutside = (event: MouseEvent) => {
-		const target = event.target as Element;
-		if (sidebarRef.current && 
-			!sidebarRef.current.contains(target) && 
-			!target.closest('[data-menu-button]')) {
-			setIsMobileMenuOpen(false);
-			setActiveDropdown(null);
-		}
-	};
+  useEffect(() => {
+    const handleScroll = () => setIsScrolled(window.scrollY > 18);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-	const handleDropdownToggle = (dropdown: string) => {
-		setActiveDropdown(activeDropdown === dropdown ? null : dropdown);
-	};
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [location.pathname]);
 
-	useEffect(() => {
-		const handleScroll = () => {
-			setIsScrolled(window.scrollY > 20);
-		};
-		window.addEventListener("scroll", handleScroll);
-		return () => window.removeEventListener("scroll", handleScroll);
-	}, []);
+  return (
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
+        isTransparent
+          ? "border-transparent bg-primary/45 text-white backdrop-blur-md"
+          : "border-b border-border/70 bg-white/90 text-foreground shadow-[0_12px_38px_-30px_rgba(5,7,13,0.55)] backdrop-blur-xl"
+      }`}
+    >
+      <div className="container-custom">
+        <nav className="flex h-20 items-center justify-between">
+          <Link to="/" className="flex items-center gap-3">
+            <img src="/thinkmoreai-logo.webp" alt="ThinkMoreAI Logo" className="h-12 w-auto" />
+            <span className={`font-heading text-xl font-extrabold ${isTransparent ? "text-white" : "text-foreground"}`}>
+              ThinkMoreAI
+            </span>
+          </Link>
 
-	useEffect(() => {
-		document.addEventListener("mousedown", handleClickOutside);
-		return () => {
-			document.removeEventListener("mousedown", handleClickOutside);
-		};
-	}, []);
+          <div className="hidden items-center gap-1 lg:flex">
+            {navLinks.map((link) => {
+              const active = location.pathname === link.href;
+              return (
+                <Link
+                  key={link.name}
+                  to={link.href}
+                  className={`relative px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
+                    isTransparent
+                      ? active
+                        ? "text-amber-soft"
+                        : "text-white/72 hover:text-white"
+                      : active
+                      ? "text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {link.name}
+                  {active && (
+                    <motion.span
+                      layoutId="header-active-link"
+                      className="absolute inset-x-4 -bottom-1 h-0.5 bg-accent"
+                      transition={{ type: "spring", stiffness: 500, damping: 35 }}
+                    />
+                  )}
+                </Link>
+              );
+            })}
+          </div>
 
-	const shouldShowDarkHeader = !isHomePage || isScrolled;
+          <div className="hidden lg:block">
+            <Button variant="accent" asChild className="group">
+              <Link to="/contact" className="inline-flex items-center gap-2">
+                Free Consultation
+                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+              </Link>
+            </Button>
+          </div>
 
-	return (
-		<header
-			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-				isHomePage && !isScrolled
-					? "bg-gradient-to-r from-primary to-primary/95 backdrop-blur-xl"
-					: "bg-card/95 backdrop-blur-xl shadow-lg border-b border-border/50"
-			}`}
-		>
-			<div className="container-custom">
-				<nav className="flex items-center justify-between h-20">
-					{/* Logo */}
-					<motion.a
-						href="/"
-						initial={{ opacity: 0, x: -20 }}
-						animate={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.5 }}
-						className="flex items-center gap-2 group"
-						whileHover={{ scale: 1.05 }}
-						whileTap={{ scale: 0.95 }}
-					>
-						<motion.img
-							src="/thinkmoreai-logo.webp"
-							alt="ThinkMoreAI Logo"
-							className="h-20 w-auto transition-transform duration-300 group-hover:rotate-3"
-							whileHover={{ rotate: [0, 5, -5, 0] }}
-							transition={{ duration: 0.5 }}
-						/>
-						<span className={`font-heading font-bold text-2xl transition-colors duration-300 ${
-							isHomePage && !isScrolled
-								? "text-accent"
-								: "text-foreground"
-						}`}>
-							ThinkMoreAI
-						</span>
-					</motion.a>
+          <button
+            type="button"
+            className={`flex h-10 w-10 items-center justify-center border lg:hidden ${
+              isTransparent ? "border-white/20 text-white" : "border-border text-foreground"
+            }`}
+            onClick={() => setIsMobileMenuOpen((value) => !value)}
+            aria-label="Toggle navigation"
+          >
+            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </nav>
+      </div>
 
-					{/* Desktop Navigation */}
-					<motion.div
-						initial={{ opacity: 0, y: -10 }}
-						animate={{ opacity: 1, y: 0 }}
-						transition={{ duration: 0.5, delay: 0.1 }}
-						className="hidden lg:flex items-center gap-8"
-					>
-						{navLinks.map((link) => (
-							<motion.div
-								key={link.name}
-								className="relative"
-								whileHover={{ y: -2 }}
-								transition={{ type: "spring", stiffness: 300, damping: 17 }}
-							>
-								<motion.div
-									className="group"
-									whileHover="hovered"
-								>
-									<a
-										href={link.href}
-										className={`font-medium text-lg transition-colors duration-300 relative flex items-center gap-1 ${
-											isHomePage && !isScrolled
-												? "text-primary-foreground/80 hover:text-primary-foreground"
-												: "text-muted-foreground hover:text-foreground"
-										}`}
-									>
-										{link.name}
-									</a>
-									<motion.div
-										className="absolute -bottom-1 left-0 h-0.5 bg-yellow-500 origin-left"
-										initial={false}
-										animate={{ 
-											width: location.pathname === link.href ? "100%" : "0%",
-											scaleX: location.pathname === link.href ? 1 : 0
-										}}
-										variants={{
-											hovered: { 
-												width: "100%", 
-												scaleX: 1,
-												transition: { duration: 0.3, ease: "easeOut" }
-											}
-										}}
-										transition={{ 
-											width: { duration: 0.3, ease: "easeOut" },
-											scaleX: { duration: 0.3, ease: "easeOut" }
-										}}
-									/>
-								</motion.div>
-								{location.pathname === link.href && (
-									<motion.div
-										layoutId="activeTab"
-										className="absolute -bottom-1 left-0 w-full h-0.5 bg-accent"
-										initial={false}
-										transition={{ type: "spring", stiffness: 500, damping: 30 }}
-									/>
-								)}
-							</motion.div>
-						))}
-					</motion.div>
-
-					{/* CTA Button */}
-					<motion.div
-						initial={{ opacity: 0, x: 20 }}
-						animate={{ opacity: 1, x: 0 }}
-						transition={{ duration: 0.5, delay: 0.2 }}
-						className="hidden lg:block"
-					>
-						<motion.div
-							whileHover={{ scale: 1.05 }}
-							whileTap={{ scale: 0.95 }}
-							transition={{ type: "spring", stiffness: 400, damping: 17 }}
-						>
-							<Button variant="accent" size="default" asChild className="group shadow-lg shadow-accent/25">
-								<a href="/contact" className="flex items-center gap-2">
-									Get a Free Consultation
-									<motion.div
-										className="overflow-hidden"
-										whileHover={{ x: 3 }}
-										transition={{ type: "spring", stiffness: 300, damping: 15 }}
-									>
-										<ArrowRight className="w-4 h-4" />
-									</motion.div>
-								</a>
-							</Button>
-						</motion.div>
-					</motion.div>
-
-					{/* Mobile Menu Button */}
-					<motion.button
-						data-menu-button
-						className={`lg:hidden p-2 transition-colors ${
-							isHomePage && !isScrolled ? "text-primary-foreground" : "text-foreground"
-						}`}
-						onClick={(e) => {
-							e.stopPropagation();
-							setIsMobileMenuOpen(!isMobileMenuOpen);
-						}}
-						whileHover={{ scale: 1.1 }}
-						whileTap={{ scale: 0.9 }}
-						transition={{ type: "spring", stiffness: 400, damping: 17 }}
-					>
-						<AnimatePresence mode="wait">
-							{isMobileMenuOpen ? (
-								<motion.div
-									key="close"
-									initial={{ rotate: -90, opacity: 0 }}
-									animate={{ rotate: 0, opacity: 1 }}
-									exit={{ rotate: 90, opacity: 0 }}
-									transition={{ duration: 0.2 }}
-								>
-									<X size={24} />
-								</motion.div>
-							) : (
-								<motion.div
-									key="menu"
-									initial={{ rotate: 90, opacity: 0 }}
-									animate={{ rotate: 0, opacity: 1 }}
-									exit={{ rotate: -90, opacity: 0 }}
-									transition={{ duration: 0.2 }}
-								>
-									<Menu size={24} />
-								</motion.div>
-							)}
-						</AnimatePresence>
-					</motion.button>
-				</nav>
-			</div>
-
-			{/* Mobile Menu */}
-			<AnimatePresence>
-				{isMobileMenuOpen && (
-					<motion.div
-						ref={sidebarRef}
-						initial={{ opacity: 0, height: 0 }}
-						animate={{ opacity: 1, height: "auto" }}
-						exit={{ opacity: 0, height: 0 }}
-						transition={{ duration: 0.3, ease: "easeInOut" }}
-						className="lg:hidden bg-card/95 backdrop-blur-xl border-b border-border shadow-lg"
-					>
-						<div className="container-custom py-6">
-							<motion.div 
-								className="flex flex-col gap-2"
-								initial={{ opacity: 0, y: -20 }}
-								animate={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.3, delay: 0.1 }}
-							>
-								{navLinks.map((link, index) => (
-									<motion.div
-										key={link.name}
-										initial={{ opacity: 0, x: -20 }}
-										animate={{ opacity: 1, x: 0 }}
-										transition={{ duration: 0.2, delay: 0.1 + index * 0.05 }}
-									>
-										<motion.a
-											href={link.href}
-											onClick={() => {
-												setIsMobileMenuOpen(false);
-												setActiveDropdown(null);
-											}}
-											className={`font-medium py-3 px-4 rounded-lg transition-all duration-300 flex items-center justify-between ${
-												location.pathname === link.href
-													? "bg-accent/20 text-accent"
-													: "text-foreground hover:bg-accent/10 hover:text-accent"
-											}`}
-											whileHover={{ x: 5 }}
-											whileTap={{ scale: 0.95 }}
-										>
-											<span>{link.name}</span>
-											{location.pathname === link.href && (
-												<motion.div
-													initial={{ scale: 0 }}
-													animate={{ scale: 1 }}
-													transition={{ type: "spring", stiffness: 500, damping: 30 }}
-												>
-													<ChevronDown className="w-4 h-4" />
-												</motion.div>
-											)}
-										</motion.a>
-									</motion.div>
-								))}
-							</motion.div>
-							<motion.div
-								initial={{ opacity: 0, y: 20 }}
-								animate={{ opacity: 1, y: 0 }}
-								transition={{ duration: 0.3, delay: 0.3 }}
-								className="mt-6"
-							>
-								<motion.div
-									whileHover={{ scale: 1.02 }}
-									whileTap={{ scale: 0.98 }}
-									transition={{ type: "spring", stiffness: 400, damping: 17 }}
-								>
-									<Button variant="accent" size="lg" className="w-full shadow-lg shadow-accent/25" asChild>
-										<a href="/contact" className="flex items-center justify-center gap-2">
-											Get a Free Consultation
-											<ArrowRight className="w-4 h-4" />
-										</a>
-									</Button>
-								</motion.div>
-							</motion.div>
-						</div>
-					</motion.div>
-				)}
-			</AnimatePresence>
-		</header>
-	);
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.24 }}
+            className="border-t border-border bg-white text-foreground lg:hidden"
+          >
+            <div className="container-custom py-4">
+              <div className="grid gap-1">
+                {navLinks.map((link) => (
+                  <Link
+                    key={link.name}
+                    to={link.href}
+                    className={`border px-4 py-3 text-sm font-semibold ${
+                      location.pathname === link.href
+                        ? "border-accent bg-accent/10 text-foreground"
+                        : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
+                    }`}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
+              </div>
+              <Button variant="accent" asChild className="mt-4 w-full">
+                <Link to="/contact">Free Consultation</Link>
+              </Button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </header>
+  );
 };
 
 export default Header;

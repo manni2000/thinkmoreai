@@ -1,40 +1,35 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Star, Quote } from "lucide-react";
+import { Quote, Star } from "lucide-react";
 
 const testimonials = [
   {
     id: 1,
     name: "Rajesh Sharma",
     role: "CEO, TechStart India",
-    country: "🇮🇳 India",
-    rating: 5,
-    text: "ThinkmoreAI transformed our entire digital presence. Their team's execution was flawless, and they delivered ahead of schedule.",
+    region: "India",
+    text: "ThinkMoreAI transformed our digital presence with sharp execution and clear communication. The team delivered ahead of schedule.",
   },
   {
     id: 2,
     name: "Sarah Mitchell",
     role: "Founder, HealthFlow",
-    country: "🇺🇸 USA",
-    rating: 5,
-    text: "Working with ThinkmoreAI was a game-changer. Their AI solutions helped us automate 70% of our customer support.",
+    region: "USA",
+    text: "Their AI automation helped us remove repetitive support work and improve response quality without losing the human touch.",
   },
   {
     id: 3,
     name: "Ahmed Al-Rashid",
     role: "Director, Gulf Ventures",
-    country: "🇦🇪 UAE",
-    rating: 5,
-    text: "Professional, reliable, and incredibly skilled. They understood our requirements perfectly and delivered exceptional results.",
+    region: "UAE",
+    text: "Professional, reliable, and technically strong. They understood our requirements and translated them into a clean product experience.",
   },
   {
     id: 4,
     name: "Michael Chen",
     role: "Marketing Director, Digital Growth",
-    country: "Europe (UK)",
-    rating: 5,
-    text: "Their SEO optimization services transformed our online presence. We went from page 3 to #1 in Google rankings within 3 months. Organic traffic increased by 200%!",
+    region: "UK",
+    text: "The SEO and analytics work gave us a clearer growth engine. We saw stronger search visibility and much better reporting discipline.",
   },
 ];
 
@@ -47,58 +42,50 @@ const Testimonials = () => {
       <div className="container-custom">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-          className="text-center max-w-3xl mx-auto mb-16"
+          transition={{ duration: 0.55 }}
+          className="mx-auto mb-12 max-w-3xl text-center"
         >
-          <span className="text-accent font-semibold text-sm uppercase tracking-wider">
-            Testimonials
-          </span>
-          <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground mt-4 mb-6">
-            Trusted by Clients{" "}
-            <span className="gradient-text">Worldwide</span>
+          <span className="section-eyebrow">Client proof</span>
+          <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
+            Trusted by teams building beyond the obvious.
           </h2>
-          <p className="text-lg text-muted-foreground">
-            See what our clients have to say about working with us.
+          <p className="mt-5 text-lg leading-8 text-muted-foreground">
+            Clients choose us when they need strategy and execution to move together.
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid gap-5 lg:grid-cols-4">
           {testimonials.map((testimonial, index) => (
-            <motion.div
+            <motion.article
               key={testimonial.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 24 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="glass-card rounded-2xl p-6 hover-lift relative"
+              transition={{ duration: 0.45, delay: index * 0.06 }}
+              className="premium-card relative p-6"
             >
-              <Quote className="absolute top-4 right-4 w-8 h-8 text-accent/20" />
-              
-              {/* Rating */}
-              <div className="flex gap-1 mb-4">
-                {Array.from({ length: testimonial.rating }).map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-accent text-accent" />
+              <Quote className="absolute right-5 top-5 h-8 w-8 text-accent/[0.18]" />
+              <div className="mb-5 flex gap-1">
+                {Array.from({ length: 5 }).map((_, itemIndex) => (
+                  <Star key={itemIndex} className="h-4 w-4 fill-accent text-accent" />
                 ))}
               </div>
 
-              <p className="text-muted-foreground text-sm mb-6 leading-relaxed">
+              <p className="text-sm leading-7 text-muted-foreground">
                 "{testimonial.text}"
               </p>
 
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-accent/20 flex items-center justify-center">
-                  <span className="font-heading font-bold text-accent">
-                    {testimonial.name.charAt(0)}
-                  </span>
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground text-sm">{testimonial.name}</p>
-                  <p className="text-muted-foreground text-xs">{testimonial.role}</p>
-                  <p className="text-xs mt-0.5">{testimonial.country}</p>
-                </div>
+              <div className="mt-7 border-t border-border pt-5">
+                <p className="font-heading text-sm font-bold text-foreground">
+                  {testimonial.name}
+                </p>
+                <p className="mt-1 text-xs text-muted-foreground">{testimonial.role}</p>
+                <p className="mt-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent">
+                  {testimonial.region}
+                </p>
               </div>
-            </motion.div>
+            </motion.article>
           ))}
         </div>
       </div>
