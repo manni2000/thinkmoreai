@@ -81,7 +81,7 @@ const TeamAvatar = ({
         {/* subtle radial sheen so the panel reads as intentional design, not a placeholder */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.14),transparent_60%)]" />
         <div
-          className={`relative flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${theme.badge} ring-2 ring-white/25 shadow-[0_12px_30px_-12px_rgba(0,0,0,0.7)] transition-transform duration-500 group-hover:scale-105 sm:h-24 sm:w-24`}
+          className={`relative mb-12 flex h-20 w-20 items-center justify-center rounded-full bg-gradient-to-br ${theme.badge} ring-2 ring-white/25 shadow-[0_12px_30px_-12px_rgba(0,0,0,0.7)] transition-transform duration-500 group-hover:scale-105 sm:h-24 sm:w-24`}
         >
           <span className="font-heading text-2xl font-bold tracking-wide text-white sm:text-3xl">
             {getInitials(name)}
@@ -133,37 +133,40 @@ const Team = () => {
               initial={{ opacity: 0, y: 26 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.45, delay: index * 0.06 }}
-              className="premium-card group flex flex-col overflow-hidden bg-white"
+              className="premium-card group flex flex-col overflow-hidden bg-white transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_60px_-30px_rgba(11,27,63,0.5)]"
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-primary">
+              <div className="relative aspect-square overflow-hidden bg-primary">
                 <TeamAvatar
                   name={member.name}
                   avatar={member.avatar}
                   theme={fallbackThemes[index % fallbackThemes.length]}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/[0.78] via-transparent to-transparent" />
-                <div className="absolute bottom-4 left-4 right-4">
-                  <h3 className="font-heading text-lg font-bold text-white sm:text-xl">
+                {/* top accent line that animates in on hover */}
+                <div className="absolute inset-x-0 top-0 z-10 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-accent to-amber-soft transition-transform duration-500 group-hover:scale-x-100" />
+                <div className="absolute inset-0 bg-gradient-to-t from-primary/[0.92] via-primary/[0.2] to-transparent" />
+
+                <div className="absolute inset-x-3.5 bottom-3.5 z-10 flex flex-col items-center text-center">
+                  <span className="inline-flex items-center gap-1.5 border border-accent/30 bg-accent/[0.14] px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.14em] text-amber-soft backdrop-blur-sm">
+                    {member.role}
+                  </span>
+                  <h3 className="mt-2 font-heading text-base font-bold leading-tight text-white sm:text-lg">
                     {member.name}
                   </h3>
-                  <p className="mt-1 text-sm font-semibold text-amber-soft">
-                    {member.role}
-                  </p>
                 </div>
               </div>
 
-              <div className="flex flex-1 flex-col p-5">
-                <p className="text-sm leading-6 text-muted-foreground sm:min-h-[72px]">
+              <div className="flex flex-1 flex-col p-4">
+                <p className="text-[13px] leading-6 text-muted-foreground sm:min-h-[60px]">
                   {member.bio}
                 </p>
-                <div className="mt-5 flex gap-2">
+                <div className="mt-4 flex gap-2 border-t border-border/70 pt-3.5">
                   {member.social.linkedin && (
                     <a
                       href={member.social.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${member.name} LinkedIn`}
-                      className="flex h-9 w-9 items-center justify-center border border-border text-muted-foreground transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-accent-foreground"
+                      className="flex h-8 w-8 items-center justify-center border border-border text-muted-foreground transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-accent-foreground"
                     >
                       <Linkedin className="h-4 w-4" />
                     </a>
@@ -172,7 +175,7 @@ const Team = () => {
                     <a
                       href={`mailto:${member.social.email}`}
                       aria-label={`${member.name} Email`}
-                      className="flex h-9 w-9 items-center justify-center border border-border text-muted-foreground transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-accent-foreground"
+                      className="flex h-8 w-8 items-center justify-center border border-border text-muted-foreground transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-accent-foreground"
                     >
                       <Mail className="h-4 w-4" />
                     </a>

@@ -44,7 +44,7 @@ const About = () => {
             initial={{ opacity: 0, y: 24 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.55 }}
-            className="max-w-2xl"
+            className="flex max-w-2xl flex-col items-center text-center lg:items-start lg:text-left"
           >
             <span className="section-eyebrow">About us</span>
             <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
@@ -56,7 +56,7 @@ const About = () => {
               and enterprise teams turn ideas into scalable systems with clarity and speed.
             </p>
 
-            <div className="mt-8 grid gap-3">
+            <div className="mt-8 grid w-full gap-3 text-left">
               {operatingPoints.map((point, index) => (
                 <motion.div
                   key={point}

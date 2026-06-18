@@ -179,9 +179,9 @@ const Contact = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55 }}
-          className="mb-12 grid gap-8 lg:grid-cols-[0.85fr_1fr] lg:items-end"
+          className="mb-12 grid gap-8 text-center lg:grid-cols-[0.85fr_1fr] lg:items-end lg:text-left"
         >
-          <div>
+          <div className="flex flex-col items-center lg:items-start">
             <span className="section-eyebrow">Contact</span>
             <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
               Tell us what you want to build, automate, or grow.
@@ -192,7 +192,7 @@ const Contact = () => {
               Share a few details and we will respond with next steps, rough scope,
               and the best path to move from idea to execution.
             </p>
-            <div className="mt-5 flex flex-wrap gap-2">
+            <div className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
               {trustItems.map((item) => (
                 <span
                   key={item.label}

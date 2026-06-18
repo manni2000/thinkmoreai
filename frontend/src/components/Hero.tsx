@@ -51,7 +51,7 @@ const Hero = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="max-w-3xl"
+          className="flex max-w-3xl flex-col items-center text-center lg:items-start lg:text-left"
         >
           <div className="section-eyebrow border-white/[0.15] bg-white/[0.08] text-amber-soft">
             <Sparkles className="h-4 w-4" />
@@ -90,7 +90,7 @@ const Hero = () => {
             </Button>
           </div>
 
-          <div className="mt-9 grid max-w-2xl grid-cols-3 border-y border-white/[0.12]">
+          <div className="mt-9 grid w-full max-w-2xl grid-cols-3 border-y border-white/[0.12] text-left">
             {proofPoints.map((point) => (
               <div key={point.label} className="py-5 pr-4">
                 <div className="font-heading text-2xl font-bold text-white sm:text-3xl">
@@ -103,7 +103,7 @@ const Hero = () => {
             ))}
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-3 text-sm text-white/[0.64]">
+          <div className="mt-6 flex flex-wrap justify-center gap-3 text-sm text-white/[0.64] lg:justify-start">
             {["Production-grade builds", "Clear delivery milestones", "Long-term support"].map((item) => (
               <span key={item} className="inline-flex items-center gap-2">
                 <CheckCircle2 className="h-4 w-4 text-amber-soft" />

@@ -113,7 +113,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm text-primary-foreground/[0.48] sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-12 flex flex-col items-center gap-4 border-t border-white/10 pt-6 text-center text-sm text-primary-foreground/[0.48] sm:flex-row sm:items-center sm:justify-between sm:text-left">
           <p>© {currentYear} ThinkMoreAI. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <a href="/privacy-policy" className="transition-colors hover:text-accent">

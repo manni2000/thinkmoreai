@@ -39,9 +39,9 @@ const WhyChooseUs = () => {
           initial={{ opacity: 0, y: 24 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55 }}
-          className="mb-12 grid gap-8 lg:grid-cols-[0.75fr_1fr] lg:items-end"
+          className="mb-12 grid gap-8 text-center lg:grid-cols-[0.75fr_1fr] lg:items-end lg:text-left"
         >
-          <div>
+          <div className="flex flex-col items-center lg:items-start">
             <span className="section-eyebrow border-white/[0.15] bg-white/[0.08] text-amber-soft">
               Why ThinkMoreAI
             </span>
@@ -49,7 +49,7 @@ const WhyChooseUs = () => {
               Built for founders and teams who need momentum.
             </h2>
           </div>
-          <p className="max-w-2xl text-lg leading-8 text-primary-foreground/[0.68]">
+          <p className="mx-auto max-w-2xl text-lg leading-8 text-primary-foreground/[0.68] lg:mx-0">
             We keep the work practical: clear scope, visible progress, senior thinking,
             and systems that are maintainable after launch.
           </p>

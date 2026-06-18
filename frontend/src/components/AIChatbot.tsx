@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll } from "framer-motion";
-import { Bot, MessageCircle, Send, X } from "lucide-react";
+import { Send, X } from "lucide-react";
+import { FaWhatsapp } from "react-icons/fa";
+import { RiRobot2Fill } from "react-icons/ri";
 import { Button } from "@/components/ui/button";
 
 const botResponses: Record<string, string> = {
@@ -234,7 +236,7 @@ const AIChatbot = () => {
               className="flex h-14 w-14 items-center justify-center border border-emerald-400/25 bg-emerald-500 text-white shadow-[0_18px_40px_-22px_rgba(16,185,129,0.9)] transition-transform duration-300 hover:-translate-y-1"
               aria-label="Contact ThinkMoreAI on WhatsApp"
             >
-              <MessageCircle className="h-6 w-6" />
+              <FaWhatsapp className="h-7 w-7" />
             </a>
             <button
               type="button"
@@ -242,7 +244,7 @@ const AIChatbot = () => {
               className="flex h-14 w-14 items-center justify-center border border-accent/30 bg-primary text-accent shadow-[0_18px_45px_-20px_rgba(245,166,35,0.9)] transition-transform duration-300 hover:-translate-y-1"
               aria-label="Open ThinkMoreAI assistant"
             >
-              <Bot className="h-6 w-6" />
+              <RiRobot2Fill className="h-6 w-6" />
             </button>
           </motion.div>
         )}
@@ -260,7 +262,7 @@ const AIChatbot = () => {
             <div className="flex items-center justify-between bg-primary p-4 text-primary-foreground">
               <div className="flex items-center gap-3">
                 <div className="flex h-10 w-10 items-center justify-center border border-accent/30 bg-accent/10 text-accent">
-                  <Bot className="h-5 w-5" />
+                  <RiRobot2Fill className="h-5 w-5" />
                 </div>
                 <div>
                   <h3 className="font-heading font-semibold">ThinkMoreAI Assistant</h3>

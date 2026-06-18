@@ -16,7 +16,7 @@ const TransformSection = () => {
           transition={{ duration: 0.55 }}
           className="grid items-center gap-8 lg:grid-cols-[1fr_auto]"
         >
-          <div className="max-w-3xl">
+          <div className="flex max-w-3xl flex-col items-center text-center lg:items-start lg:text-left">
             <span className="section-eyebrow border-white/[0.15] bg-white/[0.08] text-amber-soft">
               Next step
             </span>
@@ -29,7 +29,7 @@ const TransformSection = () => {
             </p>
           </div>
 
-          <Button variant="hero" size="xl" asChild className="group justify-self-start lg:justify-self-end">
+          <Button variant="hero" size="xl" asChild className="group justify-self-center lg:justify-self-end">
             <a
               href="https://cal.id/enquire.thinkmoreai"
               target="_blank"
