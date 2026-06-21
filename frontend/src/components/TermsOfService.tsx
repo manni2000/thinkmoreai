@@ -96,7 +96,7 @@ const TermsOfService = () => {
   ];
 
   return (
-    <section className="section-padding surface-grid bg-background relative overflow-hidden">
+    <section className="section-padding pt-28 md:pt-32 surface-grid bg-background relative overflow-hidden">
       {/* Background Animation */}
       <div className="hidden">
         <motion.div
