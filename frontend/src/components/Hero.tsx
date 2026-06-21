@@ -54,8 +54,7 @@ const Hero = () => {
           className="flex max-w-3xl flex-col items-center text-center lg:items-start lg:text-left"
         >
           <div className="section-eyebrow border-white/[0.15] bg-white/[0.08] text-amber-soft">
-            <Sparkles className="h-4 w-4" />
-            AI execution studio
+           Digital Growth Solutions
           </div>
 
           <h1 className="mt-7 font-heading text-5xl font-extrabold leading-[0.95] tracking-normal text-white sm:text-6xl lg:text-7xl">
