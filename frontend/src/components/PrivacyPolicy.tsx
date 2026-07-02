@@ -95,7 +95,7 @@ const PrivacyPolicy = () => {
     {
       icon: Mail,
       title: "12. Contact",
-      content: "For privacy questions: info@thinkmoreai.com"
+      content: "For privacy questions: manishmandal9734@gmail.com"
     }
   ];
 

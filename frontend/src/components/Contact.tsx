@@ -363,7 +363,7 @@ const Contact = () => {
           >
             {[
               { icon: Phone, label: "Phone", info: "+91-9608826629", href: "tel:+919608826629" },
-              { icon: Mail, label: "Email", info: "info@thinkmoreai.com", href: "mailto:info@thinkmoreai.com" },
+              { icon: Mail, label: "Email", info: "manishmandal9734@gmail.com", href: "mailto:manishmandal9734@gmail.com" },
             ].map((item) => (
               <div key={item.label} className="premium-card bg-white p-5">
                 <div className="flex items-start gap-4">

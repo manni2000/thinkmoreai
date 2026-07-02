@@ -1,3 +1,4 @@
+import PageSeo from "@/components/PageSeo";
 import Portfolio from "@/components/Portfolio";
 import Process from "@/components/Process";
 import FAQ from "@/components/FAQ";
@@ -8,6 +9,7 @@ import DiscoveryCallButton from "@/components/DiscoveryCallButton";
 const PortfolioPage = () => {
   return (
     <div className="min-h-screen bg-background">
+      <PageSeo page="portfolio" />
       <main>
         <div className="pt-20" />
         <Portfolio />

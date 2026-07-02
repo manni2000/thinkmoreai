@@ -218,10 +218,10 @@ const TermsOfService = () => {
               </p>
               <div className="mt-3">
                 <a 
-                  href="mailto:info@thinkmoreai.com" 
+                  href="mailto:manishmandal9734@gmail.com" 
                   className="font-medium text-accent underline"
                 >
-                  info@thinkmoreai.com
+                  manishmandal9734@gmail.com
                 </a>
               </div>
             </motion.div>

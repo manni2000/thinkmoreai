@@ -1,3 +1,4 @@
+import PageSeo from "@/components/PageSeo";
 import Services from "@/components/Services";
 import Process from "@/components/Process";
 import FAQ from "@/components/FAQ";
@@ -8,6 +9,7 @@ import DiscoveryCallButton from "@/components/DiscoveryCallButton";
 const ServicesPage = () => {
   return (
     <div className="min-h-screen bg-background">
+      <PageSeo page="services" />
       <main>
         <div className="pt-20" />
         <Services />

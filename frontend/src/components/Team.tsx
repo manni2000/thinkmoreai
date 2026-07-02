@@ -1,32 +1,49 @@
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Linkedin, Mail } from "lucide-react";
+import TeamPortrait from "@/components/TeamPortrait";
 
-const teamMembers = [
+interface TeamMember {
+  name: string;
+  role: string;
+  /** Real photo path (in /public); leave empty for the illustrated portrait. */
+  avatar: string;
+  avatarSize?: "normal" | "large" | "xlarge";
+  bio: string;
+  social: {
+    linkedin?: string;
+    email?: string;
+  };
+}
+
+const teamMembers: TeamMember[] = [
   {
     name: "Charan Kumar",
     role: "CEO & Founder",
-    avatar: "/charan-avatar.jpg",
+    avatar: "/images/portfolio/Charan.webp",
+    avatarSize: "large",
     bio: "Data analysis, SEO, marketing strategy, and business growth execution.",
     social: {
       linkedin: "https://www.linkedin.com/in/bcharankumar/",
-      email: "info@thinkmoreai.com",
+      email: "bonkacharan@gmail.com",
     },
   },
   {
     name: "Manish Kumar",
     role: "CTO & Founder",
-    avatar: "/manish-avatar.jpg",
+    avatar: "/images/portfolio/manish.png",
+    avatarSize: "xlarge",
     bio: "Full-stack architecture, scalable systems, and AI product engineering.",
     social: {
       linkedin: "https://www.linkedin.com/in/manish-kr-mandal/",
-      email: "info@thinkmoreai.com",
+      email: "manishmandal9734@gmail.com",
     },
   },
   {
     name: "Achyut Kumar Chaudhary",
     role: "CMO",
-    avatar: "/Achyut-Kumar-Chaudhary.jpg",
+    avatar: "/images/portfolio/Achyut%20Kumar.webp",
+     avatarSize: "large",
     bio: "Strategic marketing, market positioning, and client growth advisory.",
     social: {
       linkedin: "https://www.linkedin.com/in/achyuta-kumar-choudhury-323887234",
@@ -36,69 +53,63 @@ const teamMembers = [
   {
     name: "Aniket Kr Mandal",
     role: "Project Manager",
-    avatar: "/aniket-avatar.jpg",
+    avatar: "/images/portfolio/aniket.avif",
     bio: "Delivery planning, stakeholder coordination, and execution discipline.",
     social: {
-      email: "info@thinkmoreai.com",
+      email: "aniketmandal0101@gmail.com",
     },
   },
 ];
 
-// Deterministic palette per member so each card's fallback avatar is distinct but cohesive.
-const fallbackThemes = [
-  { panel: "from-[#0b1b3f] to-[#13294d]", badge: "from-[#1e3a8a] to-[#3b82f6]" },
-  { panel: "from-[#072a27] to-[#0c3b36]", badge: "from-[#0f766e] to-[#14b8a6]" },
-  { panel: "from-[#241245] to-[#34195f]", badge: "from-[#7c3aed] to-[#a855f7]" },
-  { panel: "from-[#3a1f05] to-[#4d2c08]", badge: "from-[#b45309] to-[#f59e0b]" },
-];
-
-const getInitials = (name: string) =>
-  name
-    .trim()
-    .split(/\s+/)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? "")
-    .join("");
-
 const TeamAvatar = ({
   name,
   avatar,
-  theme,
+  variant,
+  avatarSize = "normal",
 }: {
   name: string;
-  avatar: string;
-  theme: { panel: string; badge: string };
+  avatar?: string;
+  variant: number;
+  avatarSize?: "normal" | "large" | "xlarge";
 }) => {
   const [imgFailed, setImgFailed] = useState(false);
+  const portraitSize =
+    avatarSize === "xlarge"
+      ? "h-[110%] px-0"
+      : avatarSize === "large"
+        ? "h-[98%] px-2 sm:px-3"
+        : "h-[92%] px-4 sm:px-5";
+  const portraitPlacement = avatarSize === "xlarge" ? "top-0" : "bottom-0";
 
-  if (imgFailed) {
+  // Flat illustrated portrait used when there is no real photo.
+  if (!avatar || imgFailed) {
     return (
       <div
-        className={`relative flex h-full w-full items-center justify-center bg-gradient-to-br ${theme.panel}`}
+        className="relative h-full w-full overflow-hidden bg-[#fbfaf7]"
         aria-label={name}
         role="img"
       >
-        {/* subtle radial sheen so the panel reads as intentional design, not a placeholder */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_25%,rgba(255,255,255,0.14),transparent_60%)]" />
-        <div
-          className={`relative mb-8 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br ${theme.badge} ring-2 ring-white/25 shadow-[0_12px_30px_-12px_rgba(0,0,0,0.7)] transition-transform duration-500 group-hover:scale-105 sm:mb-12 sm:h-24 sm:w-24`}
-        >
-          <span className="font-heading text-xl font-bold tracking-wide text-white sm:text-3xl">
-            {getInitials(name)}
-          </span>
-        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_26%,rgba(255,191,69,0.16),transparent_42%)]" />
+        <TeamPortrait
+          seed={name}
+          variant={variant}
+          className={`absolute inset-x-0 w-full transition-transform duration-500 group-hover:scale-[1.04] ${portraitPlacement} ${portraitSize}`}
+        />
       </div>
     );
   }
 
   return (
-    <img
-      src={avatar}
-      alt={name}
-      loading="lazy"
-      onError={() => setImgFailed(true)}
-      className="h-full w-full object-cover grayscale-[0.18] transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
-    />
+    <div className="relative h-full w-full overflow-hidden bg-[#fbfaf7]">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_26%,rgba(255,191,69,0.14),transparent_44%)]" />
+      <img
+        src={avatar}
+        alt={name}
+        loading="lazy"
+        onError={() => setImgFailed(true)}
+        className={`absolute inset-x-0 w-full object-contain transition-transform duration-700 group-hover:scale-105 ${portraitPlacement} ${portraitSize}`}
+      />
+    </div>
   );
 };
 
@@ -135,27 +146,26 @@ const Team = () => {
               transition={{ duration: 0.45, delay: index * 0.06 }}
               className="premium-card group flex flex-col overflow-hidden bg-white transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_60px_-30px_rgba(11,27,63,0.5)]"
             >
-              <div className="relative aspect-[4/3] overflow-hidden bg-primary sm:aspect-square">
+              <div className="relative aspect-[4/3] overflow-hidden border-b border-border/70 bg-[#fbfaf7]">
                 <TeamAvatar
                   name={member.name}
                   avatar={member.avatar}
-                  theme={fallbackThemes[index % fallbackThemes.length]}
+                  variant={index}
+                  avatarSize={member.avatarSize}
                 />
                 {/* top accent line that animates in on hover */}
                 <div className="absolute inset-x-0 top-0 z-10 h-[3px] origin-left scale-x-0 bg-gradient-to-r from-accent to-amber-soft transition-transform duration-500 group-hover:scale-x-100" />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary/[0.92] via-primary/[0.2] to-transparent" />
-
-                <div className="absolute inset-x-2.5 bottom-2.5 z-10 flex flex-col items-center text-center sm:inset-x-3.5 sm:bottom-3.5">
-                  <span className="inline-flex items-center gap-1.5 border border-accent/30 bg-accent/[0.14] px-1.5 py-0.5 text-[9px] font-semibold uppercase tracking-[0.12em] text-amber-soft backdrop-blur-sm sm:px-2 sm:text-[10px] sm:tracking-[0.14em]">
-                    {member.role}
-                  </span>
-                  <h3 className="mt-1.5 font-heading text-sm font-bold leading-tight text-white sm:mt-2 sm:text-base lg:text-lg">
-                    {member.name}
-                  </h3>
-                </div>
               </div>
 
               <div className="flex flex-1 flex-col p-3 sm:p-4">
+                <div className="mb-3">
+                  <span className="inline-flex items-center border border-[#9a6a00]/35 bg-[#fff7dc] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.1em] text-[#111827] sm:text-[11px]">
+                    {member.role}
+                  </span>
+                  <h3 className="mt-2 font-heading text-base font-bold leading-tight text-foreground sm:text-lg">
+                    {member.name}
+                  </h3>
+                </div>
                 <p className="text-[11px] leading-5 text-muted-foreground sm:text-[13px] sm:leading-6 sm:min-h-[60px]">
                   {member.bio}
                 </p>

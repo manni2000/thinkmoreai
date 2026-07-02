@@ -1,19 +1,17 @@
 import PageSeo from "@/components/PageSeo";
-import Team from "@/components/Team";
-import Process from "@/components/Process";
+import EarnWithUs from "@/components/EarnWithUs";
 import FAQ from "@/components/FAQ";
-import TransformSection from "@/components/TransformSection";
 import Contact from "@/components/Contact";
 import DiscoveryCallButton from "@/components/DiscoveryCallButton";
 
-const TeamPage = () => {
+const EarnPage = () => {
   return (
     <div className="min-h-screen bg-background">
-      <PageSeo page="team" />
+      <PageSeo page="earn" />
       <main>
         <div className="pt-20" />
-        <Team />
-        <TransformSection />
+        <EarnWithUs />
+        <FAQ />
         <Contact />
       </main>
       <DiscoveryCallButton link="https://cal.id/enquire.thinkmoreai" />
@@ -21,4 +19,4 @@ const TeamPage = () => {
   );
 };
 
-export default TeamPage;
+export default EarnPage;

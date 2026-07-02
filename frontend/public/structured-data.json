@@ -2,29 +2,33 @@
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "ThinkmoreAI",
-  "alternateName": "ThinkmoreAI - AI Powered Digital Solutions & Business Services",
+  "alternateName": "ThinkmoreAI - AI Digital Solutions & Business Services",
   "url": "https://www.thinkmoreai.com",
   "logo": "https://www.thinkmoreai.com/thinkmoreai-logo.webp",
+  "image": "https://www.thinkmoreai.com/thinkmoreai.webp",
+  "description": "ThinkMoreAI is an AI agency delivering web & mobile app development, AI chatbots, workflow automation, data analytics, SEO and digital marketing. Turn your ideas into scalable, revenue-driving solutions.",
   "contactPoint": {
     "@type": "ContactPoint",
-    "telephone": "",
+    "telephone": "+91-9608826629",
     "contactType": "Business service",
     "availableLanguage": "English"
   },
   "sameAs": [
     "https://www.thinkmoreai.com"
   ],
-  "description": "AI-driven web development, mobile apps, automation, analytics, social media & video editing services, and SEO Optimization. Transform your ideas into scalable solutions.",
   "address": {
     "@type": "PostalAddress",
     "addressCountry": "IN"
   },
   "geo": {
     "@type": "GeoCoordinates",
-    "latitude": "",
-    "longitude": ""
+    "latitude": "20.5937",
+    "longitude": "78.9629"
   },
-  "founder": "Charan Kumar and Manish Kumar",
+  "founder": [
+    { "@type": "Person", "name": "Charan Kumar" },
+    { "@type": "Person", "name": "Manish Kumar" }
+  ],
   "foundingDate": "2026-01-01",
   "areaServed": "Worldwide",
   "knowsLanguage": "English",
@@ -37,7 +41,7 @@
         "itemOffered": {
           "@type": "Service",
           "name": "Web Development",
-          "description": "AI-powered web development solutions"
+          "description": "AI-powered web development solutions with modern frameworks"
         }
       },
       {
@@ -45,7 +49,7 @@
         "itemOffered": {
           "@type": "Service",
           "name": "Mobile App Development",
-          "description": "iOS and Android app development"
+          "description": "iOS and Android app development with AI integration"
         }
       },
       {
@@ -53,7 +57,7 @@
         "itemOffered": {
           "@type": "Service",
           "name": "AI Chatbots",
-          "description": "Custom AI chatbots and automation"
+          "description": "Custom AI chatbots and workflow automation solutions"
         }
       },
       {
@@ -61,7 +65,7 @@
         "itemOffered": {
           "@type": "Service",
           "name": "Data Analytics",
-          "description": "Business intelligence and analytics"
+          "description": "Business intelligence and predictive analytics"
         }
       },
       {
@@ -72,20 +76,20 @@
           "description": "Search engine optimization and digital marketing"
         }
       },
-        {
+      {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
           "name": "Social Media Management",
-          "description": "Social media management and marketing"
+          "description": "Social media management and marketing services"
         }
       },
-        {
+      {
         "@type": "Offer",
         "itemOffered": {
           "@type": "Service",
           "name": "Digital Marketing",
-          "description": "Digital marketing services"
+          "description": "Comprehensive digital marketing and advertising"
         }
       }
     ]

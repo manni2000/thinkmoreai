@@ -13,7 +13,7 @@ const botResponses: Record<string, string> = {
     "Our services include:\n\n- Website and mobile app development\n- AI chatbots and workflow automation\n- Data analytics and SEO optimization\n- Social media management and video editing\n- AI consulting and implementation roadmaps",
 
   contact:
-    "You can reach us at info@thinkmoreai.com or book a discovery call from the website. Share your goals and we will help map the next best step.",
+    "You can reach us at manishmandal9734@gmail.com or book a discovery call from the website. Share your goals and we will help map the next best step.",
 
   pricing:
     "Pricing depends on scope, complexity, timeline, and support needs. We use transparent project estimates, milestone-based plans, and retainers when ongoing work makes sense.",

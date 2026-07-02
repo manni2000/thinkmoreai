@@ -41,13 +41,26 @@ const Header = () => {
       <div className="container-custom">
         <nav className="flex h-20 items-center justify-between">
           <Link to="/" className="flex items-center gap-3">
-            <img src="/thinkmoreai-logo.webp" alt="ThinkMoreAI Logo" className="h-12 w-auto" />
-            <span className={`font-heading text-xl font-extrabold ${isTransparent ? "text-white" : "text-foreground"}`}>
-              ThinkMoreAI
-            </span>
+            <img src="/thinkmoreai-logo.webp" alt="ThinkMoreAI Logo" className="h-14 w-auto sm:h-16" />
+            <div className="flex flex-col leading-tight">
+              <span className={`font-heading text-2xl font-extrabold ${isTransparent ? "text-white" : "text-foreground"}`}>
+                ThinkMoreAI
+              </span>
+              <span className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${isTransparent ? "text-white/75" : "text-muted-foreground"}`}>
+                Your Vision, Our Execution
+              </span>
+            </div>
           </Link>
 
           <div className="hidden items-center gap-1 lg:flex">
+            <Link
+              to="/earn"
+              className={`relative px-4 py-2 text-sm font-bold transition-colors duration-300 ${
+                isTransparent ? "text-amber-soft hover:text-amber-200" : "text-accent hover:text-accent/80"
+              }`}
+            >
+              Earn ₹
+            </Link>
             {navLinks.map((link) => {
               const active = location.pathname === link.href;
               return (
@@ -110,6 +123,12 @@ const Header = () => {
           >
             <div className="container-custom py-4">
               <div className="grid gap-1">
+                <Link
+                  to="/earn"
+                  className="border border-accent/40 bg-accent/10 px-4 py-3 text-sm font-bold text-accent"
+                >
+                  Earn ₹ — Refer & get 10%
+                </Link>
                 {navLinks.map((link) => (
                   <Link
                     key={link.name}
