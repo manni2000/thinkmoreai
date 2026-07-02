@@ -22,18 +22,18 @@ const proofPoints = [
 const capabilityCards = [
   {
     icon: Bot,
-    label: "AI Automation",
-    value: "Chatbots, workflows, and internal copilots",
+    label: "Save Time with AI",
+    value: "Smart chat, task follow-ups, reports, and daily automation",
   },
   {
     icon: LineChart,
-    label: "Growth Systems",
-    value: "Analytics, SEO, content, and conversion loops",
+    label: "Bring in More Leads",
+    value: "SEO, content, analytics, and conversion improvements",
   },
   {
     icon: Cpu,
-    label: "Product Engineering",
-    value: "Web, mobile, cloud, and scalable integrations",
+    label: "Build Digital Products",
+    value: "Websites, apps, dashboards, and secure integrations",
   },
 ];
 
@@ -122,15 +122,15 @@ const Hero = () => {
             <div className="flex items-center justify-between border-b border-white/10 pb-4">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/[0.44]">
-                  Delivery cockpit
+                  Simple growth plan
                 </p>
                 <p className="mt-1 font-heading text-lg font-semibold text-white">
-                  AI readiness sprint
+                  From idea to launch
                 </p>
               </div>
               <div className="inline-flex items-center gap-2 border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
                 <span className="h-1.5 w-1.5 bg-emerald-300" />
-                Live
+                Ready
               </div>
             </div>
 
@@ -159,16 +159,16 @@ const Hero = () => {
             <div className="mt-5 grid grid-cols-2 gap-3">
               <div className="border border-white/10 bg-white/[0.045] p-4">
                 <ShieldCheck className="h-5 w-5 text-cyan-200" />
-                <p className="mt-3 text-2xl font-bold text-white">NDA</p>
+                <p className="mt-3 text-2xl font-bold text-white">Private</p>
                 <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/[0.42]">
-                  ready
+                  confidential
                 </p>
               </div>
               <div className="border border-white/10 bg-white/[0.045] p-4">
                 <LineChart className="h-5 w-5 text-amber-soft" />
-                <p className="mt-3 text-2xl font-bold text-white">KPIs</p>
+                <p className="mt-3 text-2xl font-bold text-white">Goals</p>
                 <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/[0.42]">
-                  mapped
+                  clear
                 </p>
               </div>
             </div>

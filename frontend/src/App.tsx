@@ -7,12 +7,14 @@ import ScrollToTop from "@/components/ScrollToTop";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import AIChatbot from "@/components/AIChatbot";
+import PageSeo from "@/components/PageSeo";
 import Index from "./pages/Index";
 import AboutPage from "./pages/AboutPage";
 import ServicesPage from "./pages/ServicesPage";
 // import TechnologiesPage from "./pages/TechnologiesPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import TeamPage from "@/pages/TeamPage";
+import EarnPage from "./pages/EarnPage";
 import NotFound from "./pages/NotFound";
 import Process from "@/components/Process";
 import ContactPage from "./pages/ContactPage";
@@ -36,12 +38,45 @@ const App = () => (
           <Route path="/services" element={<ServicesPage />} />
           {/* <Route path="/technologies" element={<TechnologiesPage />} /> */}
           <Route path="/portfolio" element={<PortfolioPage />} />
-          <Route path="/process" element={<Process />} />
-          <Route path="/faq" element={<FAQ />} />
+          <Route
+            path="/process"
+            element={
+              <>
+                <PageSeo page="process" />
+                <Process />
+              </>
+            }
+          />
+          <Route
+            path="/faq"
+            element={
+              <>
+                <PageSeo page="faq" />
+                <FAQ />
+              </>
+            }
+          />
           <Route path="/team" element={<TeamPage />} />
           <Route path="/contact" element={<ContactPage />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/earn" element={<EarnPage />} />
+          <Route
+            path="/privacy-policy"
+            element={
+              <>
+                <PageSeo page="privacy" noindex />
+                <PrivacyPolicy />
+              </>
+            }
+          />
+          <Route
+            path="/terms-of-service"
+            element={
+              <>
+                <PageSeo page="terms" noindex />
+                <TermsOfService />
+              </>
+            }
+          />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Footer />

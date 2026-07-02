@@ -36,8 +36,13 @@ const Footer = () => {
         <div className="grid gap-10 lg:grid-cols-[1.25fr_0.7fr_0.8fr_0.9fr]">
           <div>
             <div className="flex items-center gap-3">
-              <img src="/thinkmoreai-logo.webp" alt="ThinkMoreAI Logo" className="h-12 w-auto" />
-              <span className="font-heading text-2xl font-extrabold">ThinkMoreAI</span>
+              <img src="/thinkmoreai-logo.webp" alt="ThinkMoreAI Logo" className="h-16 w-auto sm:h-20" />
+              <div className="flex flex-col leading-tight">
+                <span className="font-heading text-2xl font-extrabold">ThinkMoreAI</span>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary-foreground/[0.62]">
+                  Your Vision, Our Execution
+                </span>
+              </div>
             </div>
             <p className="mt-5 max-w-md text-sm leading-7 text-primary-foreground/[0.62]">
               AI-driven development, automation, analytics, and growth systems delivered
@@ -90,7 +95,7 @@ const Footer = () => {
             <div className="mt-5 space-y-4">
               {[
                 { icon: Phone, info: "+91-9608826629", href: "tel:+919608826629" },
-                { icon: Mail, info: "info@thinkmoreai.com", href: "mailto:info@thinkmoreai.com" },
+                { icon: Mail, info: "manishmandal9734@gmail.com", href: "mailto:manishmandal9734@gmail.com" },
               ].map((contact) => (
                 <a
                   key={contact.info}
