@@ -1,233 +1,150 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const makeSeededRandom = () => {
-  let seed = 39;
-  return () => {
-    seed = (seed * 16807) % 2147483647;
-    return (seed - 1) / 2147483646;
-  };
+const roundedRect = (width: number, height: number, radius: number) => {
+  const shape = new THREE.Shape();
+  const x = -width / 2;
+  const y = -height / 2;
+  shape.moveTo(x + radius, y);
+  shape.lineTo(x + width - radius, y); shape.quadraticCurveTo(x + width, y, x + width, y + radius);
+  shape.lineTo(x + width, y + height - radius); shape.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+  shape.lineTo(x + radius, y + height); shape.quadraticCurveTo(x, y + height, x, y + height - radius);
+  shape.lineTo(x, y + radius); shape.quadraticCurveTo(x, y, x + radius, y);
+  return shape;
+};
+
+const frameGeometry = () => {
+  const outer = roundedRect(5.4, 5.4, 1.22);
+  outer.holes.push(roundedRect(4.35, 4.35, .86));
+  const geometry = new THREE.ExtrudeGeometry(outer, { depth: .25, bevelEnabled: true, bevelSegments: 3, steps: 1, bevelSize: .09, bevelThickness: .09, curveSegments: 18 });
+  geometry.center();
+  return geometry;
 };
 
 const disposeObject = (object: THREE.Object3D) => {
   const mesh = object as THREE.Mesh;
-  const points = object as THREE.Points;
-  const line = object as THREE.LineSegments;
-  const geometry = mesh.geometry || points.geometry || line.geometry;
-  const material = mesh.material || points.material || line.material;
-
-  geometry?.dispose?.();
-
-  if (Array.isArray(material)) {
-    material.forEach((item) => item.dispose());
-  } else {
-    material?.dispose?.();
-  }
+  mesh.geometry?.dispose?.();
+  if (Array.isArray(mesh.material)) mesh.material.forEach((material) => material.dispose());
+  else mesh.material?.dispose?.();
 };
 
-const HeroScene3D = () => {
-  const mountRef = useRef<HTMLDivElement | null>(null);
+const HeroScene3D = ({ paused = false }: { paused?: boolean }) => {
+  const mountRef = useRef<HTMLDivElement>(null);
+  const pausedRef = useRef(paused);
+  const refreshLoopRef = useRef<() => void>(() => undefined);
+
+  useEffect(() => { pausedRef.current = paused; refreshLoopRef.current(); }, [paused]);
 
   useEffect(() => {
     const mount = mountRef.current;
     if (!mount) return;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let renderer: THREE.WebGLRenderer;
+    try { renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" }); }
+    catch { return; }
 
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(48, 1, 0.1, 120);
-    camera.position.set(0, 0, 12);
-
-    const renderer = new THREE.WebGLRenderer({
-      alpha: true,
-      antialias: true,
-      powerPreference: "high-performance",
-    });
     renderer.setClearColor(0x000000, 0);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.8));
-    renderer.domElement.dataset.hero3d = "true";
-    renderer.domElement.style.display = "block";
-    renderer.domElement.style.height = "100%";
-    renderer.domElement.style.width = "100%";
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.6));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.05;
+    renderer.domElement.style.cssText = "display:block;width:100%;height:100%";
     mount.appendChild(renderer.domElement);
 
-    const group = new THREE.Group();
-    scene.add(group);
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(38, 1, .1, 80);
+    camera.position.set(0, .15, 14.5);
+    const system = new THREE.Group();
+    scene.add(system);
 
-    const ambientLight = new THREE.AmbientLight(0x9fc5ff, 1.2);
-    scene.add(ambientLight);
+    scene.add(new THREE.HemisphereLight(0xc8f7ff, 0x080b10, 1.35));
+    const cyanLight = new THREE.PointLight(0x77e5ff, 75, 28, 2); cyanLight.position.set(5, 4, 7); scene.add(cyanLight);
+    const violetLight = new THREE.PointLight(0x9690ff, 60, 25, 2); violetLight.position.set(-4, -3, 6); scene.add(violetLight);
+    const edgeLight = new THREE.DirectionalLight(0xffffff, 2.2); edgeLight.position.set(-3, 5, 8); scene.add(edgeLight);
 
-    const keyLight = new THREE.PointLight(0xffc85a, 90, 32);
-    keyLight.position.set(4, 5, 8);
-    scene.add(keyLight);
-
-    const rimLight = new THREE.PointLight(0x3ce4d7, 70, 28);
-    rimLight.position.set(-5, -3, 7);
-    scene.add(rimLight);
-
-    const coreGeometry = new THREE.IcosahedronGeometry(2.1, 1);
-    const coreMaterial = new THREE.MeshStandardMaterial({
-      color: 0x0b1325,
-      emissive: 0x112447,
-      emissiveIntensity: 0.8,
-      metalness: 0.72,
-      roughness: 0.24,
-      wireframe: true,
-    });
-    const core = new THREE.Mesh(coreGeometry, coreMaterial);
-    group.add(core);
-
-    const shellGeometry = new THREE.IcosahedronGeometry(2.65, 1);
-    const shellMaterial = new THREE.MeshBasicMaterial({
-      color: 0x56f2e4,
-      transparent: true,
-      opacity: 0.18,
-      wireframe: true,
-    });
-    const shell = new THREE.Mesh(shellGeometry, shellMaterial);
-    group.add(shell);
-
-    const ringMaterial = new THREE.MeshBasicMaterial({
-      color: 0xffbf45,
-      transparent: true,
-      opacity: 0.44,
-      blending: THREE.AdditiveBlending,
+    const metal = new THREE.MeshPhysicalMaterial({ color: 0x26394a, emissive: 0x07151c, emissiveIntensity: .45, metalness: .86, roughness: .3, clearcoat: .55, clearcoatRoughness: .2 });
+    const frameGeo = frameGeometry();
+    const rotations: [number, number, number][] = [[.12,.22,.1],[1.18,.56,.55],[-.7,1.08,-.45]];
+    const frames = rotations.map((rotation, index) => {
+      const frame = new THREE.Mesh(frameGeo.clone(), metal.clone());
+      frame.rotation.set(...rotation);
+      frame.scale.setScalar(1 - index * .045);
+      system.add(frame);
+      return frame;
     });
 
-    const rings = [0, 1, 2].map((index) => {
-      const ring = new THREE.Mesh(new THREE.TorusGeometry(3.15 + index * 0.38, 0.012, 12, 160), ringMaterial.clone());
-      ring.rotation.x = index === 0 ? Math.PI / 2.35 : Math.PI / (2.8 + index);
-      ring.rotation.y = index * 0.78;
-      group.add(ring);
-      return ring;
-    });
+    const coreMaterial = new THREE.MeshPhysicalMaterial({ color: 0x76e7ff, emissive: 0x326b82, emissiveIntensity: 2.1, metalness: .2, roughness: .12, transmission: .2, thickness: 1.5 });
+    const core = new THREE.Mesh(new THREE.IcosahedronGeometry(1.12, 3), coreMaterial);
+    system.add(core);
+    const coreShell = new THREE.Mesh(new THREE.IcosahedronGeometry(1.48, 1), new THREE.MeshBasicMaterial({ color: 0x9690ff, wireframe: true, transparent: true, opacity: .17 }));
+    system.add(coreShell);
 
-    const random = makeSeededRandom();
-    const pointCount = 520;
-    const positions = new Float32Array(pointCount * 3);
-    const colors = new Float32Array(pointCount * 3);
-    const palette = [
-      new THREE.Color(0x56f2e4),
-      new THREE.Color(0xffbf45),
-      new THREE.Color(0x8fb8ff),
-      new THREE.Color(0xffffff),
-    ];
-
-    for (let i = 0; i < pointCount; i += 1) {
-      const radius = 3.6 + random() * 6.3;
-      const theta = random() * Math.PI * 2;
-      const phi = Math.acos(2 * random() - 1);
-      const color = palette[Math.floor(random() * palette.length)];
-
-      positions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
-      positions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-      positions[i * 3 + 2] = radius * Math.cos(phi);
-      colors[i * 3] = color.r;
-      colors[i * 3 + 1] = color.g;
-      colors[i * 3 + 2] = color.b;
+    const traceMaterial = new THREE.LineBasicMaterial({ color: 0x77e5ff, transparent: true, opacity: .22 });
+    const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0xd8f9ff });
+    const nodeGeometry = new THREE.SphereGeometry(.075, 12, 12);
+    for (let index = 0; index < 8; index += 1) {
+      const angle = index / 8 * Math.PI * 2;
+      const radius = 3.25 + (index % 2) * .65;
+      const node = new THREE.Mesh(nodeGeometry.clone(), nodeMaterial.clone());
+      node.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius * .62, Math.sin(angle * 2) * .8);
+      system.add(node);
+      const line = new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0), node.position.clone()]), traceMaterial.clone());
+      system.add(line);
     }
 
-    const pointGeometry = new THREE.BufferGeometry();
-    pointGeometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-    pointGeometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-    const pointMaterial = new THREE.PointsMaterial({
-      size: 0.032,
-      transparent: true,
-      opacity: 0.78,
-      vertexColors: true,
-      blending: THREE.AdditiveBlending,
-      depthWrite: false,
-    });
-    const points = new THREE.Points(pointGeometry, pointMaterial);
-    group.add(points);
-
-    const lineCount = 120;
-    const linePositions = new Float32Array(lineCount * 2 * 3);
-    for (let i = 0; i < lineCount; i += 1) {
-      const start = Math.floor(random() * pointCount);
-      const end = Math.floor(random() * pointCount);
-      linePositions.set(positions.slice(start * 3, start * 3 + 3), i * 6);
-      linePositions.set(positions.slice(end * 3, end * 3 + 3), i * 6 + 3);
-    }
-
-    const lineGeometry = new THREE.BufferGeometry();
-    lineGeometry.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
-    const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0x75dff3,
-      transparent: true,
-      opacity: 0.11,
-      blending: THREE.AdditiveBlending,
-    });
-    const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
-    group.add(lines);
+    const orbital = new THREE.Mesh(new THREE.TorusGeometry(4.05, .014, 8, 160), new THREE.MeshBasicMaterial({ color: 0x77e5ff, transparent: true, opacity: .24 }));
+    orbital.rotation.x = 1.22; orbital.rotation.y = .35; system.add(orbital);
 
     const pointer = { x: 0, y: 0 };
     const onPointerMove = (event: PointerEvent) => {
       const rect = mount.getBoundingClientRect();
-      pointer.x = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
-      pointer.y = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+      pointer.x = ((event.clientX - rect.left) / rect.width - .5) * 2;
+      pointer.y = ((event.clientY - rect.top) / rect.height - .5) * 2;
     };
-
     const resize = () => {
-      const width = Math.max(mount.clientWidth, 1);
-      const height = Math.max(mount.clientHeight, 1);
-      camera.aspect = width / height;
-      camera.updateProjectionMatrix();
-      renderer.setSize(width, height, false);
+      const width = Math.max(1, mount.clientWidth); const height = Math.max(1, mount.clientHeight);
+      camera.aspect = width / height; camera.updateProjectionMatrix(); renderer.setSize(width, height, false);
     };
+    const onScroll = () => { camera.position.y = Math.min(window.scrollY / window.innerHeight, 1) * -.55 + .15; };
+    const onContextLost = (event: Event) => { event.preventDefault(); mount.style.opacity = "0"; };
+    const onContextRestored = () => { mount.style.opacity = "1"; resize(); renderer.render(scene, camera); };
+    renderer.domElement.addEventListener("webglcontextlost", onContextLost);
+    renderer.domElement.addEventListener("webglcontextrestored", onContextRestored);
+    window.addEventListener("resize", resize); window.addEventListener("scroll", onScroll, { passive: true }); mount.addEventListener("pointermove", onPointerMove);
+    resize(); onScroll();
 
-    window.addEventListener("resize", resize);
-    window.addEventListener("pointermove", onPointerMove);
-    resize();
-
-    const clock = new THREE.Clock();
-    let frame = 0;
-
-    const render = () => {
-      const elapsed = clock.getElapsedTime();
-
-      group.rotation.y += (pointer.x * 0.2 - group.rotation.y) * 0.018;
-      group.rotation.x += (-pointer.y * 0.12 - group.rotation.x) * 0.018;
-      core.rotation.x = elapsed * 0.14;
-      core.rotation.y = elapsed * 0.2;
-      shell.rotation.x = -elapsed * 0.09;
-      shell.rotation.z = elapsed * 0.08;
-      points.rotation.y = elapsed * 0.018;
-      lines.rotation.y = elapsed * 0.016;
-
-      rings.forEach((ring, index) => {
-        ring.rotation.z = elapsed * (0.12 + index * 0.035);
-        ring.scale.setScalar(1 + Math.sin(elapsed * 1.2 + index) * 0.015);
-      });
-
-      renderer.render(scene, camera);
-      frame = window.requestAnimationFrame(render);
+    let visible = true; let pageVisible = !document.hidden; let raf = 0; let lastTime = performance.now();
+    const render = (time: number) => {
+      const delta = Math.min((time - lastTime) / 1000, .05); lastTime = time;
+      system.rotation.y += (pointer.x * .12 - system.rotation.y) * .025;
+      system.rotation.x += (-pointer.y * .08 - system.rotation.x) * .025;
+      frames.forEach((frame, index) => { frame.rotation.z += delta * (.045 + index * .014); });
+      core.rotation.y += delta * .18; core.rotation.x += delta * .12; coreShell.rotation.y -= delta * .08; orbital.rotation.z += delta * .035;
+      renderer.render(scene, camera); raf = requestAnimationFrame(render);
     };
-
-    if (prefersReducedMotion) {
-      group.rotation.y = -0.32;
-      group.rotation.x = 0.08;
-      renderer.render(scene, camera);
-    } else {
-      render();
-    }
+    const refreshLoop = () => {
+      cancelAnimationFrame(raf);
+      if (!reducedMotion && !pausedRef.current && visible && pageVisible) { lastTime = performance.now(); raf = requestAnimationFrame(render); }
+      else renderer.render(scene, camera);
+    };
+    refreshLoopRef.current = refreshLoop;
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; refreshLoop(); }, { threshold: .05 });
+    observer.observe(mount);
+    const onVisibility = () => { pageVisible = !document.hidden; refreshLoop(); };
+    document.addEventListener("visibilitychange", onVisibility);
+    refreshLoop();
 
     return () => {
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("pointermove", onPointerMove);
-      window.cancelAnimationFrame(frame);
-      scene.traverse(disposeObject);
-      renderer.dispose();
-      renderer.domElement.remove();
+      cancelAnimationFrame(raf); observer.disconnect();
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("resize", resize); window.removeEventListener("scroll", onScroll); mount.removeEventListener("pointermove", onPointerMove);
+      renderer.domElement.removeEventListener("webglcontextlost", onContextLost); renderer.domElement.removeEventListener("webglcontextrestored", onContextRestored);
+      scene.traverse(disposeObject); frameGeo.dispose(); metal.dispose(); traceMaterial.dispose(); nodeMaterial.dispose(); nodeGeometry.dispose(); renderer.dispose(); renderer.domElement.remove();
+      refreshLoopRef.current = () => undefined;
     };
   }, []);
 
-  return (
-    <div
-      ref={mountRef}
-      className="absolute inset-0 z-0 overflow-hidden"
-      aria-hidden="true"
-    />
-  );
+  return <div ref={mountRef} className="absolute inset-0 z-[1] transition-opacity duration-300" aria-hidden="true" />;
 };
 
 export default HeroScene3D;

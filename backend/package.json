@@ -16,7 +16,7 @@
     "express-validator": "^7.3.1",
     "helmet": "^8.1.0",
     "hpp": "^0.2.3",
-    "nodemailer": "^6.9.5",
+    "nodemailer": "^10.0.10",
     "xss": "^1.0.15"
   },
   "devDependencies": {

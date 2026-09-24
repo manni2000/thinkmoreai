@@ -118,7 +118,7 @@ const Team = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section className="section-padding relative overflow-hidden bg-[#f5f7fb]">
+    <section className="warm-section section-padding relative overflow-hidden">
       <div className="container-custom">
         <motion.div
           ref={ref}
@@ -128,10 +128,10 @@ const Team = () => {
           className="mx-auto mb-12 max-w-3xl text-center"
         >
           <span className="section-eyebrow">Team</span>
-          <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
+          <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-[#10151d] sm:text-4xl lg:text-5xl">
             Strategy, engineering, and growth under one roof.
           </h2>
-          <p className="mt-5 text-base leading-7 text-muted-foreground sm:text-lg sm:leading-8">
+          <p className="mt-5 text-base leading-7 text-[#5c6571] sm:text-lg sm:leading-8">
             A compact leadership team focused on practical delivery, clear communication,
             and measurable client outcomes.
           </p>
@@ -144,7 +144,7 @@ const Team = () => {
               initial={{ opacity: 0, y: 26 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.45, delay: index * 0.06 }}
-              className="premium-card group flex flex-col overflow-hidden bg-white transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_60px_-30px_rgba(11,27,63,0.5)]"
+              className="group flex flex-col overflow-hidden border border-[#10151d]/15 bg-white/50 transition-all duration-300 hover:-translate-y-1 hover:border-[#16697a]/40"
             >
               <div className="relative aspect-[4/3] overflow-hidden border-b border-border/70 bg-[#fbfaf7]">
                 <TeamAvatar
@@ -162,21 +162,21 @@ const Team = () => {
                   <span className="inline-flex items-center border border-[#9a6a00]/35 bg-[#fff7dc] px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-[0.1em] text-[#111827] sm:text-[11px]">
                     {member.role}
                   </span>
-                  <h3 className="mt-2 font-heading text-base font-bold leading-tight text-foreground sm:text-lg">
+                  <h3 className="mt-2 font-heading text-base font-bold leading-tight text-[#10151d] sm:text-lg">
                     {member.name}
                   </h3>
                 </div>
-                <p className="text-[11px] leading-5 text-muted-foreground sm:text-[13px] sm:leading-6 sm:min-h-[60px]">
+                <p className="text-[11px] leading-5 text-[#5c6571] sm:text-[13px] sm:leading-6 sm:min-h-[60px]">
                   {member.bio}
                 </p>
-                <div className="mt-3 flex gap-2 border-t border-border/70 pt-3 sm:mt-4 sm:pt-3.5">
+                <div className="mt-3 flex gap-2 border-t border-[#10151d]/10 pt-3 sm:mt-4 sm:pt-3.5">
                   {member.social.linkedin && (
                     <a
                       href={member.social.linkedin}
                       target="_blank"
                       rel="noopener noreferrer"
                       aria-label={`${member.name} LinkedIn`}
-                      className="flex h-8 w-8 items-center justify-center border border-border text-muted-foreground transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-accent-foreground"
+                      className="flex h-8 w-8 items-center justify-center border border-[#10151d]/15 text-[#5c6571] transition-colors duration-300 hover:border-[#16697a] hover:bg-[#16697a] hover:text-white"
                     >
                       <Linkedin className="h-4 w-4" />
                     </a>
@@ -185,7 +185,7 @@ const Team = () => {
                     <a
                       href={`mailto:${member.social.email}`}
                       aria-label={`${member.name} Email`}
-                      className="flex h-8 w-8 items-center justify-center border border-border text-muted-foreground transition-colors duration-300 hover:border-accent hover:bg-accent hover:text-accent-foreground"
+                      className="flex h-8 w-8 items-center justify-center border border-[#10151d]/15 text-[#5c6571] transition-colors duration-300 hover:border-[#16697a] hover:bg-[#16697a] hover:text-white"
                     >
                       <Mail className="h-4 w-4" />
                     </a>

@@ -71,7 +71,7 @@ const DiscoveryCallButton = ({ link }: DiscoveryCallButtonProps) => {
               <div className="relative flex max-w-0 items-center overflow-hidden rounded-r-2xl border-y border-r border-accent/40 bg-[linear-gradient(120deg,hsl(var(--amber-soft)),hsl(var(--accent)))] text-accent-foreground opacity-0 shadow-[0_28px_65px_-24px_rgba(245,166,35,1)] transition-all duration-300 ease-out group-hover:max-w-[280px] group-hover:pl-1 group-hover:pr-6 group-hover:opacity-100">
                 <div className="flex flex-col whitespace-nowrap py-4">
                   <span className="text-[11px] font-semibold uppercase tracking-[0.18em] text-accent-foreground/70">
-                    Free · 24-hour response
+                    Free · direct scheduling
                   </span>
                   <span className="mt-0.5 font-heading text-lg font-extrabold leading-tight">
                     Book a Discovery Call

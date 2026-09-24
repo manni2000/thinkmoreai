@@ -1,156 +1,109 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowRight, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ArrowUpRight, Menu, X } from "lucide-react";
 
 const navLinks = [
-  { name: "About", href: "/about" },
   { name: "Services", href: "/services" },
-  { name: "Portfolio", href: "/portfolio" },
-  { name: "Team", href: "/team" },
+  { name: "Work", href: "/portfolio" },
+  { name: "Process", href: "/process" },
+  { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
 ];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const location = useLocation();
-  const isHomePage = location.pathname === "/";
-  const isTransparent = isHomePage && !isScrolled;
+  const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 18);
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     handleScroll();
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => { setOpen(false); }, [location.pathname]);
+
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-  }, [location.pathname]);
+    if (!open) return;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const focusable = menuRef.current?.querySelectorAll<HTMLElement>("a, button");
+    focusable?.[0]?.focus();
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        triggerRef.current?.focus();
+      }
+      if (event.key === "Tab" && focusable?.length) {
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+        else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+      }
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        isTransparent
-          ? "border-transparent bg-primary/45 text-white backdrop-blur-md"
-          : "border-b border-border/70 bg-white/90 text-foreground shadow-[0_12px_38px_-30px_rgba(5,7,13,0.55)] backdrop-blur-xl"
-      }`}
-    >
-      <div className="container-custom">
-        <nav className="flex h-20 items-center justify-between">
-          <Link to="/" className="flex items-center gap-3">
-            <img src="/thinkmoreai-logo.webp" alt="ThinkMoreAI Logo" className="h-14 w-auto sm:h-16" />
-            <div className="flex flex-col leading-tight">
-              <span className={`font-heading text-2xl font-extrabold ${isTransparent ? "text-white" : "text-foreground"}`}>
-                ThinkMoreAI
-              </span>
-              <span className={`text-[11px] font-semibold uppercase tracking-[0.18em] ${isTransparent ? "text-white/75" : "text-muted-foreground"}`}>
-                Your Vision, Our Execution
-              </span>
-            </div>
+    <>
+      <a href="#main-content" className="fixed left-4 top-3 z-[100] -translate-y-20 bg-accent px-4 py-3 font-semibold text-accent-foreground transition-transform focus:translate-y-0">Skip to content</a>
+      <header className={`fixed inset-x-0 top-0 z-50 border-b transition-all duration-300 ${isScrolled || open ? "border-white/10 bg-[#080b10]/90 shadow-2xl shadow-black/20 backdrop-blur-xl" : "border-transparent bg-transparent"}`}>
+        <nav className="container-custom flex h-[76px] items-center justify-between" aria-label="Primary navigation">
+          <Link to="/" className="group flex items-center gap-2.5" aria-label="ThinkMoreAI home">
+            <img src="/thinkmoreai-logo.webp" alt="" className="h-10 w-10 object-contain transition-transform duration-300 group-hover:rotate-3" />
+            <span className="font-heading text-base font-semibold tracking-[-0.03em] text-white sm:text-lg">ThinkMore<span className="text-accent">AI</span></span>
           </Link>
 
-          <div className="hidden items-center gap-1 lg:flex">
-            <Link
-              to="/earn"
-              className={`relative px-4 py-2 text-sm font-bold transition-colors duration-300 ${
-                isTransparent ? "text-amber-soft hover:text-amber-200" : "text-accent hover:text-accent/80"
-              }`}
-            >
-              Earn ₹
-            </Link>
-            {navLinks.map((link) => {
-              const active = location.pathname === link.href;
-              return (
-                <Link
-                  key={link.name}
-                  to={link.href}
-                  className={`relative px-4 py-2 text-sm font-semibold transition-colors duration-300 ${
-                    isTransparent
-                      ? active
-                        ? "text-amber-soft"
-                        : "text-white/72 hover:text-white"
-                      : active
-                      ? "text-foreground"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
-                >
-                  {link.name}
-                  {active && (
-                    <motion.span
-                      layoutId="header-active-link"
-                      className="absolute inset-x-4 -bottom-1 h-0.5 bg-accent"
-                      transition={{ type: "spring", stiffness: 500, damping: 35 }}
-                    />
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-
-          <div className="hidden lg:block">
-            <Button variant="accent" asChild className="group">
-              <Link to="/contact" className="inline-flex items-center gap-2">
-                Free Consultation
-                <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+          <div className="hidden items-center gap-7 lg:flex">
+            {navLinks.map((link) => (
+              <Link key={link.name} to={link.href} aria-current={location.pathname === link.href ? "page" : undefined} className={`relative py-2 text-sm transition-colors ${location.pathname === link.href ? "text-white" : "text-white/58 hover:text-white"}`}>
+                {link.name}
+                {location.pathname === link.href && <motion.span layoutId="nav-active" className="absolute inset-x-0 -bottom-0.5 h-px bg-accent" />}
               </Link>
-            </Button>
+            ))}
           </div>
 
-          <button
-            type="button"
-            className={`flex h-10 w-10 items-center justify-center border lg:hidden ${
-              isTransparent ? "border-white/20 text-white" : "border-border text-foreground"
-            }`}
-            onClick={() => setIsMobileMenuOpen((value) => !value)}
-            aria-label="Toggle navigation"
-          >
-            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          <div className="hidden items-center gap-4 lg:flex">
+            <Link to="/earn" className="font-mono text-[10px] uppercase tracking-[0.16em] text-white/48 transition-colors hover:text-accent">Referral program</Link>
+            <Link to="/contact" className="group inline-flex h-11 items-center gap-2 border border-accent/40 bg-accent px-5 text-sm font-semibold text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-white">
+              Start a project <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+            </Link>
+          </div>
+
+          <button ref={triggerRef} type="button" onClick={() => setOpen((value) => !value)} className="flex h-11 w-11 items-center justify-center border border-white/15 text-white lg:hidden" aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? "Close navigation" : "Open navigation"}>
+            {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </nav>
-      </div>
+      </header>
 
       <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.24 }}
-            className="border-t border-border bg-white text-foreground lg:hidden"
-          >
-            <div className="container-custom py-4">
-              <div className="grid gap-1">
-                <Link
-                  to="/earn"
-                  className="border border-accent/40 bg-accent/10 px-4 py-3 text-sm font-bold text-accent"
-                >
-                  Earn ₹ — Refer & get 10%
-                </Link>
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    to={link.href}
-                    className={`border px-4 py-3 text-sm font-semibold ${
-                      location.pathname === link.href
-                        ? "border-accent bg-accent/10 text-foreground"
-                        : "border-transparent text-muted-foreground hover:border-border hover:text-foreground"
-                    }`}
-                  >
-                    {link.name}
+        {open && (
+          <motion.div id="mobile-navigation" role="dialog" aria-modal="true" aria-label="Mobile navigation" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-40 bg-[#080b10] pt-[76px] lg:hidden">
+            <motion.div ref={menuRef} initial={{ y: -18 }} animate={{ y: 0 }} exit={{ y: -18 }} className="container-custom flex min-h-[calc(100svh-76px)] flex-col py-8">
+              <div className="flex flex-1 flex-col justify-center">
+                {navLinks.map((link, index) => (
+                  <Link key={link.name} to={link.href} className="flex min-h-16 items-center justify-between border-b border-white/10 py-4 font-heading text-3xl font-medium text-white">
+                    <span>{link.name}</span><span className="font-mono text-[10px] text-white/35">0{index + 1}</span>
                   </Link>
                 ))}
               </div>
-              <Button variant="accent" asChild className="mt-4 w-full">
-                <Link to="/contact">Free Consultation</Link>
-              </Button>
-            </div>
+              <div className="grid gap-3 pb-4">
+                <Link to="/contact" className="flex min-h-14 items-center justify-center gap-2 bg-accent px-5 font-semibold text-accent-foreground">Start a project <ArrowUpRight className="h-4 w-4" /></Link>
+                <Link to="/earn" className="flex min-h-12 items-center justify-center border border-white/15 px-5 text-sm text-white/70">Explore the referral program</Link>
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 };
 

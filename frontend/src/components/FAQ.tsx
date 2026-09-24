@@ -55,7 +55,7 @@ const FAQ = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="faq" className="section-padding surface-grid bg-[#f5f7fb]">
+    <section id="faq" className="warm-section section-padding">
       <div className="container-custom">
         <motion.div
           ref={ref}
@@ -65,10 +65,10 @@ const FAQ = () => {
           className="mx-auto mb-12 max-w-3xl text-center"
         >
           <span className="section-eyebrow">FAQ</span>
-          <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
+          <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-[#10151d] sm:text-4xl lg:text-5xl">
             Questions clients ask before we build.
           </h2>
-          <p className="mt-5 text-lg leading-8 text-muted-foreground">
+          <p className="mt-5 text-lg leading-8 text-[#5c6571]">
             Clear answers for scope, process, security, and working style.
           </p>
         </motion.div>
@@ -84,12 +84,12 @@ const FAQ = () => {
               <AccordionItem
                 key={faq.question}
                 value={`item-${index}`}
-                className="border border-border bg-white px-5 shadow-sm transition-all duration-300 data-[state=open]:border-accent/40"
+                className="border border-[#10151d]/15 bg-white/55 px-5 transition-all duration-300 data-[state=open]:border-[#16697a]/50"
               >
-                <AccordionTrigger className="text-left font-heading text-base font-semibold text-foreground hover:text-accent hover:no-underline sm:text-lg">
+                <AccordionTrigger className="text-left font-heading text-base font-semibold text-[#10151d] hover:text-[#16697a] hover:no-underline sm:text-lg">
                   {faq.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-sm leading-7 text-muted-foreground sm:text-base">
+                <AccordionContent className="text-sm leading-7 text-[#5c6571] sm:text-base">
                   {faq.answer}
                 </AccordionContent>
               </AccordionItem>

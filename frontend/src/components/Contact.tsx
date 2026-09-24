@@ -1,402 +1,84 @@
-import { motion, useInView } from "framer-motion";
-import type { ChangeEvent, FocusEvent, FormEvent } from "react";
-import { useRef, useState } from "react";
-import {
-  AlertCircle,
-  ArrowRight,
-  Briefcase,
-  CheckCircle,
-  Clock,
-  Mail,
-  MessageSquare,
-  Phone,
-  Send,
-  Shield,
-  Star,
-  User,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/hooks/use-toast";
+import { useState, type ChangeEvent, type FocusEvent, type FormEvent, type InputHTMLAttributes } from "react";
+import { motion } from "framer-motion";
+import { AlertCircle, ArrowUpRight, CheckCircle2, Mail, Phone, Send } from "lucide-react";
+import { Link } from "react-router-dom";
 import { submitContactForm } from "@/lib/api";
 
-const services = [
-  "Website Development",
-  "Mobile App Development",
-  "Social Media Management",
-  "Research Report",
-  "Data Analytics",
-  "AI Chatbot",
-  "SEO Optimization",
-  "AI Consultant",
-];
-
-const trustItems = [
-  { icon: Clock, label: "24-hour response" },
-  { icon: Shield, label: "Confidential discovery" },
-  { icon: Star, label: "No-obligation scope" },
-];
+const services = ["AI products & assistants", "Web & mobile applications", "Automation & integrations", "Data, analytics & growth"];
+type FormState = { name: string; email: string; phone: string; services: string[]; message: string };
 
 const Contact = () => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [focusedField, setFocusedField] = useState<string | null>(null);
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    services: [] as string[],
-    message: "",
-  });
-  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [charCount, setCharCount] = useState(0);
+  const [formData, setFormData] = useState<FormState>({ name: "", email: "", phone: "", services: [], message: "" });
+  const [errors, setErrors] = useState<Record<string,string>>({});
+  const [status, setStatus] = useState<"idle"|"sending"|"success"|"error">("idle");
 
-  const validateField = (name: string, value: string) => {
-    const errors: Record<string, string> = {};
-
-    switch (name) {
-      case "name":
-        if (!value || value.trim().length < 2) {
-          errors.name = "Name must be at least 2 characters";
-        } else if (value.trim().length > 50) {
-          errors.name = "Name must be less than 50 characters";
-        }
-        break;
-      case "email":
-        if (!value) {
-          errors.email = "Email is required";
-        } else if (!value.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
-          errors.email = "Please enter a valid email address";
-        }
-        break;
-      case "phone":
-        if (value && !value.match(/^[+]?[\d\s\-()]+$/)) {
-          errors.phone = "Please enter a valid phone number";
-        }
-        break;
-      case "message":
-        if (!value || value.trim().length < 10) {
-          errors.message = "Message must be at least 10 characters";
-        } else if (value.trim().length > 1000) {
-          errors.message = "Message must be less than 1000 characters";
-        }
-        break;
-      default:
-        break;
-    }
-
-    setFieldErrors((prev) => ({ ...prev, [name]: errors[name] || "" }));
-    return !errors[name];
+  const validate = (name: string, value: string) => {
+    let error = "";
+    if (name === "name" && (value.trim().length < 2 || value.trim().length > 50)) error = "Enter a name between 2 and 50 characters.";
+    if (name === "email" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) error = "Enter a valid email address.";
+    if (name === "phone" && value && !/^[+]?\d[\d\s\-()]{5,19}$/.test(value)) error = "Enter a valid phone number.";
+    if (name === "message" && (value.trim().length < 10 || value.trim().length > 1000)) error = "Tell us a little more (10–1000 characters).";
+    setErrors((current) => ({ ...current, [name]: error }));
+    return !error;
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-
-    if (name === "message") {
-      setCharCount(value.length);
-    }
-
-    if (fieldErrors[name]) {
-      setFieldErrors((prev) => ({ ...prev, [name]: "" }));
-    }
+  const change = (event: ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
+    const { name, value } = event.target;
+    setFormData((current) => ({ ...current, [name]: value }));
+    if (errors[name]) setErrors((current) => ({ ...current, [name]: "" }));
+    if (status !== "idle") setStatus("idle");
   };
+  const blur = (event: FocusEvent<HTMLInputElement|HTMLTextAreaElement>) => validate(event.target.name, event.target.value);
+  const toggleService = (service: string) => setFormData((current) => ({ ...current, services: current.services.includes(service) ? current.services.filter((item) => item !== service) : [...current.services, service] }));
 
-  const handleServiceChange = (service: string, checked: boolean) => {
-    setFormData((prev) => ({
-      ...prev,
-      services: checked
-        ? [...prev.services, service]
-        : prev.services.filter((item) => item !== service),
-    }));
-  };
-
-  const handleInputBlur = (e: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    validateField(name, value);
-    setFocusedField(null);
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const fieldsToValidate = ["name", "email", "phone", "message"];
-    const isValid = fieldsToValidate.every((key) =>
-      validateField(key, formData[key as keyof typeof formData] as string)
-    );
-
-    if (!isValid) {
-      toast({
-        title: "Validation Error",
-        description: "Please fix the errors in the form",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    const data = {
-      name: formData.name.trim(),
-      email: formData.email.trim().toLowerCase(),
-      phone: formData.phone.trim() || undefined,
-      services: formData.services,
-      message: formData.message.trim(),
-    };
-
+  const submit = async (event: FormEvent) => {
+    event.preventDefault();
+    const valid = ["name","email","phone","message"].map((key) => validate(key, formData[key as keyof FormState] as string)).every(Boolean);
+    if (!valid) { setStatus("error"); return; }
+    setStatus("sending");
     try {
-      await submitContactForm(data);
-      setIsSuccess(true);
-      toast({
-        title: "Message sent successfully!",
-        description: "We'll get back to you within 24 hours.",
-      });
+      await submitContactForm({ name: formData.name.trim(), email: formData.email.trim().toLowerCase(), phone: formData.phone.trim() || undefined, services: formData.services, message: formData.message.trim() });
+      setStatus("success");
       setFormData({ name: "", email: "", phone: "", services: [], message: "" });
-      setCharCount(0);
-
-      setTimeout(() => setIsSuccess(false), 5000);
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Failed to send message. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+      setErrors({});
+    } catch { setStatus("error"); }
   };
 
-  return (
-    <section id="contact" className="section-padding relative overflow-hidden bg-background">
-      <div className="surface-grid absolute inset-0 opacity-70" />
+  const fieldClass = (name: string) => `min-h-12 w-full border bg-white/[.035] px-4 text-sm text-white outline-none transition-colors placeholder:text-white/28 focus:border-accent ${errors[name]?"border-red-400/70":"border-white/12"}`;
 
-      <div className="container-custom relative z-10">
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 24 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.55 }}
-          className="mb-12 grid gap-8 text-center lg:grid-cols-[0.85fr_1fr] lg:items-end lg:text-left"
-        >
-          <div className="flex flex-col items-center lg:items-start">
-            <span className="section-eyebrow">Contact</span>
-            <h2 className="mt-5 font-heading text-3xl font-bold leading-tight text-foreground sm:text-4xl lg:text-5xl">
-              Tell us what you want to build, automate, or grow.
-            </h2>
+  return <section id="contact" className="section-padding relative overflow-hidden bg-[#080b10]">
+    <div className="absolute right-[-12%] top-[5%] h-[600px] w-[600px] rounded-full border border-accent/10 shadow-[inset_0_0_100px_rgba(119,229,255,.045)]"/><div className="absolute right-[-5%] top-[18%] h-[420px] w-[420px] rotate-45 rounded-[28%] border border-violet-300/10"/>
+    <div className="container-custom relative">
+      <div className="grid gap-12 lg:grid-cols-[.72fr_1.28fr] lg:gap-20">
+        <div>
+          <span className="section-eyebrow">Start a conversation</span>
+          <h2 className="mt-6 text-[clamp(2.65rem,5.5vw,5.5rem)] font-medium leading-[.98] tracking-[-.06em] text-white">Have a problem worth solving?</h2>
+          <p className="mt-7 max-w-lg text-base leading-8 text-white/55">Tell us what you’re building, what’s slowing you down, or what you want to automate.</p>
+          <div className="mt-10 space-y-3 border-t border-white/10 pt-7">
+            <a href="mailto:manishmandal9734@gmail.com" className="flex min-h-12 items-center gap-3 text-sm text-white/62 transition-colors hover:text-accent"><Mail className="h-4 w-4 text-accent"/>manishmandal9734@gmail.com</a>
+            <a href="tel:+919608826629" className="flex min-h-12 items-center gap-3 text-sm text-white/62 transition-colors hover:text-accent"><Phone className="h-4 w-4 text-accent"/>+91 96088 26629</a>
           </div>
-          <div>
-            <p className="text-lg leading-8 text-muted-foreground">
-              Share a few details and we will respond with next steps, rough scope,
-              and the best path to move from idea to execution.
-            </p>
-            <div className="mt-5 flex flex-wrap justify-center gap-2 lg:justify-start">
-              {trustItems.map((item) => (
-                <span
-                  key={item.label}
-                  className="inline-flex items-center gap-2 border border-border bg-white px-3 py-2 text-sm font-medium text-foreground"
-                >
-                  <item.icon className="h-4 w-4 text-accent" />
-                  {item.label}
-                </span>
-              ))}
-            </div>
-          </div>
-        </motion.div>
-
-        <div className="grid gap-8 lg:grid-cols-[1fr_0.55fr]">
-          <motion.form
-            initial={{ opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            onSubmit={handleSubmit}
-            className="premium-card space-y-6 bg-white p-5 sm:p-7"
-          >
-            <div className="grid gap-5 sm:grid-cols-2">
-              {["name", "email"].map((field) => (
-                <div key={field} onFocus={() => setFocusedField(field)} className="relative">
-                  <label htmlFor={field} className="mb-2 flex items-center gap-2 text-sm font-semibold text-foreground">
-                    {field === "name" ? <User className="h-4 w-4" /> : <Mail className="h-4 w-4" />}
-                    {field === "name" ? "Name" : "Email"} *
-                  </label>
-                  <Input
-                    id={field}
-                    name={field}
-                    type={field === "email" ? "email" : "text"}
-                    placeholder={field === "name" ? "Your name" : "you@company.com"}
-                    value={formData[field as keyof typeof formData] as string}
-                    onChange={handleInputChange}
-                    onBlur={handleInputBlur}
-                    required
-                    className={`h-12 border-border bg-background transition-all duration-300 placeholder:text-muted-foreground/60 focus:border-accent ${
-                      focusedField === field ? "shadow-[0_0_0_3px_rgba(245,166,35,0.12)]" : ""
-                    } ${fieldErrors[field] ? "border-red-500 focus:border-red-500" : ""} ${
-                      isSuccess ? "border-green-500" : ""
-                    }`}
-                  />
-                  {fieldErrors[field] && (
-                    <div className="mt-2 flex items-center gap-1 text-xs text-red-500">
-                      <AlertCircle className="h-3 w-3" />
-                      {fieldErrors[field]}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            <div className="relative">
-              <label htmlFor="phone" className="mb-2 flex items-center gap-2 text-sm font-semibold text-foreground">
-                <Phone className="h-4 w-4" />
-                Phone Number
-              </label>
-              <Input
-                id="phone"
-                name="phone"
-                type="tel"
-                placeholder="+91 98765 43210"
-                value={formData.phone}
-                onChange={handleInputChange}
-                onBlur={handleInputBlur}
-                className={`h-12 border-border bg-background transition-all duration-300 placeholder:text-muted-foreground/60 focus:border-accent ${
-                  fieldErrors.phone ? "border-red-500 focus:border-red-500" : ""
-                }`}
-              />
-              {fieldErrors.phone && (
-                <div className="mt-2 flex items-center gap-1 text-xs text-red-500">
-                  <AlertCircle className="h-3 w-3" />
-                  {fieldErrors.phone}
-                </div>
-              )}
-            </div>
-
-            <div>
-              <label className="mb-3 flex items-center gap-2 text-sm font-semibold text-foreground">
-                <Briefcase className="h-4 w-4" />
-                Services Interested In
-              </label>
-              <div className="grid gap-3 sm:grid-cols-2">
-                {services.map((service) => (
-                  <label
-                    key={service}
-                    htmlFor={`service-${service}`}
-                    className={`flex cursor-pointer items-center gap-3 border p-3 text-sm transition-all duration-300 ${
-                      formData.services.includes(service)
-                        ? "border-accent bg-accent/10 text-foreground"
-                        : "border-border bg-background text-muted-foreground hover:border-accent/50 hover:text-foreground"
-                    }`}
-                  >
-                    <input
-                      type="checkbox"
-                      id={`service-${service}`}
-                      name="services"
-                      value={service}
-                      checked={formData.services.includes(service)}
-                      onChange={(e) => handleServiceChange(service, e.target.checked)}
-                      className="h-4 w-4 flex-shrink-0 border-border text-accent focus:ring-accent"
-                    />
-                    <span>{service}</span>
-                  </label>
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <label htmlFor="message" className="mb-2 flex items-center gap-2 text-sm font-semibold text-foreground">
-                <MessageSquare className="h-4 w-4" />
-                Message *
-              </label>
-              <div className="relative">
-                <Textarea
-                  id="message"
-                  name="message"
-                  placeholder="Tell us about your goals, workflow, product, or problem..."
-                  value={formData.message}
-                  onChange={handleInputChange}
-                  onBlur={handleInputBlur}
-                  required
-                  rows={5}
-                  minLength={10}
-                  maxLength={1000}
-                  className={`resize-none border-border bg-background transition-all duration-300 placeholder:text-muted-foreground/60 focus:border-accent ${
-                    fieldErrors.message ? "border-red-500 focus:border-red-500" : ""
-                  } ${isSuccess ? "border-green-500" : ""}`}
-                />
-                <div className="absolute bottom-2 right-2 flex items-center gap-2 text-xs text-muted-foreground">
-                  <span className={charCount > 950 ? "text-red-500" : charCount > 900 ? "text-orange-500" : ""}>
-                    {charCount}/1000
-                  </span>
-                  {charCount >= 10 && charCount <= 1000 && !fieldErrors.message && (
-                    <CheckCircle className="h-3 w-3 text-green-500" />
-                  )}
-                </div>
-              </div>
-              {fieldErrors.message && (
-                <div className="mt-2 flex items-center gap-1 text-xs text-red-500">
-                  <AlertCircle className="h-3 w-3" />
-                  {fieldErrors.message}
-                </div>
-              )}
-            </div>
-
-            <Button type="submit" variant="hero" size="xl" className="w-full group" disabled={isSubmitting}>
-              {isSubmitting ? (
-                <span className="inline-flex items-center gap-2">
-                  <Send className="h-5 w-5 animate-spin" />
-                  Sending...
-                </span>
-              ) : (
-                <span className="inline-flex items-center gap-2">
-                  Send Message
-                  <Send className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-              )}
-            </Button>
-          </motion.form>
-
-          <motion.aside
-            initial={{ opacity: 0, y: 24 }}
-            animate={isInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.18 }}
-            className="space-y-4"
-          >
-            {[
-              { icon: Phone, label: "Phone", info: "+91-9608826629", href: "tel:+919608826629" },
-              { icon: Mail, label: "Email", info: "manishmandal9734@gmail.com", href: "mailto:manishmandal9734@gmail.com" },
-            ].map((item) => (
-              <div key={item.label} className="premium-card bg-white p-5">
-                <div className="flex items-start gap-4">
-                  <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center border border-accent/25 bg-accent/10 text-accent">
-                    <item.icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="font-heading font-semibold text-foreground">{item.label}</p>
-                    <a href={item.href} className="mt-1 block text-sm text-muted-foreground transition-colors hover:text-accent">
-                      {item.info}
-                    </a>
-                  </div>
-                </div>
-              </div>
-            ))}
-
-            <div className="premium-card bg-primary p-6 text-primary-foreground">
-              <h3 className="font-heading text-2xl font-bold">Prefer a call?</h3>
-              <p className="mt-3 text-sm leading-6 text-primary-foreground/[0.68]">
-                Schedule a discovery call and we will map the highest-impact path for your business.
-              </p>
-              <Button variant="hero" asChild className="mt-6 group w-full">
-                <a href="https://cal.id/enquire.thinkmoreai" target="_blank" rel="noopener noreferrer">
-                  Book a Discovery Call
-                  <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
-                </a>
-              </Button>
-            </div>
-          </motion.aside>
+          <a href="https://cal.id/enquire.thinkmoreai" target="_blank" rel="noopener noreferrer" className="mt-7 inline-flex items-center gap-2 border-b border-white/25 pb-1 text-sm font-semibold text-white transition-colors hover:border-accent hover:text-accent">Prefer a discovery call? <ArrowUpRight className="h-4 w-4"/></a>
         </div>
+
+        <motion.form initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: .55 }} onSubmit={submit} noValidate className="border border-white/10 bg-[#111720]/85 p-5 backdrop-blur-md sm:p-8">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <Field label="Name" name="name" value={formData.name} onChange={change} onBlur={blur} error={errors.name} className={fieldClass("name")} required autoComplete="name" placeholder="Your name"/>
+            <Field label="Work email" name="email" type="email" value={formData.email} onChange={change} onBlur={blur} error={errors.email} className={fieldClass("email")} required autoComplete="email" placeholder="you@company.com"/>
+          </div>
+          <div className="mt-5"><Field label="Phone (optional)" name="phone" type="tel" value={formData.phone} onChange={change} onBlur={blur} error={errors.phone} className={fieldClass("phone")} autoComplete="tel" placeholder="+91 98765 43210"/></div>
+          <fieldset className="mt-7"><legend className="text-sm font-medium text-white">What can we help with?</legend><div className="mt-3 grid gap-2 sm:grid-cols-2">{services.map((service)=><label key={service} className={`flex min-h-12 cursor-pointer items-center gap-3 border px-3 text-xs transition-colors ${formData.services.includes(service)?"border-accent/50 bg-accent/[.08] text-white":"border-white/10 text-white/48 hover:border-white/25"}`}><input type="checkbox" className="h-4 w-4 accent-[#77e5ff]" checked={formData.services.includes(service)} onChange={()=>toggleService(service)}/>{service}</label>)}</div></fieldset>
+          <div className="mt-7"><label htmlFor="message" className="text-sm font-medium text-white">Project notes <span className="text-accent">*</span></label><textarea id="message" name="message" rows={5} minLength={10} maxLength={1000} required value={formData.message} onChange={change} onBlur={blur} placeholder="Goals, current workflow, timeline, or the problem you want to solve…" className={`${fieldClass("message")} mt-2 resize-y py-3`} aria-invalid={Boolean(errors.message)} aria-describedby={errors.message?"message-error":"message-count"}/><div className="mt-2 flex justify-between gap-4">{errors.message?<p id="message-error" className="flex items-center gap-1.5 text-xs text-red-300"><AlertCircle className="h-3.5 w-3.5"/>{errors.message}</p>:<span/>}<span id="message-count" className="font-mono text-[9px] text-white/30">{formData.message.length}/1000</span></div></div>
+          <button type="submit" disabled={status==="sending"} className="mt-7 flex min-h-14 w-full items-center justify-center gap-3 bg-accent px-6 text-sm font-semibold text-accent-foreground transition-all hover:bg-white disabled:cursor-wait disabled:opacity-60">{status==="sending"?"Sending…":<>Send message <Send className="h-4 w-4"/></>}</button>
+          <div aria-live="polite" className="mt-4 min-h-6">{status==="success"&&<p className="flex items-center gap-2 text-sm text-emerald-300"><CheckCircle2 className="h-4 w-4"/>Your message was sent. We’ll be in touch.</p>}{status==="error"&&<p className="flex items-center gap-2 text-sm text-red-300"><AlertCircle className="h-4 w-4"/>Please check the fields or try again.</p>}</div>
+          <p className="mt-2 text-xs leading-5 text-white/30">By sending this form, you agree to our <Link to="/privacy-policy" className="underline hover:text-white">privacy policy</Link>.</p>
+        </motion.form>
       </div>
-    </section>
-  );
+    </div>
+  </section>;
 };
+
+type FieldProps = InputHTMLAttributes<HTMLInputElement> & { label: string; error?: string };
+const Field = ({ label, error, required, ...props }: FieldProps) => { const id = String(props.name); return <div><label htmlFor={id} className="text-sm font-medium text-white">{label}{required&&<span className="text-accent"> *</span>}</label><input id={id} {...props} required={required} aria-invalid={Boolean(error)} aria-describedby={error?`${id}-error`:undefined}/>{error&&<p id={`${id}-error`} className="mt-2 flex items-center gap-1.5 text-xs text-red-300"><AlertCircle className="h-3.5 w-3.5"/>{error}</p>}</div>; };
 
 export default Contact;

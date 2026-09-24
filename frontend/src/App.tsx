@@ -32,6 +32,7 @@ const App = () => (
       <BrowserRouter>
         <ScrollToTop />
         <Header />
+        <div id="main-content" tabIndex={-1}>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<AboutPage />} />
@@ -43,7 +44,7 @@ const App = () => (
             element={
               <>
                 <PageSeo page="process" />
-                <Process />
+                <div className="pt-[76px]"><Process /></div>
               </>
             }
           />
@@ -52,7 +53,7 @@ const App = () => (
             element={
               <>
                 <PageSeo page="faq" />
-                <FAQ />
+                <div className="pt-[76px]"><FAQ /></div>
               </>
             }
           />
@@ -79,6 +80,7 @@ const App = () => (
           />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </div>
         <Footer />
         <AIChatbot />
       </BrowserRouter>

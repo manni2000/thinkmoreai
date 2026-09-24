@@ -1,178 +1,86 @@
+import { Component, lazy, Suspense, useEffect, useState, type ErrorInfo, type ReactNode } from "react";
 import { motion } from "framer-motion";
-import {
-  ArrowRight,
-  Bot,
-  CheckCircle2,
-  Cpu,
-  LineChart,
-  ShieldCheck,
-  Sparkles,
-  Zap,
-} from "lucide-react";
+import { ArrowDownRight, ArrowRight, Pause, Play } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import HeroScene3D from "@/components/HeroScene3D";
 
-const proofPoints = [
-  { value: "50+", label: "projects delivered" },
-  { value: "3x", label: "average ROI target" },
-  { value: "40%", label: "faster delivery" },
-];
+const HeroScene3D = lazy(() => import("@/components/HeroScene3D"));
 
-const capabilityCards = [
-  {
-    icon: Bot,
-    label: "Save Time with AI",
-    value: "Smart chat, task follow-ups, reports, and daily automation",
-  },
-  {
-    icon: LineChart,
-    label: "Bring in More Leads",
-    value: "SEO, content, analytics, and conversion improvements",
-  },
-  {
-    icon: Cpu,
-    label: "Build Digital Products",
-    value: "Websites, apps, dashboards, and secure integrations",
-  },
-];
+class SceneErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() { return { failed: true }; }
+  componentDidCatch(error: Error, info: ErrorInfo) { console.warn("ThinkCore 3D unavailable", error, info); }
+  render() { return this.state.failed ? null : this.props.children; }
+}
+
+const ThinkCorePoster = () => (
+  <div className="absolute inset-0 flex items-center justify-center overflow-hidden" aria-hidden="true">
+    <div className="absolute h-[64%] w-[64%] rounded-full bg-cyan-300/10 blur-[70px]" />
+    <div className="relative aspect-square w-[72%] max-w-[470px] [transform-style:preserve-3d]">
+      <div className="absolute inset-[16%] rotate-[12deg] rounded-[28%] border-[7px] border-white/16 shadow-[inset_0_0_30px_rgba(255,255,255,.08),0_0_35px_rgba(119,229,255,.09)]" />
+      <div className="absolute inset-[18%] -rotate-[43deg] rounded-[28%] border-[7px] border-cyan-200/30 shadow-[inset_0_0_24px_rgba(119,229,255,.12)]" />
+      <div className="absolute inset-[20%] rotate-[67deg] rounded-[28%] border-[6px] border-violet-300/25" />
+      <div className="absolute left-1/2 top-1/2 h-[28%] w-[28%] -translate-x-1/2 -translate-y-1/2 rounded-[38%] border border-white/25 bg-[radial-gradient(circle_at_35%_30%,#d9fbff_0%,#77e5ff_10%,#9690ff_42%,#111720_78%)] shadow-[0_0_55px_rgba(119,229,255,.48)]" />
+    </div>
+  </div>
+);
 
 const Hero = () => {
+  const [canRenderScene, setCanRenderScene] = useState(false);
+  const [motionPaused, setMotionPaused] = useState(false);
+
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const capable = window.matchMedia("(min-width: 768px)").matches && (navigator.hardwareConcurrency ?? 4) >= 4;
+    setMotionPaused(reduced);
+    setCanRenderScene(capable);
+  }, []);
+
   return (
-    <section className="relative isolate min-h-[88svh] overflow-hidden bg-[#05070d] pt-24 pb-12 text-white lg:pt-32 lg:pb-16">
-      <HeroScene3D />
+    <section className="relative isolate min-h-[100svh] overflow-hidden bg-[#080b10] pt-[76px] text-white">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_77%_42%,rgba(119,229,255,.12),transparent_28%),radial-gradient(circle_at_92%_18%,rgba(150,144,255,.09),transparent_24%)]" />
+      <div className="surface-grid absolute inset-0 opacity-55 [mask-image:linear-gradient(to_bottom,black,transparent_88%)]" />
 
-      <div className="dark-surface-grid absolute inset-0 z-[1] opacity-35 [mask-image:linear-gradient(to_bottom,black,transparent_92%)]" />
-      <div className="absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(5,7,13,0.97)_0%,rgba(5,7,13,0.82)_42%,rgba(5,7,13,0.36)_78%,rgba(5,7,13,0.72)_100%)]" />
-      <div className="absolute inset-x-0 bottom-0 z-[1] h-24 bg-gradient-to-t from-background to-transparent" />
-
-      <div className="container-custom relative z-10 grid min-h-[calc(88svh-9rem)] items-center gap-12 lg:grid-cols-[1.02fr_0.98fr]">
-        <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
-          className="flex max-w-3xl flex-col items-center text-center lg:items-start lg:text-left"
-        >
-          <div className="section-eyebrow border-white/[0.15] bg-white/[0.08] text-amber-soft">
-           Digital Growth Solutions
-          </div>
-
-          <h1 className="mt-7 font-heading text-5xl font-extrabold leading-[0.95] tracking-normal text-white sm:text-6xl lg:text-7xl">
-            ThinkMoreAI
+      <div className="container-custom relative z-10 grid min-h-[calc(100svh-76px)] items-center gap-5 py-12 md:grid-cols-[1.05fr_.95fr] md:gap-0 md:py-16 lg:py-20">
+        <motion.div initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, ease: [0.22,1,0.36,1] }} className="relative z-10 max-w-[800px]">
+          <div className="section-eyebrow">Intelligence, engineered</div>
+          <h1 className="mt-7 max-w-[780px] font-heading text-[clamp(2.5rem,7.15vw,7rem)] font-medium leading-[.92] tracking-[-.075em] text-white">
+            <span className="block">AI that works.</span>
+            <span className="block">Software that</span>
+            <span className="block">moves <span className="gradient-text">business</span></span>
+            <span className="gradient-text block">forward.</span>
           </h1>
-
-          <p className="mt-6 max-w-2xl text-lg leading-8 text-white/[0.74] sm:text-xl">
-            We design, build, and scale AI-powered products, automation, analytics,
-            and growth systems for teams that need measurable business outcomes,
-            not generic software.
+          <p className="mt-7 max-w-[610px] text-base leading-7 text-white/62 sm:text-lg sm:leading-8">
+            We design and build AI-powered products, intelligent automation, applications, and growth systems around your business goals.
           </p>
-
-          <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Button variant="hero" size="xl" asChild className="group">
-              <a
-                href="https://cal.id/enquire.thinkmoreai"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-3"
-              >
-                <Zap className="h-5 w-5" />
-                Book a Discovery Call
-                <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </a>
-            </Button>
-
-            <Button variant="heroOutline" size="xl" asChild className="group">
-              <Link to="/portfolio" className="inline-flex items-center justify-center gap-3">
-                View Work
-                <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-              </Link>
-            </Button>
+          <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+            <Link to="/contact" className="group inline-flex min-h-14 items-center justify-center gap-3 bg-accent px-7 text-sm font-semibold text-accent-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-white">
+              Start a project <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+            <Link to="/portfolio" className="group inline-flex min-h-14 items-center justify-center gap-3 border border-white/18 bg-white/[.035] px-7 text-sm font-semibold text-white transition-all duration-200 hover:border-white/40 hover:bg-white/[.08]">
+              Explore our work <ArrowDownRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:translate-y-0.5" />
+            </Link>
           </div>
-
-          <div className="mt-9 grid w-full max-w-2xl grid-cols-3 border-y border-white/[0.12] text-left">
-            {proofPoints.map((point) => (
-              <div key={point.label} className="py-5 pr-4">
-                <div className="font-heading text-2xl font-bold text-white sm:text-3xl">
-                  {point.value}
-                </div>
-                <div className="mt-1 text-xs font-medium uppercase tracking-[0.18em] text-white/[0.48]">
-                  {point.label}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-6 flex flex-wrap justify-center gap-3 text-sm text-white/[0.64] lg:justify-start">
-            {["Production-grade builds", "Clear delivery milestones", "Long-term support"].map((item) => (
-              <span key={item} className="inline-flex items-center gap-2">
-                <CheckCircle2 className="h-4 w-4 text-amber-soft" />
-                {item}
-              </span>
+          <div className="mt-10 flex flex-wrap gap-x-7 gap-y-3 border-t border-white/10 pt-5">
+            {["AI products", "Web & mobile", "Automation", "Analytics & growth"].map((item, index) => (
+              <span key={item} className="font-mono text-[10px] uppercase tracking-[.17em] text-white/42"><span className="mr-2 text-accent/70">0{index + 1}</span>{item}</span>
             ))}
           </div>
         </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, x: 28 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-          className="relative hidden justify-self-end lg:block lg:w-full lg:max-w-[500px]"
-        >
-          <div className="border border-white/[0.12] bg-white/[0.055] p-5 shadow-[0_28px_90px_-55px_rgba(255,191,69,0.95)] backdrop-blur-2xl">
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.22em] text-white/[0.44]">
-                  Simple growth plan
-                </p>
-                <p className="mt-1 font-heading text-lg font-semibold text-white">
-                  From idea to launch
-                </p>
-              </div>
-              <div className="inline-flex items-center gap-2 border border-emerald-400/25 bg-emerald-400/10 px-3 py-1 text-xs font-semibold text-emerald-200">
-                <span className="h-1.5 w-1.5 bg-emerald-300" />
-                Ready
-              </div>
-            </div>
+        <motion.div initial={{ opacity: 0, scale: .96 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: .8, delay: .12 }} className="relative -mx-5 h-[420px] min-w-0 md:mx-0 md:h-[min(70vw,720px)] md:min-h-[570px]">
+          <ThinkCorePoster />
+          {canRenderScene && (
+            <SceneErrorBoundary>
+              <Suspense fallback={null}><HeroScene3D paused={motionPaused} /></Suspense>
+            </SceneErrorBoundary>
+          )}
 
-            <div className="mt-5 space-y-3">
-              {capabilityCards.map((item, index) => (
-                <div
-                  key={item.label}
-                  className="grid grid-cols-[2.75rem_1fr_auto] items-center gap-4 border border-white/10 bg-black/[0.18] p-4"
-                >
-                  <div className="flex h-11 w-11 items-center justify-center border border-white/[0.12] bg-white/[0.08] text-amber-soft">
-                    <item.icon className="h-5 w-5" />
-                  </div>
-                  <div>
-                    <p className="font-heading text-sm font-semibold text-white">
-                      {item.label}
-                    </p>
-                    <p className="mt-1 text-xs leading-5 text-white/[0.52]">{item.value}</p>
-                  </div>
-                  <span className="text-xs font-semibold text-white/[0.38]">
-                    0{index + 1}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <div className="mt-5 grid grid-cols-2 gap-3">
-              <div className="border border-white/10 bg-white/[0.045] p-4">
-                <ShieldCheck className="h-5 w-5 text-cyan-200" />
-                <p className="mt-3 text-2xl font-bold text-white">Private</p>
-                <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/[0.42]">
-                  confidential
-                </p>
-              </div>
-              <div className="border border-white/10 bg-white/[0.045] p-4">
-                <LineChart className="h-5 w-5 text-amber-soft" />
-                <p className="mt-3 text-2xl font-bold text-white">Goals</p>
-                <p className="mt-1 text-xs uppercase tracking-[0.18em] text-white/[0.42]">
-                  clear
-                </p>
-              </div>
-            </div>
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute left-[4%] top-[30%] flex items-center gap-2 md:left-[1%]"><span className="h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_12px_#77e5ff]" /><span className="tech-label text-white/60">AI</span></div>
+            <div className="absolute right-[3%] top-[43%] flex items-center gap-2"><span className="tech-label text-white/60">Automation</span><span className="h-1.5 w-1.5 rounded-full bg-violet-300" /></div>
+            <div className="absolute bottom-[18%] left-[22%] flex items-center gap-2"><span className="h-1.5 w-1.5 rounded-full bg-white/70" /><span className="tech-label text-white/60">Products</span></div>
           </div>
+
         </motion.div>
       </div>
     </section>

@@ -104,7 +104,7 @@ const EarnWithUs = () => {
           </span>
           <h2 className="mt-5 font-heading text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
             Refer a project.{" "}
-            <span className="text-amber-soft">Earn massive money.</span>
+            <span className="text-amber-soft">Earn 10%.</span>
           </h2>
           <p className="mt-5 text-lg leading-8 text-primary-foreground/[0.68]">
             Anyone can earn with us. Bring us a project — yours, your client's, or a

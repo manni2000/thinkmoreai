@@ -46,7 +46,7 @@ export const SEO_PAGES: Record<string, PageSeo> = {
     path: "/",
     title: "ThinkmoreAI - AI Digital Solutions, Automation & Business Growth",
     description:
-      "ThinkMoreAI is an AI agency delivering web & mobile app development, AI chatbots, workflow automation, data analytics, SEO and digital marketing. Turn your ideas into scalable, revenue-driving solutions.",
+      "ThinkMoreAI designs and builds web and mobile applications, AI assistants, workflow automation, data analytics, SEO and digital growth systems around business goals.",
     shortKeywords: [
       "AI company",
       "web development",
@@ -124,7 +124,7 @@ export const SEO_PAGES: Record<string, PageSeo> = {
     path: "/portfolio",
     title: "Portfolio - AI, Web, App & Automation Projects | ThinkmoreAI",
     description:
-      "See ThinkMoreAI's portfolio of delivered projects — SaaS platforms, e-commerce, mobile apps, AI chatbots, dashboards and automation built for real business results.",
+      "Explore ThinkMoreAI's public concept demos and work samples across SaaS, e-commerce, mobile products, research and digital experiences.",
     shortKeywords: [
       "AI portfolio",
       "web development portfolio",
@@ -133,7 +133,7 @@ export const SEO_PAGES: Record<string, PageSeo> = {
     ],
     longKeywords: [
       "AI and web development portfolio and case studies",
-      "examples of AI automation and SaaS projects delivered",
+      "examples of AI automation and SaaS product concepts",
     ],
   },
 
@@ -141,7 +141,7 @@ export const SEO_PAGES: Record<string, PageSeo> = {
     path: "/process",
     title: "Our Process - How ThinkmoreAI Delivers AI Projects",
     description:
-      "Discover ThinkMoreAI's proven delivery process — discovery, design, engineering, launch and support — built to ship AI and software projects with precision.",
+      "Discover ThinkMoreAI's delivery process — understand, design, build and improve — for turning business goals into working AI and software systems.",
     shortKeywords: [
       "development process",
       "AI project delivery",
@@ -173,7 +173,7 @@ export const SEO_PAGES: Record<string, PageSeo> = {
     path: "/team",
     title: "Our Team - The People Behind ThinkmoreAI",
     description:
-      "Meet the ThinkMoreAI team — engineers, designers and strategists from global companies building AI-driven products, automation and growth systems.",
+      "Meet the ThinkMoreAI team across engineering, data, marketing strategy and project delivery, building AI-driven products, automation and growth systems.",
     shortKeywords: ["ThinkMoreAI team", "AI experts", "development team"],
     longKeywords: [
       "meet the AI and software development team at ThinkMoreAI",

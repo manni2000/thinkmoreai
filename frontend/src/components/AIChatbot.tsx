@@ -28,22 +28,22 @@ const botResponses: Record<string, string> = {
     "ThinkMoreAI is led by Charan Kumar, CEO and Founder, and Manish Kumar, CTO and Founder. The wider team combines strategy, engineering, marketing, analytics, and project delivery expertise.",
 
   experience:
-    "Our team brings experience from global MNCs and fast-scaling startup environments, with work across enterprise applications, AI systems, analytics, and digital growth.",
+    "The team combines product engineering, data analysis, SEO, marketing strategy, project management, and AI implementation skills. You can review the named team members on the Team page.",
 
   process:
-    "Our process is simple: discovery, estimate, design, build, launch, and support. You get clear milestones, regular demos, and practical communication throughout.",
+    "Our process is simple: understand, design, build, and improve. Each stage turns goals and constraints into concrete deliverables, from architecture and prototypes through deployment and iteration.",
 
   portfolio:
-    "Our portfolio includes e-commerce, fintech, food delivery, SaaS, video production, and research projects. You can view featured work in the Portfolio section.",
+    "Our portfolio includes clearly labeled concept demos and work samples across commerce, fintech, food delivery, SaaS, video production, and research. You can open each public preview from the Work page.",
 
   support:
     "Post-launch support can include bug fixes, performance optimization, security updates, monitoring, new features, and ongoing technical assistance.",
 
   timeline:
-    "Timelines vary by scope. Simple websites can take 2-4 weeks, complex web apps 2-3 months, mobile apps 3-4 months, and enterprise systems 4-6 months or more.",
+    "Timelines depend on scope, integrations, review cycles, and launch requirements. Share the project details and the team can propose a realistic delivery plan after discovery.",
 
   industries:
-    "We serve healthcare, finance, e-commerce, education, manufacturing, media, real estate, professional services, and other growth-focused businesses.",
+    "ThinkMoreAI works from the business problem rather than a fixed industry package. Share your workflow and constraints so the team can confirm whether it is a good fit.",
 
   default:
     "Hi, I am ThinkMoreAI's assistant. Ask me about services, pricing, process, portfolio, timelines, technologies, team, or how to get started.",
@@ -60,6 +60,7 @@ const quickPrompts = ["Services", "Pricing", "Process"];
 const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showFloatingButtons, setShowFloatingButtons] = useState(false);
+  const [isContactVisible, setIsContactVisible] = useState(false);
   const { scrollY } = useScroll();
   const [messages, setMessages] = useState<Message[]>([
     { id: 1, text: botResponses.default, isBot: true },
@@ -80,6 +81,14 @@ const AIChatbot = () => {
     });
     return unsubscribe;
   }, [scrollY]);
+
+  useEffect(() => {
+    const contact = document.getElementById("contact");
+    if (!contact) return;
+    const observer = new IntersectionObserver(([entry]) => setIsContactVisible(entry.isIntersecting), { threshold: 0.08 });
+    observer.observe(contact);
+    return () => observer.disconnect();
+  }, []);
 
   const getResponse = (query: string): string => {
     const lowerQuery = query.toLowerCase();
@@ -221,7 +230,7 @@ const AIChatbot = () => {
   return (
     <>
       <AnimatePresence>
-        {showFloatingButtons && !isOpen && (
+        {showFloatingButtons && !isOpen && !isContactVisible && (
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -290,7 +299,7 @@ const AIChatbot = () => {
                   <div
                     className={`max-w-[84%] whitespace-pre-line border px-4 py-3 text-sm leading-6 ${
                       message.isBot
-                        ? "border-border bg-white text-foreground"
+                        ? "border-white/10 bg-white/[0.06] text-white"
                         : "border-accent bg-accent text-accent-foreground"
                     }`}
                   >
@@ -301,7 +310,7 @@ const AIChatbot = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            <div className="border-t border-border bg-white p-4">
+            <div className="border-t border-border bg-[#0c1118] p-4">
               <div className="mb-3 flex flex-wrap gap-2">
                 {quickPrompts.map((prompt) => (
                   <button
