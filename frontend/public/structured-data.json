@@ -26,8 +26,14 @@
     "longitude": "78.9629"
   },
   "founder": [
-    { "@type": "Person", "name": "Charan Kumar" },
-    { "@type": "Person", "name": "Manish Kumar" }
+    {
+      "@type": "Person",
+      "name": "Charan Kumar"
+    },
+    {
+      "@type": "Person",
+      "name": "Manish Kumar"
+    }
   ],
   "foundingDate": "2026-01-01",
   "areaServed": "Worldwide",

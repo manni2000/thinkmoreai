@@ -104,7 +104,7 @@ const EarnWithUs = () => {
           </span>
           <h2 className="mt-5 font-heading text-3xl font-bold leading-tight sm:text-4xl lg:text-5xl">
             Refer a project.{" "}
-            <span className="text-amber-soft">Earn 10%.</span>
+            <span className="text-amber-soft">Earn massive money.</span>
           </h2>
           <p className="mt-5 text-lg leading-8 text-primary-foreground/[0.68]">
             Anyone can earn with us. Bring us a project — yours, your client's, or a
@@ -138,11 +138,10 @@ const EarnWithUs = () => {
             {examples.map((row) => (
               <div
                 key={row.project}
-                className={`relative flex flex-col items-center border p-6 text-center ${
-                  row.highlight
-                    ? "border-amber-soft/60 bg-amber-soft/[0.12]"
-                    : "border-white/10 bg-white/[0.04]"
-                }`}
+                className={`relative flex flex-col items-center border p-6 text-center ${row.highlight
+                  ? "border-amber-soft/60 bg-amber-soft/[0.12]"
+                  : "border-white/10 bg-white/[0.04]"
+                  }`}
               >
                 {row.highlight && (
                   <span className="absolute -top-3 border border-amber-soft/50 bg-amber-soft px-3 py-0.5 text-[10px] font-bold uppercase tracking-wider text-primary">
