@@ -1,26 +1,16 @@
 import PageSeo from "@/components/PageSeo";
-import Services from "@/components/Services";
-import Process from "@/components/Process";
 import FAQ from "@/components/FAQ";
-import TransformSection from "@/components/TransformSection";
 import Contact from "@/components/Contact";
-import DiscoveryCallButton from "@/components/DiscoveryCallButton";
+import { StudioCapabilities, StudioProcess, StudioCTA } from "@/components/StudioExperience";
 
-const ServicesPage = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <PageSeo page="services" />
-      <main>
-        <div className="pt-20" />
-        <Services />
-        <TransformSection />
-        <Process />
-        <FAQ />
-        <Contact />
-      </main>
-      <DiscoveryCallButton link="https://cal.id/enquire.thinkmoreai" />
-    </div>
-  );
-};
-
-export default ServicesPage;
+export default function ServicesPage() {
+  return <main>
+    <PageSeo page="services" />
+    <section className="studio-page-hero"><div className="studio-container"><span className="studio-kicker">SERVICES / END TO END</span><h1>From a hard problem<br/>to a working system.</h1><p>Applied AI systems, high-scale web and mobile platforms, mission-critical automation, and data intelligence. Select a focused capability or partner with us to solve complex architectural challenges.</p><div className="studio-page-hero__line"/></div></section>
+    <StudioCapabilities />
+    <StudioProcess />
+    <FAQ />
+    <StudioCTA />
+    <Contact />
+  </main>;
+}

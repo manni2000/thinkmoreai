@@ -13,7 +13,7 @@
  */
 
 export const SITE_URL = "https://www.thinkmoreai.com";
-export const SITE_NAME = "ThinkmoreAI";
+export const SITE_NAME = "ThinkMoreAI";
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/thinkmoreai.webp`;
 
 export interface PageSeo {
@@ -44,9 +44,9 @@ const globalLongKeywords = [
 export const SEO_PAGES: Record<string, PageSeo> = {
   home: {
     path: "/",
-    title: "ThinkmoreAI - AI Digital Solutions, Automation & Business Growth",
+    title: "ThinkMoreAI — AI Products, SaaS & Digital Engineering",
     description:
-      "ThinkMoreAI designs and builds web and mobile applications, AI assistants, workflow automation, data analytics, SEO and digital growth systems around business goals.",
+      "ThinkMoreAI designs and engineers AI products, SaaS platforms, intelligent automation, and modern digital experiences for founders and businesses.",
     shortKeywords: [
       "AI company",
       "web development",
@@ -81,7 +81,7 @@ export const SEO_PAGES: Record<string, PageSeo> = {
 
   about: {
     path: "/about",
-    title: "About ThinkmoreAI - AI Agency Built for Business Growth",
+    title: "About ThinkMoreAI — Product Thinking & Engineering",
     description:
       "Learn about ThinkMoreAI — an AI-first agency helping startups, founders and small businesses grow with practical AI automation, custom software and measurable execution.",
     shortKeywords: [
@@ -94,6 +94,27 @@ export const SEO_PAGES: Record<string, PageSeo> = {
       "AI agency for startups and small businesses",
       "AI first digital agency in India",
       "practical AI implementation and business growth consulting",
+    ],
+  },
+
+  capabilities: {
+    path: "/capabilities",
+    title: "Engineering Capabilities & Full Technology Stack | ThinkMoreAI",
+    description:
+      "Explore ThinkMoreAI's engineering capabilities: modern frontend architectures, distributed backend APIs, applied AI pipelines, vector retrieval, and high-availability cloud infrastructure.",
+    shortKeywords: [
+      "AI capabilities",
+      "technology stack",
+      "engineering capabilities",
+      "software architecture",
+      "AI development stack",
+      "full-stack development",
+      "cloud infrastructure",
+    ],
+    longKeywords: [
+      "modern AI and full-stack software technology stack",
+      "production AI systems and distributed backend architecture",
+      "scalable cloud and vector retrieval engineering capabilities",
     ],
   },
 
@@ -169,17 +190,6 @@ export const SEO_PAGES: Record<string, PageSeo> = {
     ],
   },
 
-  team: {
-    path: "/team",
-    title: "Our Team - The People Behind ThinkmoreAI",
-    description:
-      "Meet the ThinkMoreAI team across engineering, data, marketing strategy and project delivery, building AI-driven products, automation and growth systems.",
-    shortKeywords: ["ThinkMoreAI team", "AI experts", "development team"],
-    longKeywords: [
-      "meet the AI and software development team at ThinkMoreAI",
-    ],
-  },
-
   contact: {
     path: "/contact",
     title: "Contact ThinkmoreAI - Book a Free AI Discovery Call",
@@ -197,11 +207,11 @@ export const SEO_PAGES: Record<string, PageSeo> = {
     ],
   },
 
-  earn: {
-    path: "/earn",
-    title: "Earn With Us - Refer a Project, Earn 10% Commission | ThinkmoreAI",
+  referral: {
+    path: "/referral",
+    title: "Referral Program | Earn 10% for Project Introductions | ThinkMoreAI",
     description:
-      "Refer any web, app, AI or automation project to ThinkMoreAI and earn a flat 10% commission on the client's first payout. No skills, no investment, no risk — anyone can join.",
+      "Introduce an AI, SaaS, app or automation project to ThinkMoreAI. Explore our 10% referral commission and how to make an introduction.",
     shortKeywords: [
       "referral program",
       "earn commission",

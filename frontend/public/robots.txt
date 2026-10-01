@@ -5,10 +5,9 @@ Allow: /
 Allow: /about
 Allow: /services
 Allow: /portfolio
-Allow: /earn
+Allow: /referral
 Allow: /process
 Allow: /faq
-Allow: /team
 Allow: /contact
 Allow: /privacy-policy
 Allow: /terms-of-service

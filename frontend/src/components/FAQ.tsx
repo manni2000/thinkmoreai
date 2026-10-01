@@ -11,42 +11,42 @@ const faqs = [
   {
     question: "What does ThinkMoreAI do?",
     answer:
-      "ThinkMoreAI helps startups, founders, and businesses build AI-powered automation, digital marketing systems, custom software, analytics, chatbots, and growth workflows.",
+      "ThinkMoreAI is an independent AI product and digital engineering studio. We design, architect, and deploy intelligent AI systems, custom SaaS platforms, workflow automation, and performance analytics for ambitious founders and enterprises.",
   },
   {
-    question: "Who should work with ThinkMoreAI?",
+    question: "Who is the ideal client for ThinkMoreAI?",
     answer:
-      "We are a strong fit for startups, small businesses, and growing teams that need practical AI adoption, better operations, stronger digital presence, or a production-ready product partner.",
+      "We partner with seed-to-growth startups, established businesses, and forward-thinking enterprises that need to turn complex challenges into production-ready software, automate mission-critical operations, or deploy applied AI with measurable ROI.",
   },
   {
-    question: "What AI services do you provide?",
+    question: "What specific AI and engineering capabilities do you deliver?",
     answer:
-      "We provide AI business automation, AI digital marketing, custom software development, AI chatbot development, workflow design, and implementation consulting tailored to business goals.",
+      "Our capabilities span autonomous AI agents, retrieval-augmented generation (RAG) knowledge systems, end-to-end web and mobile applications (React, Next.js, Node.js, Python), enterprise API integrations, and predictive data intelligence platforms.",
   },
   {
-    question: "Do you work with non-technical founders?",
+    question: "Do you work with non-technical founders and executives?",
     answer:
-      "Yes. We handle the technical complexity and explain tradeoffs in plain business language so founders can make confident decisions.",
+      "Yes. We act as your fractional product and technical leadership. We translate commercial objectives into clear architectural roadmaps, handle end-to-end engineering, and provide transparent, jargon-free communication at every milestone.",
   },
   {
-    question: "How is ThinkMoreAI different from other agencies?",
+    question: "How is ThinkMoreAI different from traditional agencies?",
     answer:
-      "We focus on practical implementation and measurable results. Strategy, product thinking, automation, analytics, and execution are handled together instead of as disconnected tasks.",
+      "Traditional agencies sell billable hours on disconnected tickets. We operate as dedicated product co-builders—uniting commercial strategy, user experience design, modern AI engineering, and scalable cloud infrastructure with full accountability for delivery.",
   },
   {
-    question: "Is data secure and confidential?",
+    question: "How do you protect client data, privacy, and intellectual property?",
     answer:
-      "Yes. We follow industry-standard security practices, keep project information confidential, and can sign NDAs when required.",
+      "Clients retain 100% intellectual property ownership of all custom code, models, and architectures created. We enforce strict NDAs, build on SOC 2 and GDPR-compliant cloud infrastructure, and utilize enterprise-tier AI APIs with zero data training retention.",
   },
   {
-    question: "What is your payment structure?",
+    question: "What are your engagement models and payment structures?",
     answer:
-      "We offer milestone-based payments, retainers, and fixed-price scopes depending on the project. The exact structure is discussed during discovery.",
+      "We offer milestone-based fixed scopes for well-defined builds, agile sprint blocks for rapid prototyping, and monthly dedicated engineering retainers for ongoing product evolution. All terms are scoped transparently during technical discovery.",
   },
   {
-    question: "Do you offer maintenance packages?",
+    question: "What level of support and maintenance is provided post-launch?",
     answer:
-      "Yes. Maintenance can include updates, monitoring, security patches, performance improvements, and feature enhancements.",
+      "Every production deployment includes dedicated warranty coverage. Beyond launch, we offer SLA-backed maintenance packages covering real-time infrastructure monitoring, performance optimization, model tuning, security patches, and continuous feature expansion.",
   },
 ];
 
@@ -55,11 +55,11 @@ const FAQ = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="faq" className="warm-section section-padding">
+    <section id="faq" className="studio-faq warm-section section-padding">
       <div className="container-custom">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 24 }}
+          initial={false}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55 }}
           className="mx-auto mb-12 max-w-3xl text-center"
@@ -74,7 +74,7 @@ const FAQ = () => {
         </motion.div>
 
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={false}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55, delay: 0.1 }}
           className="mx-auto max-w-4xl"
