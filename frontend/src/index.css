@@ -16,32 +16,32 @@
     --secondary-foreground: 210 24% 90%;
     --muted: 215 22% 15%;
     --muted-foreground: 217 16% 67%;
-    --accent: 190 100% 73%;
+    --accent: 85 68% 72%;
     --accent-foreground: 216 46% 7%;
     --destructive: 0 70% 52%;
     --destructive-foreground: 0 0% 100%;
     --border: 215 20% 20%;
     --input: 215 20% 20%;
-    --ring: 190 100% 73%;
+    --ring: 85 68% 72%;
     --radius: 0.35rem;
     --navy-deep: 216 33% 5%;
     --navy-medium: 215 31% 9%;
     --navy-light: 215 22% 15%;
-    --amber-glow: 190 100% 73%;
-    --amber-soft: 248 100% 78%;
-    --blue-accent: 190 100% 73%;
+    --amber-glow: 85 68% 72%;
+    --amber-soft: 85 68% 72%;
+    --blue-accent: 85 68% 72%;
     --success: 160 73% 45%;
     --glass: 210 30% 96%;
     --gradient-hero: linear-gradient(135deg, #080b10 0%, #0d131c 58%, #0d1720 100%);
     --gradient-card: linear-gradient(180deg, #111720 0%, #0c1118 100%);
-    --gradient-accent: linear-gradient(135deg, #77e5ff 0%, #9690ff 100%);
+    --gradient-accent: linear-gradient(135deg, #bce986 0%, #9fc7b4 100%);
     --gradient-glass: linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.025));
-    --gradient-text: linear-gradient(110deg, #f3f6fa 8%, #77e5ff 56%, #9690ff 100%);
+    --gradient-text: linear-gradient(110deg, #f3f6fa 8%, #bce986 56%, #9fc7b4 100%);
     --shadow-sm: 0 1px 2px rgba(0,0,0,.24);
     --shadow-md: 0 12px 34px -22px rgba(0,0,0,.75);
     --shadow-lg: 0 24px 70px -36px rgba(0,0,0,.85);
     --shadow-xl: 0 32px 100px -44px rgba(0,0,0,.9);
-    --shadow-glow: 0 0 48px rgba(119,229,255,.18);
+    --shadow-glow: 0 0 48px rgba(188,233,134,.18);
     --shadow-card: 0 24px 60px -40px rgba(0,0,0,.85);
   }
 
@@ -55,8 +55,8 @@
     text-rendering: geometricPrecision;
   }
   h1, h2, h3, h4, h5, h6 { font-family: "Sora", sans-serif; @apply font-semibold tracking-tight; }
-  ::selection { background: rgba(119, 229, 255, .24); color: #fff; }
-  :focus-visible { outline: 2px solid #77e5ff; outline-offset: 4px; }
+  ::selection { background: rgba(188, 233, 134, .3); color: #fff; }
+  :focus-visible { outline: 2px solid #bce986; outline-offset: 4px; }
 }
 
 @layer components {

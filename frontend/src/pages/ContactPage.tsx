@@ -1,6 +1,5 @@
 import PageSeo from "@/components/PageSeo";
 import Contact from "@/components/Contact";
-import DiscoveryCallButton from "@/components/DiscoveryCallButton";
 
 const ContactPage = () => {
   return (
@@ -8,9 +7,8 @@ const ContactPage = () => {
       <PageSeo page="contact" />
       <main>
         <div className="pt-20" />
-        <Contact />
+        <Contact standalone />
       </main>
-      <DiscoveryCallButton link="https://cal.id/enquire.thinkmoreai" />
     </div>
   );
 };

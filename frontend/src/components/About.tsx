@@ -23,7 +23,7 @@ const About = () => (
           <p className="max-w-3xl text-xl leading-9 text-[#3d4651] md:text-2xl md:leading-10">
             ThinkMoreAI works with startups, founders, small businesses, and growing teams to turn manual work, product ideas, and fragmented data into clear digital systems.
           </p>
-          <Link to="/about" className="mt-7 inline-flex items-center gap-2 border-b border-[#10151d]/30 pb-1 text-sm font-semibold text-[#10151d] transition-colors hover:border-[#16697a] hover:text-[#16697a]">Meet the team behind the work <ArrowUpRight className="h-4 w-4" /></Link>
+          <Link to="/about" className="mt-7 inline-flex items-center gap-2 border-b border-[#10151d]/30 pb-1 text-sm font-semibold text-[#10151d] transition-colors hover:border-[#16697a] hover:text-[#16697a]">Meet the founders <ArrowUpRight className="h-4 w-4" /></Link>
         </motion.div>
       </div>
 

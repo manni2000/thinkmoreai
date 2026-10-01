@@ -1,103 +1,18 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "ThinkmoreAI",
-  "alternateName": "ThinkmoreAI - AI Digital Solutions & Business Services",
-  "url": "https://www.thinkmoreai.com",
+  "name": "ThinkMoreAI",
+  "url": "https://www.thinkmoreai.com/",
   "logo": "https://www.thinkmoreai.com/thinkmoreai-logo.webp",
-  "image": "https://www.thinkmoreai.com/thinkmoreai.webp",
-  "description": "ThinkMoreAI designs and builds web and mobile applications, AI assistants, workflow automation, data analytics, SEO and digital growth systems around business goals.",
+  "description": "ThinkMoreAI designs and engineers AI products, SaaS platforms, automation, and digital experiences.",
   "contactPoint": {
     "@type": "ContactPoint",
     "telephone": "+91-9608826629",
-    "contactType": "Business service",
+    "contactType": "Business enquiries",
     "availableLanguage": "English"
   },
   "sameAs": [
-    "https://www.thinkmoreai.com"
-  ],
-  "address": {
-    "@type": "PostalAddress",
-    "addressCountry": "IN"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": "20.5937",
-    "longitude": "78.9629"
-  },
-  "founder": [
-    {
-      "@type": "Person",
-      "name": "Charan Kumar"
-    },
-    {
-      "@type": "Person",
-      "name": "Manish Kumar"
-    }
-  ],
-  "foundingDate": "2026-01-01",
-  "areaServed": "Worldwide",
-  "knowsLanguage": "English",
-  "hasOfferCatalog": {
-    "@type": "OfferCatalog",
-    "name": "Digital Business Services",
-    "itemListElement": [
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Web Development",
-          "description": "AI-powered web development solutions with modern frameworks"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Mobile App Development",
-          "description": "iOS and Android app development with AI integration"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "AI Chatbots",
-          "description": "Custom AI chatbots and workflow automation solutions"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Data Analytics",
-          "description": "Business intelligence and predictive analytics"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "SEO Optimization",
-          "description": "Search engine optimization and digital marketing"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Social Media Management",
-          "description": "Social media management and marketing services"
-        }
-      },
-      {
-        "@type": "Offer",
-        "itemOffered": {
-          "@type": "Service",
-          "name": "Digital Marketing",
-          "description": "Comprehensive digital marketing and advertising"
-        }
-      }
-    ]
-  }
+    "https://www.linkedin.com/company/thinkmoreai",
+    "https://www.instagram.com/thinkmoreai"
+  ]
 }

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion, useScroll } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Send, X } from "lucide-react";
 import { FaWhatsapp } from "react-icons/fa";
 import { RiRobot2Fill } from "react-icons/ri";
@@ -7,46 +7,46 @@ import { Button } from "@/components/ui/button";
 
 const botResponses: Record<string, string> = {
   about:
-    "ThinkMoreAI is an AI-driven technology and professional services company. We help startups, SMEs, and enterprise teams turn ideas into scalable products, automation, analytics, and growth systems.",
+    "ThinkMoreAI is an independent AI product and digital engineering studio. We partner with ambitious founders, scaling businesses, and enterprises to engineer intelligent digital products, scalable SaaS architectures, and automated operational systems with measurable commercial impact.",
 
   services:
-    "Our services include:\n\n- Website and mobile app development\n- AI chatbots and workflow automation\n- Data analytics and SEO optimization\n- Social media management and video editing\n- AI consulting and implementation roadmaps",
+    "Our core capabilities include:\n\n- AI Products & Autonomous Assistants\n- Full-Stack Web, SaaS & Mobile Platforms\n- Enterprise Workflow Automation & System Integrations\n- Data Intelligence, Performance Analytics & Conversion Systems\n- Fractional AI & Technical Leadership",
 
   contact:
-    "You can reach us at manishmandal9734@gmail.com or book a discovery call from the website. Share your goals and we will help map the next best step.",
+    "You can reach our leadership directly at info@thinkmoreai.com or schedule a discovery call through the website. Share your project goals and we will respond with practical architectural guidance within one business day.",
 
   pricing:
-    "Pricing depends on scope, complexity, timeline, and support needs. We use transparent project estimates, milestone-based plans, and retainers when ongoing work makes sense.",
+    "Engagements are structured transparently through fixed-scope milestone delivery, rapid sprint blocks, or dedicated monthly engineering retainers. Every project begins with a technical discovery phase to establish clear milestones, architecture, and commercial outcomes.",
 
   plans:
-    "We shape plans around the project stage:\n\nStartup: MVPs, landing pages, and foundational automation.\nBusiness: advanced apps, integrations, analytics, and growth systems.\nEnterprise: larger builds, AI workflows, governance, and premium support.\nCustom: tailored scope for unique requirements.",
+    "We shape engagement models around your operational stage:\n\nStartup Sprint: Production MVPs, architecture foundations, and core automation.\nGrowth & Scale: Advanced applications, deep integrations, custom AI models, and analytics.\nEnterprise: High-availability architectures, custom AI pipelines, data governance, and SLA-backed support.\nCustom: Scoped to your exact technical and commercial requirements.",
 
   technologies:
-    "We work with modern production stacks including React, Next.js, Node.js, Python, Django, React Native, Flutter, TensorFlow, PyTorch, OpenAI, AWS, GCP, and Vercel.",
+    "Our engineering stack includes React, Next.js, TypeScript, Node.js, Python, FastAPI, Django, Flutter, PyTorch, TensorFlow, OpenAI, Gemini, AWS, GCP, Docker, and CI/CD automation pipelines.",
 
   team:
-    "ThinkMoreAI is led by Charan Kumar, CEO and Founder, and Manish Kumar, CTO and Founder. The wider team combines strategy, engineering, marketing, analytics, and project delivery expertise.",
+    "ThinkMoreAI is founder-led by Charan Kumar (CEO & Founder, Commercial Strategy & Product Growth) and Manish Kumar (CTO & Founder, Systems Architecture & Applied AI), supported by a specialized team of software engineers, AI researchers, and product designers.",
 
   experience:
-    "The team combines product engineering, data analysis, SEO, marketing strategy, project management, and AI implementation skills. You can review the named team members on the Team page.",
+    "Our leadership pairs commercial acumen with deep engineering capability. We ensure that technical decisions are guided by business velocity, scalability, and measurable ROI. Learn more about our founders on the About page.",
 
   process:
-    "Our process is simple: understand, design, build, and improve. Each stage turns goals and constraints into concrete deliverables, from architecture and prototypes through deployment and iteration.",
+    "We follow a disciplined 4-stage delivery framework: Discover, Architect, Design & Build, and Launch & Improve. We deploy working software in agile two-week sprint intervals with transparent review environments.",
 
   portfolio:
-    "Our portfolio includes clearly labeled concept demos and work samples across commerce, fintech, food delivery, SaaS, video production, and research. You can open each public preview from the Work page.",
+    "Our portfolio showcases live concept prototypes, full-stack applications, and technical demonstrations across commerce, fintech, food logistics, enterprise SaaS, and data intelligence. You can inspect each live preview on our Portfolio page.",
 
   support:
-    "Post-launch support can include bug fixes, performance optimization, security updates, monitoring, new features, and ongoing technical assistance.",
+    "Every production release includes warranty coverage. Post-launch, we offer SLA-backed maintenance packages for real-time infrastructure monitoring, performance optimization, model tuning, and ongoing feature expansion.",
 
   timeline:
-    "Timelines depend on scope, integrations, review cycles, and launch requirements. Share the project details and the team can propose a realistic delivery plan after discovery.",
+    "Focused prototypes and AI workflows typically deploy in 2 to 4 weeks. End-to-end SaaS platforms or comprehensive application builds generally span 6 to 12 weeks through structured bi-weekly release milestones.",
 
   industries:
-    "ThinkMoreAI works from the business problem rather than a fixed industry package. Share your workflow and constraints so the team can confirm whether it is a good fit.",
+    "Rather than rigid industry templates, we build around operational complexity and workflow requirements. We frequently work with B2B SaaS, e-commerce, fintech, logistics, professional services, and high-growth technology ventures.",
 
   default:
-    "Hi, I am ThinkMoreAI's assistant. Ask me about services, pricing, process, portfolio, timelines, technologies, team, or how to get started.",
+    "Hi, I am ThinkMoreAI's assistant. Ask me about our engineering services, pricing models, delivery process, portfolio prototypes, technology stack, leadership, or how to start your project.",
 };
 
 interface Message {
@@ -59,14 +59,26 @@ const quickPrompts = ["Services", "Pricing", "Process"];
 
 const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [showFloatingButtons, setShowFloatingButtons] = useState(false);
-  const [isContactVisible, setIsContactVisible] = useState(false);
-  const { scrollY } = useScroll();
+  const [footerClearance, setFooterClearance] = useState(16);
   const [messages, setMessages] = useState<Message[]>([
     { id: 1, text: botResponses.default, isBot: true },
   ]);
   const [input, setInput] = useState("");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const focusFrame = requestAnimationFrame(() => closeButtonRef.current?.focus());
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsOpen(false);
+    };
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      cancelAnimationFrame(focusFrame);
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [isOpen]);
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
@@ -76,18 +88,25 @@ const AIChatbot = () => {
   }, [messages]);
 
   useEffect(() => {
-    const unsubscribe = scrollY.on("change", (latest) => {
-      setShowFloatingButtons(latest > 200);
-    });
-    return unsubscribe;
-  }, [scrollY]);
-
-  useEffect(() => {
-    const contact = document.getElementById("contact");
-    if (!contact) return;
-    const observer = new IntersectionObserver(([entry]) => setIsContactVisible(entry.isIntersecting), { threshold: 0.08 });
-    observer.observe(contact);
-    return () => observer.disconnect();
+    let frame = 0;
+    const updatePosition = () => {
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        const legalLinks = document.querySelector(".studio-footer__bottom");
+        if (!legalLinks) return;
+        const spaceAboveLinks = window.innerHeight - legalLinks.getBoundingClientRect().top + 14;
+        setFooterClearance(Math.max(16, Math.min(spaceAboveLinks, window.innerHeight - 120)));
+      });
+    };
+    updatePosition();
+    window.addEventListener("scroll", updatePosition, { passive: true });
+    window.addEventListener("resize", updatePosition);
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", updatePosition);
+      window.removeEventListener("resize", updatePosition);
+    };
   }, []);
 
   const getResponse = (query: string): string => {
@@ -230,30 +249,31 @@ const AIChatbot = () => {
   return (
     <>
       <AnimatePresence>
-        {showFloatingButtons && !isOpen && !isContactVisible && (
+        {!isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
             transition={{ duration: 0.24 }}
-            className="fixed bottom-6 right-5 z-50 flex flex-col gap-3"
+            style={{ bottom: footerClearance }}
+            className="fixed right-4 z-40 flex items-center gap-1 border border-white/15 bg-[#0d1717]/95 p-1 shadow-xl backdrop-blur-md transition-[bottom] duration-200 ease-out motion-reduce:transition-none"
           >
             <a
               href="https://wa.me/919608826629?text=Hi%20there!%20I'm%20interested%20in%20your%20services%20and%20would%20like%20to%20know%20more"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-14 w-14 items-center justify-center border border-emerald-400/25 bg-emerald-500 text-white shadow-[0_18px_40px_-22px_rgba(16,185,129,0.9)] transition-transform duration-300 hover:-translate-y-1"
+              className="flex h-9 w-9 items-center justify-center text-[#bce986] transition-colors hover:bg-white/10"
               aria-label="Contact ThinkMoreAI on WhatsApp"
             >
-              <FaWhatsapp className="h-7 w-7" />
+              <FaWhatsapp className="h-5 w-5" />
             </a>
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="flex h-14 w-14 items-center justify-center border border-accent/30 bg-primary text-accent shadow-[0_18px_45px_-20px_rgba(245,166,35,0.9)] transition-transform duration-300 hover:-translate-y-1"
+              className="flex h-9 items-center gap-2 border-l border-white/15 px-2.5 text-xs font-semibold text-white transition-colors hover:bg-white/10"
               aria-label="Open ThinkMoreAI assistant"
             >
-              <RiRobot2Fill className="h-6 w-6" />
+              <RiRobot2Fill className="h-4 w-4 text-[#bce986]" /><span>Ask us</span>
             </button>
           </motion.div>
         )}
@@ -266,29 +286,32 @@ const AIChatbot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.22 }}
-            className="fixed inset-0 z-50 flex h-full w-full flex-col bg-background md:inset-auto md:bottom-5 md:right-5 md:h-[min(640px,calc(100vh-2rem))] md:w-[430px] md:border md:border-border md:shadow-2xl"
+            className="fixed bottom-0 right-0 z-50 flex h-[min(72dvh,520px)] w-full flex-col border border-border bg-[#0c1516] shadow-2xl sm:bottom-4 sm:right-4 sm:h-[min(520px,calc(100dvh-2rem))] sm:w-[min(360px,calc(100vw-2rem))]"
+            role="dialog"
+            aria-label="ThinkMoreAI assistant"
           >
-            <div className="flex items-center justify-between bg-primary p-4 text-primary-foreground">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center border border-accent/30 bg-accent/10 text-accent">
-                  <RiRobot2Fill className="h-5 w-5" />
+            <div className="flex items-center justify-between bg-primary px-3 py-2.5 text-primary-foreground">
+              <div className="flex items-center gap-2.5">
+                <div className="flex h-8 w-8 items-center justify-center border border-accent/30 bg-accent/10 text-accent">
+                  <RiRobot2Fill className="h-4 w-4" />
                 </div>
                 <div>
-                  <h3 className="font-heading font-semibold">ThinkMoreAI Assistant</h3>
-                  <p className="text-xs text-primary-foreground/[0.62]">Fast answers for project planning</p>
+                  <h3 className="font-heading text-sm font-semibold">ThinkMoreAI Assistant</h3>
+                  <p className="text-[10px] text-primary-foreground/[0.62]">Fast answers for project planning</p>
                 </div>
               </div>
               <button
+                ref={closeButtonRef}
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="flex h-9 w-9 items-center justify-center border border-white/10 text-primary-foreground/[0.7] transition-colors hover:text-primary-foreground"
+                className="flex h-8 w-8 items-center justify-center border border-white/10 text-primary-foreground/[0.7] transition-colors hover:text-primary-foreground"
                 aria-label="Close assistant"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="flex-1 space-y-4 overflow-y-auto p-4">
+            <div className="flex-1 space-y-3 overflow-y-auto p-3">
               {messages.map((message) => (
                 <motion.div
                   key={message.id}
@@ -297,7 +320,7 @@ const AIChatbot = () => {
                   className={`flex ${message.isBot ? "justify-start" : "justify-end"}`}
                 >
                   <div
-                    className={`max-w-[84%] whitespace-pre-line border px-4 py-3 text-sm leading-6 ${
+                    className={`max-w-[88%] whitespace-pre-line border px-3 py-2.5 text-[13px] leading-5 ${
                       message.isBot
                         ? "border-white/10 bg-white/[0.06] text-white"
                         : "border-accent bg-accent text-accent-foreground"
@@ -310,14 +333,14 @@ const AIChatbot = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            <div className="border-t border-border bg-[#0c1118] p-4">
-              <div className="mb-3 flex flex-wrap gap-2">
+            <div className="border-t border-border bg-[#0c1118] p-3">
+              <div className="mb-2 flex flex-wrap gap-1.5">
                 {quickPrompts.map((prompt) => (
                   <button
                     key={prompt}
                     type="button"
                     onClick={() => handleSend(prompt)}
-                    className="border border-border bg-background px-3 py-1.5 text-xs font-semibold text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
+                    className="border border-border bg-background px-2 py-1 text-[11px] font-semibold text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
                   >
                     {prompt}
                   </button>
@@ -330,13 +353,13 @@ const AIChatbot = () => {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
                   placeholder="Type your question..."
-                  className="min-w-0 flex-1 border border-border bg-background px-4 py-2.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-accent"
+                  className="min-w-0 flex-1 border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-accent"
                 />
                 <Button onClick={() => handleSend()} size="icon" className="shrink-0">
                   <Send className="h-4 w-4" />
                 </Button>
               </div>
-              <Button variant="accent" asChild className="mt-3 w-full">
+              <Button variant="accent" asChild className="mt-2 h-9 w-full text-xs">
                 <a href="https://cal.id/enquire.thinkmoreai" target="_blank" rel="noopener noreferrer">
                   Book a Discovery Call
                 </a>

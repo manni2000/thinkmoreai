@@ -1,38 +1,18 @@
 import PageSeo from "@/components/PageSeo";
-import Hero from "@/components/Hero";
-import About from "@/components/About";
-import Services from "@/components/Services";
-import Technologies from "@/components/Technologies";
-import Process from "@/components/Process";
-import Portfolio from "@/components/Portfolio";
-import TransformSection from "@/components/TransformSection";
-import EarnWithUs from "@/components/EarnWithUs";
-import Testimonials from "@/components/Testimonials";
-import Team from "@/components/Team";
-import FAQ from "@/components/FAQ";
 import Contact from "@/components/Contact";
+import { StudioHero, StudioIntro, StudioCapabilities, StudioWork, StudioArchitecture, StudioProcess, StudioPrinciples, StudioCTA } from "@/components/StudioExperience";
 
-const Index = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <PageSeo page="home" />
-      <main>
-        <Hero />
-        <About />
-        <Services />
-        {/* <Technologies /> */}
-        <Process />
-        <Portfolio />
-
-        <Technologies />
-        <TransformSection />
-        <EarnWithUs />
-        <Team />
-        <FAQ />
-        <Contact />
-      </main>
-    </div>
-  );
-};
-
-export default Index;
+export default function Index() {
+  return <main>
+    <PageSeo page="home" />
+    <StudioHero />
+    <StudioIntro />
+    <StudioCapabilities />
+    <StudioWork />
+    <StudioArchitecture />
+    <StudioProcess />
+    <StudioPrinciples />
+    <StudioCTA />
+    <Contact />
+  </main>;
+}
