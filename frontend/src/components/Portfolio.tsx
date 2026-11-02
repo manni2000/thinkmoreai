@@ -1,14 +1,12 @@
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
+import { projects as studioProjects } from "@/lib/studioContent";
 
-const projects = [
-  { title: "Maison Commerce", category: "Commerce website", label: "Concept demo", description: "A premium storefront concept focused on product discovery and a clean purchase journey.", tags: ["React", "Commerce UX", "Performance"], url: "https://maison.thinkmoreai.com/", image: "/images/portfolio/ecommerce.webp" },
-  { title: "NexaPay FinTech", category: "Mobile product", label: "Concept demo", description: "A payment product concept exploring onboarding and transaction-first mobile flows.", tags: ["Flutter", "Node.js", "Secure APIs"], url: "https://nexapay.thinkmoreai.com/", image: "/images/portfolio/mobile.webp" },
-  { title: "YumRush Delivery", category: "Ordering platform", label: "Concept demo", description: "A restaurant ordering and delivery concept with clear menu and order-status journeys.", tags: ["Vue", "Python", "AWS"], url: "https://yumrush.thinkmoreai.com/", image: "/images/portfolio/food.webp" },
-  { title: "Enterprise SaaS", category: "SaaS website", label: "Concept demo", description: "A product marketing concept using analytics-led framing and structured feature communication.", tags: ["React", "SaaS", "Analytics"], url: "https://enterprise.thinkmoreai.com/", image: "/images/portfolio/saas.webp" },
-  { title: "Brand Video Production", category: "Video editing", label: "Work sample", description: "A video and motion editing sample for brand and social storytelling.", tags: ["Motion", "Video", "Brand story"], url: "https://drive.google.com/file/d/134pW1Ai3qzkDdVnT4DAKf_73s0gaW_E8/view?usp=drivesdk", image: "/images/portfolio/video.webp" },
-  { title: "Market Research Report", category: "Research", label: "Work sample", description: "A research and data-storytelling sample structured for concise decision support.", tags: ["Research", "Charts", "Insights"], url: "https://drive.google.com/file/d/18U6DK0hfOQD0A4KXeyvBAtGWB_2S7lLS/view?usp=sharing", image: "/images/portfolio/Research-report.webp" },
-];
+const projects = studioProjects.map(project => ({
+  ...project,
+  description: project.built,
+  tags: project.technology,
+}));
 
 const Portfolio = () => (
   <section id="portfolio" className="warm-section section-padding overflow-hidden">

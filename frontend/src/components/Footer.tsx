@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 
-const navigation = [["Work","/portfolio"],["Services","/services"],["Capabilities","/capabilities"],["Process","/process"],["About","/about"],["Contact","/contact"]];
+const navigation = [["Work","/portfolio"],["Services","/services"],["About","/about"],["Contact","/contact"]];
 const serviceLinks = [["AI products","/services/ai-products"],["Web & mobile","/services/web-mobile"],["Automation","/services/automation"],["Data & growth","/services/data-growth"]];
 const socials = [["LinkedIn","https://www.linkedin.com/company/thinkmoreai"],["Instagram","https://www.instagram.com/thinkmoreai"],["Facebook","https://www.facebook.com/share/1AzqgtTzzJ/"]];
 

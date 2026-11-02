@@ -187,8 +187,8 @@ const categories = [
 ] as const;
 
 function getCategoryGroup(slug: string) {
-  if (slug === "maison-commerce" || slug === "yumrush-delivery") return "commerce";
-  if (slug === "nexapay-fintech" || slug === "enterprise-saas") return "mobile";
+  if (slug === "maison-commerce" || slug === "enterprise-saas") return "commerce";
+  if (slug === "nexapay-fintech" || slug === "yumrush-delivery") return "mobile";
   return "media";
 }
 
