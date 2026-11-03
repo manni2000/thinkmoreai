@@ -255,14 +255,14 @@ const AIChatbot = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 24 }}
             transition={{ duration: 0.24 }}
-            style={{ bottom: footerClearance }}
+            style={{ bottom: `calc(${footerClearance}px + env(safe-area-inset-bottom, 0px))` }}
             className="fixed right-4 z-40 flex items-center gap-1 border border-white/15 bg-[#0d1717]/95 p-1 shadow-xl backdrop-blur-md transition-[bottom] duration-200 ease-out motion-reduce:transition-none"
           >
             <a
               href="https://wa.me/919608826629?text=Hi%20there!%20I'm%20interested%20in%20your%20services%20and%20would%20like%20to%20know%20more"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex h-9 w-9 items-center justify-center text-[#bce986] transition-colors hover:bg-white/10"
+              className="flex h-11 w-11 items-center justify-center text-[#bce986] transition-colors hover:bg-white/10"
               aria-label="Contact ThinkMoreAI on WhatsApp"
             >
               <FaWhatsapp className="h-5 w-5" />
@@ -270,10 +270,10 @@ const AIChatbot = () => {
             <button
               type="button"
               onClick={() => setIsOpen(true)}
-              className="flex h-9 items-center gap-2 border-l border-white/15 px-2.5 text-xs font-semibold text-white transition-colors hover:bg-white/10"
+              className="flex h-11 w-11 items-center justify-center gap-2 border-l border-white/15 text-xs font-semibold text-white transition-colors hover:bg-white/10 sm:w-auto sm:px-2.5"
               aria-label="Open ThinkMoreAI assistant"
             >
-              <RiRobot2Fill className="h-4 w-4 text-[#bce986]" /><span>Ask us</span>
+              <RiRobot2Fill className="h-5 w-5 text-[#bce986]" /><span className="hidden sm:inline">Ask us</span>
             </button>
           </motion.div>
         )}
@@ -286,7 +286,7 @@ const AIChatbot = () => {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.98 }}
             transition={{ duration: 0.22 }}
-            className="fixed bottom-0 right-0 z-50 flex h-[min(72dvh,520px)] w-full flex-col border border-border bg-[#0c1516] shadow-2xl sm:bottom-4 sm:right-4 sm:h-[min(520px,calc(100dvh-2rem))] sm:w-[min(360px,calc(100vw-2rem))]"
+            className="studio-assistant fixed bottom-0 right-0 z-50 flex h-[min(72dvh,520px)] w-full flex-col border border-border bg-[#0c1516] shadow-2xl sm:bottom-4 sm:right-4 sm:h-[min(520px,calc(100dvh-2rem))] sm:w-[min(360px,calc(100vw-2rem))]"
             role="dialog"
             aria-label="ThinkMoreAI assistant"
           >
@@ -304,14 +304,14 @@ const AIChatbot = () => {
                 ref={closeButtonRef}
                 type="button"
                 onClick={() => setIsOpen(false)}
-                className="flex h-8 w-8 items-center justify-center border border-white/10 text-primary-foreground/[0.7] transition-colors hover:text-primary-foreground"
+                className="flex h-11 w-11 shrink-0 items-center justify-center border border-white/10 text-primary-foreground/[0.7] transition-colors hover:text-primary-foreground"
                 aria-label="Close assistant"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
 
-            <div className="flex-1 space-y-3 overflow-y-auto p-3">
+            <div className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain p-3" role="log" aria-label="Conversation" aria-live="polite">
               {messages.map((message) => (
                 <motion.div
                   key={message.id}
@@ -320,7 +320,7 @@ const AIChatbot = () => {
                   className={`flex ${message.isBot ? "justify-start" : "justify-end"}`}
                 >
                   <div
-                    className={`max-w-[88%] whitespace-pre-line border px-3 py-2.5 text-[13px] leading-5 ${
+                    className={`max-w-[88%] whitespace-pre-line break-words border px-3 py-2.5 text-[13px] leading-5 ${
                       message.isBot
                         ? "border-white/10 bg-white/[0.06] text-white"
                         : "border-accent bg-accent text-accent-foreground"
@@ -333,14 +333,14 @@ const AIChatbot = () => {
               <div ref={messagesEndRef} />
             </div>
 
-            <div className="border-t border-border bg-[#0c1118] p-3">
+            <div className="border-t border-border bg-[#0c1118] p-3 pb-[max(.75rem,env(safe-area-inset-bottom))]">
               <div className="mb-2 flex flex-wrap gap-1.5">
                 {quickPrompts.map((prompt) => (
                   <button
                     key={prompt}
                     type="button"
                     onClick={() => handleSend(prompt)}
-                    className="border border-border bg-background px-2 py-1 text-[11px] font-semibold text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
+                    className="min-h-11 border border-border bg-background px-2 py-1 text-[11px] font-semibold text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
                   >
                     {prompt}
                   </button>
@@ -353,9 +353,10 @@ const AIChatbot = () => {
                   onChange={(e) => setInput(e.target.value)}
                   onKeyDown={(e) => e.key === "Enter" && handleSend()}
                   placeholder="Type your question..."
-                  className="min-w-0 flex-1 border border-border bg-background px-3 py-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-accent"
+                  aria-label="Your question"
+                  className="min-h-11 min-w-0 flex-1 border border-border bg-background px-3 py-2 text-base text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-accent sm:text-sm"
                 />
-                <Button onClick={() => handleSend()} size="icon" className="shrink-0">
+                <Button onClick={() => handleSend()} size="icon" className="h-11 w-11 shrink-0" aria-label="Send question" disabled={!input.trim()}>
                   <Send className="h-4 w-4" />
                 </Button>
               </div>

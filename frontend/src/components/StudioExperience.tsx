@@ -1,6 +1,6 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "framer-motion";
-import { ArrowDown, ArrowRight, ArrowUpRight } from "lucide-react";
+import { ArrowDown, ArrowRight, ArrowUpRight, ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 import { projects, services } from "@/lib/studioContent";
 
@@ -69,7 +69,7 @@ export function StudioHero() {
     <div className="studio-hero__grid" aria-hidden="true" />
     <motion.div className="studio-hero__system" style={{ scale: systemScale, y: systemY, rotateX, rotateY }}><CoreDiagram progress={scrollYProgress}/></motion.div>
     <div className="studio-container studio-hero__inside">
-      <div className="studio-hero__top"><span className="studio-kicker"><span className="signal-dot" />Independent AI & product studio</span><span className="studio-coordinate">INDIA / WORKING WORLDWIDE</span></div>
+      <div className="studio-hero__top"><span className="studio-kicker"><span className="signal-dot" />AI innovation. Business impact</span><span className="studio-coordinate">INDIA / WORKING WORLDWIDE</span></div>
       <motion.div className="studio-hero__headline" style={{ y: typeY }}>
         <span className="studio-index">ENGINEERED FOR WHAT'S NEXT <span>001 / 004</span></span>
         <h1><span>WE BUILD</span><span className="studio-hero__outline">INTELLIGENT</span><span>DIGITAL <em>SYSTEMS.</em></span></h1>
@@ -96,7 +96,17 @@ function CapabilityGraphic({ active }: { active: number }) {
 }
 
 export function StudioCapabilities() {
+  const reduceMotion = useReducedMotion();
   const [active, setActive] = useState(0);
+  const [expanded, setExpanded] = useState<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const media = window.matchMedia("(max-width:760px)");
+    const update = () => setIsMobile(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   return (
     <section id="services" className="studio-capabilities studio-section">
@@ -104,52 +114,56 @@ export function StudioCapabilities() {
         <motion.div {...reveal} className="studio-section-heading">
           <div>
             <span className="studio-kicker">01 / WHAT WE BUILD</span>
-            <h2>One studio.<br/><span>Connected capabilities.</span></h2>
+            <h2>One studio.<br/><span>{isMobile ? "Built around you." : "Connected capabilities."}</span></h2>
           </div>
-          <p>Choose the problem first. We assemble the right product, engineering, and intelligence capabilities around it.</p>
+          <p>{isMobile ? "From AI products to web apps, find the right support for your next project." : "Choose the problem first. We assemble the right product, engineering, and intelligence capabilities around it."}</p>
         </motion.div>
 
         <div className="studio-capabilities__layout">
           {/* Left: capability list — each item has an inline mobile drawer */}
           <div className="studio-capabilities__list" aria-label="Capabilities">
             {services.map((service, index) => {
-              const isActive = active === index;
+              const isActive = isMobile ? expanded === index : active === index;
               return (
                 <div key={service.slug} className="studio-capability-row">
                   <button
                     type="button"
-                    onMouseEnter={() => setActive(index)}
-                    onFocus={() => setActive(index)}
-                    onClick={() => setActive(index)}
+                    id={`capability-trigger-${service.slug}`}
+                    onMouseEnter={() => { if (!isMobile) setActive(index); }}
+                    onFocus={() => { if (!isMobile) setActive(index); }}
+                    onClick={() => { setActive(index); if (isMobile) setExpanded(current => current === index ? null : index); }}
                     className={`studio-capability ${isActive ? "is-active" : ""}`}
-                    aria-pressed={isActive}
-                    aria-expanded={isActive}
+                    aria-pressed={isMobile ? undefined : isActive}
+                    aria-expanded={isMobile ? isActive : undefined}
+                    aria-controls={isMobile && isActive ? `capability-panel-${service.slug}` : undefined}
                   >
                     <span className="studio-capability__number">{service.number}</span>
                     <span className="studio-capability__content">
                       <strong>{service.title}</strong>
                       <span>{service.short}</span>
                     </span>
-                    <ArrowUpRight size={19} />
+                    {isMobile ? <ChevronDown size={20} className="studio-capability__chevron" aria-hidden="true" /> : <ArrowUpRight size={19} />}
                   </button>
 
                   {/* Mobile-only inline drawer */}
-                  {isActive && (
+                  {isMobile && isActive && (
                     <motion.div
                       key={`drawer-${index}`}
-                      initial={{ opacity: 0, y: -8 }}
+                      initial={reduceMotion ? false : { opacity: 0, y: -4 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                      transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}
                       className="studio-capabilities__mobile-drawer"
+                      id={`capability-panel-${service.slug}`}
+                      role="region"
+                      aria-labelledby={`capability-trigger-${service.slug}`}
                     >
-                      <CapabilityGraphic active={index} />
                       <div className="studio-capabilities__detail">
                         <p>{service.description}</p>
                         <div className="studio-capabilities__tags">
                           {service.deliverables.map(item => <span key={item}>{item}</span>)}
                         </div>
                         <Link to={`/services/${service.slug}`} className="studio-text-link">
-                          Explore this service <ArrowUpRight size={16} />
+                          View service details <ArrowUpRight size={16} />
                         </Link>
                       </div>
                     </motion.div>
@@ -289,6 +303,7 @@ export function StudioWork({ all = false }: { all?: boolean }) {
                 key={cat.id}
                 type="button"
                 className={`studio-filter-btn ${filter === cat.id ? "is-active" : ""}`}
+                aria-pressed={filter === cat.id}
                 onClick={() => setFilter(cat.id)}
               >
                 {cat.label}

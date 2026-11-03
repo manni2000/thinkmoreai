@@ -228,7 +228,7 @@ export default function CapabilitiesPage() {
             <span style={{ font: "500 12px ui-monospace, monospace", color: "#617666" }}>
               LOOKING FOR SPECIFIC SERVICE PACKAGES?
             </span>
-            <div style={{ display: "flex", gap: "24px" }}>
+            <div style={{ display: "flex", gap: "16px 24px", flexWrap: "wrap" }}>
               <Link to="/services" className="studio-text-link studio-text-link--dark">
                 Explore services <ArrowUpRight size={17} />
               </Link>

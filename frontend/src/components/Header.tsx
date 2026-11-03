@@ -19,11 +19,17 @@ export default function Header() {
   useEffect(() => { const update = () => setScrolled(window.scrollY > 24); update(); window.addEventListener("scroll", update, { passive:true }); return () => window.removeEventListener("scroll", update); }, []);
   useEffect(() => { setOpen(false); }, [pathname]);
   useEffect(() => {
+    const desktop = window.matchMedia("(min-width:901px)");
+    const closeOnDesktop = () => { if (desktop.matches) setOpen(false); };
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
+  useEffect(() => {
     if (!open) return;
     const previous = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    const focusable = menuRef.current?.querySelectorAll<HTMLElement>("a,button");
-    focusable?.[0]?.focus();
+    const focusable = [triggerRef.current, ...Array.from(menuRef.current?.querySelectorAll<HTMLElement>("a,button") ?? [])].filter((element): element is HTMLElement => Boolean(element));
+    focusable[1]?.focus();
     const handleKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") { setOpen(false); triggerRef.current?.focus(); }
       if (event.key === "Tab" && focusable?.length) { const first = focusable[0], last = focusable[focusable.length-1]; if (event.shiftKey && document.activeElement===first) {event.preventDefault();last.focus();} else if (!event.shiftKey && document.activeElement===last) {event.preventDefault();first.focus();} }

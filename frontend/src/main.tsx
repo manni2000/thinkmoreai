@@ -3,6 +3,7 @@ import { HelmetProvider } from "react-helmet-async";
 import App from "./App.tsx";
 import "./index.css";
 import "./studio.css";
+import "./responsive.css";
 import "@fontsource/sora/latin-400.css";
 import "@fontsource/sora/latin-500.css";
 import "@fontsource/sora/latin-600.css";

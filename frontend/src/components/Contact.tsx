@@ -33,8 +33,13 @@ const Contact = ({ standalone = false }: { standalone?: boolean }) => {
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
-    const valid = ["name","email","phone","message"].map((key) => validate(key, formData[key as keyof FormState] as string)).every(Boolean);
-    if (!valid) { setStatus("error"); return; }
+    const fields = ["name","email","phone","message"];
+    const results = fields.map((key) => validate(key, formData[key as keyof FormState] as string));
+    if (!results.every(Boolean)) {
+      setStatus("error");
+      event.currentTarget.querySelector<HTMLElement>(`[name="${fields[results.indexOf(false)]}"]`)?.focus();
+      return;
+    }
     setStatus("sending");
     try {
       await submitContactForm({ name: formData.name.trim(), email: formData.email.trim().toLowerCase(), phone: formData.phone.trim() || undefined, services: formData.services, message: formData.message.trim() });
